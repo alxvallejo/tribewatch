@@ -1,0 +1,77 @@
+{
+	title: String,
+	description: String, // Rich text
+	media: {
+		featured_image: Image,
+		other_images: List of Images
+	},
+	product_availability: Boolean,
+	organization: {
+		product_type: String, // e.g., Shirt, Pants, etc
+		vendor: Vendor Type, // State of Matter or Solid Matter?
+		collections: [
+			ShopCollection // Home Page, Products (some categorization)
+		],
+		tags: [
+			String // Keywords for search, seo, etc
+		]
+	},
+	variants: [
+		{
+			featured_image: Image,
+			size: String,
+			color: String,
+			price: Float,
+			sale_price: Float, // Determines Sale styling
+			quantity: Int,
+			sku: String, // if applicable
+			metafields: {
+				image_sets: [
+					image_ids // images associated with color dimension
+				],
+				3d_video: String
+			}
+		}
+	],
+	SuperFields: [
+		{
+			name: Products,
+			fields: [
+				{
+					name: icon_tag,
+					content: html, // Sustainability HTML
+				},
+				{
+					name: highlights,
+					content: html,
+				},
+				{
+					name: fit,
+					content: html
+				},
+				{
+					name: fabric,
+					content: html
+				}
+			]
+		},
+		{
+			name: faq,
+			fields: [
+				{
+					question: string,
+					answer: string
+				}
+			]
+		}
+	],
+	product_reviews: [
+		{
+			rating: Int,
+			review: String,
+			author_name: String, // not shown
+			author_email: String, // not shown
+		}
+	],
+	product_video: string
+}

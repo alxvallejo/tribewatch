@@ -69,33 +69,28 @@ const App = props => {
 	if (!user) {
 		console.log('no user');
 		return (
-			<UserContextProvider>
-				<BrowserRouter>
-					<Container>
-						<TopNav />
-						<Col>
-							Tribewatch is designed to help communities address needs in an efficient, trustworthy
-							manner.
-							<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-						</Col>
-					</Container>
-				</BrowserRouter>
-			</UserContextProvider>
+			<BrowserRouter>
+				<Container>
+					<TopNav />
+					<Col>
+						Tribewatch is designed to help communities address needs in an efficient, trustworthy manner.
+						<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+					</Col>
+				</Container>
+			</BrowserRouter>
 		);
 	}
 
 	return (
-		<UserContextProvider>
-			<BrowserRouter>
-				<Container>
-					<TopNav />
-					<Switch>
-						<Route path="/admin" component={AdminDash} />
-						<Route path="/" component={Dashboard} />
-					</Switch>
-				</Container>
-			</BrowserRouter>
-		</UserContextProvider>
+		<BrowserRouter>
+			<Container>
+				<TopNav />
+				<Switch>
+					<Route path="/admin" component={AdminDash} />
+					<Route path="/" component={Dashboard} />
+				</Switch>
+			</Container>
+		</BrowserRouter>
 	);
 };
 

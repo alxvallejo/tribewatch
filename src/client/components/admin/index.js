@@ -7,5 +7,9 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 export const AdminDash = () => {
 	const state = useContext(UserContext);
 
-	return <div>Admin Dashboard</div>;
+	return (
+		<Container>
+			<h2>Admin Dashboard</h2>
+		</Container>
+	);
 };

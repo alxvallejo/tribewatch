@@ -8,13 +8,17 @@ const initialAdmin = {
 };
 
 const AdminReducer = (state, action) => {
-	console.log('action: ', action);
 	switch (action.type) {
 		case 'SET_LOCATION':
-			console.log('action', action);
 			return {
 				...state,
 				location: action.location
+			};
+
+		case 'SET_CITY':
+			return {
+				...state,
+				city: action.city
 			};
 
 		case 'SET_CITIES':

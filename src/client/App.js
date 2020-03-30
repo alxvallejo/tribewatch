@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { BrowserRouter } from 'react-router-dom';
 import { UserContextProvider, UserContext } from './context/UserContext';
+import { AdminContextProvider } from './context/AdminContext';
 import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
 import { Route, Switch } from 'react-router-dom';
 
@@ -81,6 +82,7 @@ const App = props => {
 		);
 	}
 
+	// currently assumes admin
 	return (
 		<BrowserRouter>
 			<Container>

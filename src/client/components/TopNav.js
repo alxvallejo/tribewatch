@@ -41,7 +41,7 @@ export const TopNav = () => {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">{/* <Nav.Link href="#home">Home</Nav.Link> */}</Nav>
 					<NavDropdown title={<Image rounded src={photoURL} />} id="basic-nav-dropdown">
-						<Link to="/admin">Admin</Link>
+						<NavDropdown.Item href="/admin">Admin</NavDropdown.Item>
 						<NavDropdown.Item onClick={() => signOut()}>Logout</NavDropdown.Item>
 					</NavDropdown>
 				</Navbar.Collapse>

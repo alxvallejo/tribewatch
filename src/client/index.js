@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { UserContextProvider, UserContext } from './context/UserContext';
+import { UserContextProvider } from './context/UserContext';
+import { AdminContextProvider } from './context/AdminContext';
 
 ReactDOM.render(
 	<UserContextProvider>
-		<App />
+		<AdminContextProvider>
+			<App />
+		</AdminContextProvider>
 	</UserContextProvider>,
 	document.getElementById('root')
 );

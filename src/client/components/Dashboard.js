@@ -6,6 +6,7 @@ const moment = require('moment');
 import { UserContext } from '../context/UserContext';
 import { Route, Switch } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Profile } from './Profile';
 
 // import { getLocation } from '../services/geolocate';
 
@@ -14,6 +15,7 @@ export const Dashboard = props => {
 
 	return (
 		<Container fluid>
+			<Profile />
 			<Row>
 				<Col>
 					<h2>Stores</h2>

@@ -35,13 +35,6 @@ const App = props => {
 		if (!state.user) {
 			checkUser();
 		}
-
-		// const checkLocation = async () => {
-		// 	const location = await getLocation();
-		// 	console.log('location: ', location);
-		// };
-
-		// checkLocation();
 	}, []);
 
 	// Configure FirebaseUI.

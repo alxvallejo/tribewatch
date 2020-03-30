@@ -1,27 +1,25 @@
 import React, { useContext } from 'react';
 
-import { UserContext } from '../../context/UserContext';
-import { AdminContext } from '../../context/AdminContext';
-import { firebaseApp, firebaseAuth, firebaseDb } from '../../services/firebase';
+import { UserContext } from '../../../context/UserContext';
+import { AdminContext } from '../../../context/AdminContext';
+import { firebaseApp, firebaseAuth, firebaseDb } from '../../../services/firebase';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
 import { Formik } from 'formik';
 
 export const NewStore = () => {
 	const state = useContext(UserContext);
-	const admin = useContext(AdminContext);
+	const [admin, adminDispatch] = useContext(AdminContext);
 
 	const createStore = values => {};
 	return (
 		<div>
 			<Formik
-				initialValues={{ email: '', password: '' }}
+				initialValues={{ name: '' }}
 				validate={values => {
 					const errors = {};
 					if (!values.name) {
-						errors.email = 'Required';
-					} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-						errors.email = 'Invalid email address';
+						errors.name = 'Required';
 					}
 					return errors;
 				}}

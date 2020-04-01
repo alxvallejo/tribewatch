@@ -36,7 +36,7 @@ export const Profile = () => {
 						city: values.city,
 						state: values.state
 					};
-					await firebaseDb.ref(`users/${user.uid / profile}`).set(profile);
+					await firebaseDb.ref(`users/${user.uid}/profile}`).set(newProfile);
 
 					userDispatch({
 						type: 'SET_PROFILE',
@@ -57,7 +57,7 @@ export const Profile = () => {
 					<Form onSubmit={handleSubmit}>
 						<Form.Group>
 							<Form.Label>Display Name</Form.Label>
-							<Form.Control type="text" placeholder="Display Name" name="name" />
+							<Form.Control type="text" placeholder="Display Name" name="name" onChange={handleChange} />
 							{errors.name && touched.name && errors.name}
 						</Form.Group>
 						<div>
@@ -66,18 +66,23 @@ export const Profile = () => {
 						</div>
 						<Form.Group>
 							<Form.Label>Address</Form.Label>
-							<Form.Control type="text" placeholder="1234 Main St" name="address" />
+							<Form.Control
+								type="text"
+								placeholder="1234 Main St"
+								name="address"
+								onChange={handleChange}
+							/>
 							{errors.address && touched.address && errors.address}
 						</Form.Group>
 						<Form.Group>
 							<Form.Label>Address 2</Form.Label>
-							<Form.Control type="text" placeholder="Apt. 5" name="address2" />
+							<Form.Control type="text" placeholder="Apt. 5" name="address2" onChange={handleChange} />
 							{errors.address2 && touched.address2 && errors.address2}
 						</Form.Group>
 						<Form.Row>
 							<Form.Group>
 								<Form.Label>City</Form.Label>
-								<Form.Control type="text" name="city" />
+								<Form.Control type="text" name="city" onChange={handleChange} />
 								{errors.city && touched.city && errors.city}
 							</Form.Group>
 							<Form.Group>

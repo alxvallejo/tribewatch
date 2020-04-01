@@ -11,7 +11,6 @@ import { Profile } from './Profile';
 import { LocationSelection } from './LocationSelection';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { car } from '@fortawesome/free-solid-svg-icons';
 
 // import { getLocation } from '../services/geolocate';
 
@@ -52,7 +51,7 @@ export const Dashboard = props => {
 					<h2>{`${location.city}, ${location.state}`}</h2>
 					{preferences.canDrive && (
 						<Badge variant="light" className="ml-3">
-							<FontAwesomeIcon icon={'car'} /> Driver
+							<FontAwesomeIcon icon="car" /> Driver
 						</Badge>
 					)}
 				</Row>

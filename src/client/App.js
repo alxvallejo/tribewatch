@@ -43,7 +43,7 @@ const App = props => {
 						if (userInfo.preferences) {
 							userDispatch({
 								type: 'SET_PREFERENCES',
-								location: userInfo.preferences
+								preferences: userInfo.preferences
 							});
 						}
 						if (userInfo.profile) {

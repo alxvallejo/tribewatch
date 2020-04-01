@@ -4,26 +4,28 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { firebaseAuth, firebaseDb } from '../services/firebase';
 import { states } from './admin/states';
 import { Formik } from 'formik';
+import { UserContext } from '../context/UserContext';
 
 import { map } from 'lodash';
 
 export const LocationSelection = () => {
+	const [{ user, location }, userDispatch] = useContext(UserContext);
 	const [locations, setLocations] = useState();
 	const [cityOptions, setCityOptions] = useState();
 	const [collectionId, setCollectionId] = useState();
 
 	useEffect(() => {
-		// const user = firebaseAuth.currentUser;
-		console.log('firebaseAuth: ', firebaseAuth);
-		// console.log('currentUser: ', currentUser);
 		const getLocations = async () => {
 			const resp = await firebaseDb.ref(`locations`).once('value');
 			const locations = resp.val();
-			console.log('locations: ', locations);
 			setLocations(locations);
 		};
 		getLocations();
 	}, []);
+
+	if (!user) {
+		return;
+	}
 
 	if (!locations) {
 		return 'Loading Locations...';
@@ -35,12 +37,6 @@ export const LocationSelection = () => {
 		let stateCities = map(locations[abr]);
 		setCityOptions(stateCities);
 	};
-
-	const selectCollectionId = e => {
-		const collectionId = e.target.value;
-		setCollectionId(collectionId);
-	};
-
 	const stateAbrs = Object.entries(locations).map(([abr, city]) => abr);
 	const stateOptions = stateAbrs.map(abr => {
 		return {
@@ -50,37 +46,45 @@ export const LocationSelection = () => {
 	});
 
 	return (
-		<Row>
-			<Formik
-				initialValues={{ state: '', city: '' }}
-				validate={values => {
-					const errors = {};
-					if (!values.state) {
-						errors.state = 'Required';
-					}
-					if (!values.city) {
-						errors.city = 'Required';
-					}
-					return errors;
-				}}
-				onSubmit={async (values, { setSubmitting }) => {
-					console.log('values: ', values);
-					const user = firebaseAuth.currentUser;
-					firebaseDb.ref(`users/${user.id}/collectionId`).set(values.city);
-				}}
-			>
-				{({
-					values,
-					errors,
-					touched,
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					isSubmitting,
-					setFieldValue
-					/* and other goodies */
-				}) => (
-					<Form onSubmit={handleSubmit}>
+		<Formik
+			initialValues={{ state: '', city: '' }}
+			validate={values => {
+				const errors = {};
+				if (!values.state) {
+					errors.state = 'Required';
+				}
+				if (!values.city) {
+					errors.city = 'Required';
+				}
+				return errors;
+			}}
+			onSubmit={async (values, { setSubmitting }) => {
+				const location = {
+					state: values.state,
+					city: values.city,
+					collectionId: `${values.state}_${values.city}`
+				};
+				await firebaseDb.ref(`users/${user.uid}/location`).set(location);
+
+				userDispatch({
+					type: 'SET_LOCATION',
+					location
+				});
+			}}
+		>
+			{({
+				values,
+				errors,
+				touched,
+				handleChange,
+				handleBlur,
+				handleSubmit,
+				isSubmitting,
+				setFieldValue
+				/* and other goodies */
+			}) => (
+				<Form onSubmit={handleSubmit}>
+					<Form.Row className="align-items-center">
 						<Form.Group as={Col}>
 							<Form.Label>Select State</Form.Label>
 							<Form.Control
@@ -113,21 +117,26 @@ export const LocationSelection = () => {
 									</option>
 									{cityOptions.map(c => {
 										return (
-											<option key={c.name} value={c.collectionId}>
+											<option key={c.name} value={c.name}>
 												{c.name}
 											</option>
 										);
 									})}
 								</Form.Control>
 								{errors.city && touched.city && errors.city}
+							</Form.Group>
+						)}
+
+						{values.state && (
+							<Col>
 								<Button type="submit" disabled={isSubmitting}>
 									Set Location
 								</Button>
-							</Form.Group>
+							</Col>
 						)}
-					</Form>
-				)}
-			</Formik>
-		</Row>
+					</Form.Row>
+				</Form>
+			)}
+		</Formik>
 	);
 };

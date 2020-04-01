@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { BrowserRouter } from 'react-router-dom';
-import { UserContextProvider, UserContext } from './context/UserContext';
+import { UserContext } from './context/UserContext';
 import { AdminContextProvider } from './context/AdminContext';
 import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
 import { Route, Switch } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { TopNav } from './components/TopNav';
 import { Dashboard } from './components/Dashboard';
 import { AdminDash } from './components/admin';
 
-import { firebaseAuth } from './services/firebase';
+import { firebaseAuth, firebaseDb } from './services/firebase';
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
@@ -21,14 +21,33 @@ const App = props => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const checkUser = () => {
-			firebaseAuth.onAuthStateChanged(u => {
+		const checkUser = async () => {
+			firebaseAuth.onAuthStateChanged(async u => {
 				console.log('user on app load: ', u);
 				if (u) {
 					userDispatch({
 						type: 'SET_USER',
 						user: u
 					});
+					// Get user info
+					const resp = await firebaseDb.ref(`users/${u.uid}`).once('value');
+					const userInfo = resp.val();
+					console.log('userInfo: ', userInfo);
+					if (userInfo) {
+						if (userInfo.location) {
+							userDispatch({
+								type: 'SET_LOCATION',
+								location: userInfo.location
+							});
+						}
+						if (userInfo.profile) {
+							userDispatch({
+								type: 'SET_PROFILE',
+								location: userInfo.profile
+							});
+						}
+					}
+
 					setLoading(false);
 				}
 			});
@@ -49,7 +68,10 @@ const App = props => {
 			signInSuccessWithAuthResult: (authResult, redirectUrl) => {
 				console.log('authResult', authResult);
 				if (authResult.user) {
-					state.setUser(authResult.user);
+					userDispatch({
+						type: 'SET_USER',
+						user: authResult.user
+					});
 					localStorage.setItem('authUser', JSON.stringify(authResult.user));
 				}
 				false;
@@ -69,7 +91,7 @@ const App = props => {
 					<TopNav />
 					<Col>
 						Tribewatch is designed to help communities address needs in an efficient, trustworthy manner.
-						<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+						<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
 					</Col>
 				</Container>
 			</BrowserRouter>

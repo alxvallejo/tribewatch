@@ -12,12 +12,37 @@ import { LocationSelection } from './LocationSelection';
 // import { getLocation } from '../services/geolocate';
 
 export const Dashboard = props => {
-	const state = useContext(UserContext);
+	const [{ user, location, profile }, userDispatch] = useContext(UserContext);
+
+	if (!user) {
+		return;
+	}
+
+	if (!location) {
+		return (
+			<Container>
+				<Row className="justify-content-md-center">
+					<LocationSelection />
+				</Row>
+			</Container>
+		);
+	}
+
+	if (!profile) {
+		return (
+			<Container fluid>
+				<Row>
+					<h2>{`${location.city}, ${location.state}`}</h2>
+				</Row>
+				<Row className="justify-content-md-center">
+					<Profile />
+				</Row>
+			</Container>
+		);
+	}
 
 	return (
 		<Container fluid>
-			<LocationSelection />
-			<Profile />
 			<Row>
 				<Col>
 					<h2>Stores</h2>

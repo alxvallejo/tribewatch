@@ -4,7 +4,8 @@ export const UserContext = React.createContext();
 
 const initialUser = {
 	user: null,
-	location: null
+	location: null,
+	profile: null
 };
 
 const UserReducer = (state, action) => {
@@ -19,6 +20,12 @@ const UserReducer = (state, action) => {
 			return {
 				...state,
 				location: action.location
+			};
+
+		case 'SET_PROFILE':
+			return {
+				...state,
+				profile: action.profile
 			};
 
 		default:

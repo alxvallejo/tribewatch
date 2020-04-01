@@ -3,29 +3,12 @@ import React, { useContext, useReducer, useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { firebaseAuth, firebaseDb } from '../services/firebase';
+import { UserContext } from '../context/UserContext';
 
 export const Profile = () => {
-	const [profile, setProfile] = useState();
+	const [{ user, profile }, userDispatch] = useContext(UserContext);
 
-	useEffect(() => {
-		// const user = firebaseAuth.currentUser;
-		console.log('firebaseAuth: ', firebaseAuth);
-		// console.log('currentUser: ', currentUser);
-		const getProfile = async () => {
-			const resp = await firebaseDb.ref(`users/${user.uid}/profile`).once('value');
-			const profile = resp.val();
-			console.log('profile: ', profile);
-			if (profile) {
-				setProfile(profile);
-			}
-		};
-		// getProfile();
-		const getLocations = async () => {
-			const resp = await firebaseDb.ref('locations').once('value');
-			console.log('resp: ', resp);
-		};
-		getLocations();
-	}, []);
+	useEffect(() => {}, []);
 
 	const initFields = {
 		name: '',

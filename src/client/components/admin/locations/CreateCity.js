@@ -14,6 +14,7 @@ export const CreateCity = () => {
 		const collectionId = `${stateAbr}_${city}`;
 		firebaseDb.ref(`locations/${stateAbr}/${city}`).set({
 			name: city,
+			state: stateAbr,
 			collectionId
 		});
 	};

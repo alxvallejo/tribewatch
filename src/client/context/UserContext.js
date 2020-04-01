@@ -1,29 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 
-export const UserContext = React.createContext({
+export const UserContext = React.createContext();
+
+const initialUser = {
 	user: null,
-	setUser: () => {},
-	location: null,
-	setLocation: () => {}
-});
+	location: null
+};
+
+const UserReducer = (state, action) => {
+	switch (action.type) {
+		case 'SET_USER':
+			return {
+				...state,
+				user: action.user
+			};
+
+		case 'SET_LOCATION':
+			return {
+				...state,
+				location: action.location
+			};
+
+		default:
+			return state;
+	}
+};
 
 export const UserContextProvider = props => {
-	const setUser = user => {
-		setState({ ...state, user });
-	};
+	const [state, dispatch] = useReducer(UserReducer, initialUser);
 
-	const setLocation = location => {
-		setState({ ...state, location });
-	};
-
-	const initState = {
-		user: null,
-		setUser: setUser,
-		location: null,
-		setLocation: setLocation
-	};
-
-	const [state, setState] = useState(initState);
-
-	return <UserContext.Provider value={state}>{props.children}</UserContext.Provider>;
+	return <UserContext.Provider value={[state, dispatch]}>{props.children}</UserContext.Provider>;
 };

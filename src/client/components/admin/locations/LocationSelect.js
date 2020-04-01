@@ -68,7 +68,9 @@ export const LocationSelect = () => {
 			</Row>
 			<Row>
 				<Col></Col>
-				<Col>{admin.cities && <CreateCity />}</Col>
+				<Col>
+					<CreateCity />
+				</Col>
 			</Row>
 		</Container>
 	);

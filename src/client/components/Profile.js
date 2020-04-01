@@ -4,29 +4,36 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { firebaseAuth, firebaseDb } from '../services/firebase';
 
-const initFields = {
-	name: '',
-	state: '',
-	city: '',
-	address: '',
-	ableToDrive: null
-};
-
 export const Profile = () => {
+	const [profile, setProfile] = useState();
+
 	useEffect(() => {
-		const currentUser = firebaseAuth.currentUser;
-		console.log('currentUser: ', currentUser);
-		// const getProfile = async () => {
-		// 	const resp = await firebaseDb.ref('locations').once('value');
-		// 	console.log('resp: ', resp);
-		// };
-		// getLocations();
+		// const user = firebaseAuth.currentUser;
+		console.log('firebaseAuth: ', firebaseAuth);
+		// console.log('currentUser: ', currentUser);
+		const getProfile = async () => {
+			const resp = await firebaseDb.ref(`users/${user.uid}/profile`).once('value');
+			const profile = resp.val();
+			console.log('profile: ', profile);
+			if (profile) {
+				setProfile(profile);
+			}
+		};
+		// getProfile();
 		const getLocations = async () => {
 			const resp = await firebaseDb.ref('locations').once('value');
 			console.log('resp: ', resp);
 		};
 		getLocations();
 	}, []);
+
+	const initFields = {
+		name: '',
+		state: '',
+		city: '',
+		address: '',
+		ableToDrive: null
+	};
 
 	const createProfile = values => {};
 	return (
@@ -58,10 +65,24 @@ export const Profile = () => {
 					/* and other goodies */
 				}) => (
 					<Form onSubmit={handleSubmit}>
-						<Form.Control size="lg" type="text" placeholder="Store Name" name="name" />
-						{errors.email && touched.email && errors.email}
+						<Form.Group>
+							<Form.Label>Display Name</Form.Label>
+							<Form.Control size="lg" type="text" placeholder="Display Name" name="name" />
+							{errors.name && touched.name && errors.name}
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Display Name</Form.Label>
+							<Form.Control size="lg" type="text" placeholder="Display Name" name="name" />
+							{errors.name && touched.name && errors.name}
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Display Name</Form.Label>
+							<Form.Control size="lg" type="text" placeholder="Display Name" name="name" />
+							{errors.name && touched.name && errors.name}
+						</Form.Group>
+
 						<Button type="submit" disabled={isSubmitting}>
-							Submit
+							Save
 						</Button>
 					</Form>
 				)}

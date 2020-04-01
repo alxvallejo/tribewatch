@@ -17,22 +17,23 @@ import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 const App = props => {
-	const state = useContext(UserContext);
+	const [{ user }, userDispatch] = useContext(UserContext);
 	const [loading, setLoading] = useState(true);
-	const [user, setUser] = useState();
 
 	useEffect(() => {
 		const checkUser = () => {
-			firebaseAuth.onAuthStateChanged(user => {
-				console.log('user on app load: ', user);
-				if (user) {
-					state.setUser(user);
-					setUser(user);
+			firebaseAuth.onAuthStateChanged(u => {
+				console.log('user on app load: ', u);
+				if (u) {
+					userDispatch({
+						type: 'SET_USER',
+						user: u
+					});
 					setLoading(false);
 				}
 			});
 		};
-		if (!state.user) {
+		if (!user) {
 			checkUser();
 		}
 	}, []);

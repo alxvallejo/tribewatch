@@ -7,6 +7,7 @@ import { UserContext } from '../context/UserContext';
 import { Route, Switch } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Profile } from './Profile';
+import { LocationSelection } from './LocationSelection';
 
 // import { getLocation } from '../services/geolocate';
 
@@ -15,6 +16,7 @@ export const Dashboard = props => {
 
 	return (
 		<Container fluid>
+			<LocationSelection />
 			<Profile />
 			<Row>
 				<Col>

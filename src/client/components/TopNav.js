@@ -7,29 +7,30 @@ import { Link } from 'react-router-dom';
 import { firebaseApp, firebaseAuth } from '../services/firebase';
 
 export const TopNav = () => {
-	const state = useContext(UserContext);
-	console.log('state: ', state);
+	const [{ user }, userDispatch] = useContext(UserContext);
 
 	const signOut = () => {
 		firebaseAuth
 			.signOut()
 			.then(() => {
 				localStorage.removeItem('authUser');
-				state.setUser(null);
+				userDispatch({
+					type: 'SET_USER',
+					user: null
+				});
 			})
 			.catch(e => {
 				console.log('e: ', e);
 			});
 	};
 
-	if (!state.user) {
+	if (!user) {
 		return (
 			<Navbar expand="lg">
 				<Navbar.Brand>Tribewatch</Navbar.Brand>
 			</Navbar>
 		);
 	} else {
-		const { user } = state;
 		const { displayName, photoURL } = user;
 		console.log('displayName: ', displayName);
 		console.log('photoURL: ', photoURL);

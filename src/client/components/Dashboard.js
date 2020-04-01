@@ -5,14 +5,18 @@ import { sortBy, reverse } from 'lodash';
 const moment = require('moment');
 import { UserContext } from '../context/UserContext';
 import { Route, Switch } from 'react-router-dom';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Badge } from 'react-bootstrap';
+import { Preferences } from './Preferences';
 import { Profile } from './Profile';
 import { LocationSelection } from './LocationSelection';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { car } from '@fortawesome/free-solid-svg-icons';
 
 // import { getLocation } from '../services/geolocate';
 
 export const Dashboard = props => {
-	const [{ user, location, profile }, userDispatch] = useContext(UserContext);
+	const [{ user, location, preferences, profile }, userDispatch] = useContext(UserContext);
 
 	if (!user) {
 		return;
@@ -28,11 +32,29 @@ export const Dashboard = props => {
 		);
 	}
 
+	if (!preferences) {
+		return (
+			<Container>
+				<Row>
+					<h2>{`${location.city}, ${location.state}`}</h2>
+				</Row>
+				<Row className="justify-content-md-center">
+					<Preferences />
+				</Row>
+			</Container>
+		);
+	}
+
 	if (!profile) {
 		return (
 			<Container fluid>
 				<Row>
 					<h2>{`${location.city}, ${location.state}`}</h2>
+					{preferences.canDrive && (
+						<Badge variant="light" className="ml-3">
+							<FontAwesomeIcon icon={'car'} /> Driver
+						</Badge>
+					)}
 				</Row>
 				<Row className="justify-content-md-center">
 					<Profile />

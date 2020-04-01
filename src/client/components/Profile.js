@@ -4,6 +4,7 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { firebaseAuth, firebaseDb } from '../services/firebase';
 import { UserContext } from '../context/UserContext';
+import { states } from './admin/states';
 
 export const Profile = () => {
 	const [{ user, profile }, userDispatch] = useContext(UserContext);
@@ -11,16 +12,13 @@ export const Profile = () => {
 	useEffect(() => {}, []);
 
 	const initFields = {
-		name: '',
-		state: '',
-		city: '',
-		address: '',
-		ableToDrive: null
+		...profile
 	};
 
 	const createProfile = values => {};
 	return (
 		<div>
+			<h2>Profile</h2>
 			<Formik
 				initialValues={initFields}
 				validate={values => {
@@ -30,11 +28,20 @@ export const Profile = () => {
 					}
 					return errors;
 				}}
-				onSubmit={(values, { setSubmitting }) => {
-					// setTimeout(() => {
-					// 	alert(JSON.stringify(values, null, 2));
-					// 	setSubmitting(false);
-					// }, 400);
+				onSubmit={async (values, { setSubmitting }) => {
+					const newProfile = {
+						name: values.name,
+						address: values.address,
+						address2: values.address2,
+						city: values.city,
+						state: values.state
+					};
+					await firebaseDb.ref(`users/${user.uid / profile}`).set(profile);
+
+					userDispatch({
+						type: 'SET_PROFILE',
+						profile: newProfile
+					});
 				}}
 			>
 				{({
@@ -50,22 +57,49 @@ export const Profile = () => {
 					<Form onSubmit={handleSubmit}>
 						<Form.Group>
 							<Form.Label>Display Name</Form.Label>
-							<Form.Control size="lg" type="text" placeholder="Display Name" name="name" />
+							<Form.Control type="text" placeholder="Display Name" name="name" />
 							{errors.name && touched.name && errors.name}
+						</Form.Group>
+						<div>
+							Your address is optional and will never be made public. It will only be revealed to drivers
+							you accept to receive an order from.
+						</div>
+						<Form.Group>
+							<Form.Label>Address</Form.Label>
+							<Form.Control type="text" placeholder="1234 Main St" name="address" />
+							{errors.address && touched.address && errors.address}
 						</Form.Group>
 						<Form.Group>
-							<Form.Label>Display Name</Form.Label>
-							<Form.Control size="lg" type="text" placeholder="Display Name" name="name" />
-							{errors.name && touched.name && errors.name}
+							<Form.Label>Address 2</Form.Label>
+							<Form.Control type="text" placeholder="Apt. 5" name="address2" />
+							{errors.address2 && touched.address2 && errors.address2}
 						</Form.Group>
-						<Form.Group>
-							<Form.Label>Display Name</Form.Label>
-							<Form.Control size="lg" type="text" placeholder="Display Name" name="name" />
-							{errors.name && touched.name && errors.name}
-						</Form.Group>
+						<Form.Row>
+							<Form.Group>
+								<Form.Label>City</Form.Label>
+								<Form.Control type="text" name="city" />
+								{errors.city && touched.city && errors.city}
+							</Form.Group>
+							<Form.Group>
+								<Form.Label>State</Form.Label>
+								<Form.Control as="select" onChange={handleChange} name="state">
+									<option key="selectState" value="">
+										Select State
+									</option>
+									{Object.entries(states).map(([abr, name]) => {
+										return (
+											<option key={abr} value={abr}>
+												{name}
+											</option>
+										);
+									})}
+								</Form.Control>
+								{errors.state && touched.state && errors.state}
+							</Form.Group>
+						</Form.Row>
 
 						<Button type="submit" disabled={isSubmitting}>
-							Save
+							Save Profile
 						</Button>
 					</Form>
 				)}

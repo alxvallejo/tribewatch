@@ -5,6 +5,7 @@ export const UserContext = React.createContext();
 const initialUser = {
 	user: null,
 	location: null,
+	preferences: null,
 	profile: null
 };
 
@@ -20,6 +21,12 @@ const UserReducer = (state, action) => {
 			return {
 				...state,
 				location: action.location
+			};
+
+		case 'SET_PREFERENCES':
+			return {
+				...state,
+				preferences: action.preferences
 			};
 
 		case 'SET_PROFILE':

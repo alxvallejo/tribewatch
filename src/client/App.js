@@ -40,6 +40,12 @@ const App = props => {
 								location: userInfo.location
 							});
 						}
+						if (userInfo.preferences) {
+							userDispatch({
+								type: 'SET_PREFERENCES',
+								location: userInfo.preferences
+							});
+						}
 						if (userInfo.profile) {
 							userDispatch({
 								type: 'SET_PROFILE',

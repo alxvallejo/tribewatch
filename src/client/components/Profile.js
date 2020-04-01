@@ -26,13 +26,14 @@ export const Profile = () => {
 					if (!values.name) {
 						errors.name = 'Required';
 					}
+					console.log('errors: ', errors);
 					return errors;
 				}}
 				onSubmit={async (values, { setSubmitting }) => {
 					const newProfile = {
 						name: values.name,
 						address: values.address,
-						address2: values.address2,
+						address2: values.address2 || null,
 						city: values.city,
 						state: values.state
 					};

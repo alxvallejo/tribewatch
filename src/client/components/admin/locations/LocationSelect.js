@@ -12,20 +12,22 @@ export const LocationSelect = () => {
 
 	const selectState = async e => {
 		const abr = e.target.value;
-		adminDispatch({
-			type: 'SET_LOCATION',
-			location: { state: abr, city: null }
-		});
-		const stateCitiesResponse = await firebaseDb.ref(`locations/${abr}`).once('value');
-		const stateCities = stateCitiesResponse.val();
+		const resp = await firebaseDb.ref(`locations/${abr}`).once('value');
+		const cities = resp.val();
 		adminDispatch({
 			type: 'SET_CITIES',
-			cities: stateCities
+			cities
+		});
+		adminDispatch({
+			type: 'SET_SELECTED_STATE',
+			selectedState: abr
 		});
 	};
 
 	const selectCity = async e => {
-		const city = e.target.value;
+		const cityName = e.target.value;
+		const city = admin.cities[cityName];
+
 		adminDispatch({
 			type: 'SET_CITY',
 			city
@@ -33,8 +35,8 @@ export const LocationSelect = () => {
 	};
 
 	return (
-		<Container fluid>
-			<Row className="d-flex justify-content-between align-items-start">
+		<Container>
+			<Row className="justify-content-md-center">
 				<Form>
 					<Form.Row>
 						<Form.Group as={Col} controlId="locationSelect.state">
@@ -53,6 +55,9 @@ export const LocationSelect = () => {
 							<Form.Group as={Col} controlId="locationSelect.city">
 								<Form.Label>Select City</Form.Label>
 								<Form.Control as="select" onChange={city => selectCity(city)}>
+									<option key="selectCity" value="">
+										Select City
+									</option>
 									{Object.entries(admin.cities).map(([city, val]) => {
 										return (
 											<option key={city} value={city}>
@@ -66,11 +71,8 @@ export const LocationSelect = () => {
 					</Form.Row>
 				</Form>
 			</Row>
-			<Row>
-				<Col></Col>
-				<Col>
-					<CreateCity />
-				</Col>
+			<Row className="justify-content-md-center">
+				<CreateCity />
 			</Row>
 		</Container>
 	);

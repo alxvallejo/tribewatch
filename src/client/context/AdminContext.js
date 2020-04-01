@@ -3,28 +3,29 @@ import React, { useState, useReducer } from 'react';
 export const AdminContext = React.createContext();
 
 const initialAdmin = {
-	location: null,
+	selectedState: null,
+	city: null,
 	cities: null
 };
 
 const AdminReducer = (state, action) => {
 	switch (action.type) {
-		case 'SET_LOCATION':
+		case 'SET_SELECTED_STATE':
 			return {
 				...state,
-				location: action.location
-			};
-
-		case 'SET_CITY':
-			return {
-				...state,
-				city: action.city
+				selectedState: action.selectedState
 			};
 
 		case 'SET_CITIES':
 			return {
 				...state,
 				cities: action.cities
+			};
+
+		case 'SET_CITY':
+			return {
+				...state,
+				city: action.city
 			};
 
 		default:

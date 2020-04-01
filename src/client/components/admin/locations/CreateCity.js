@@ -5,21 +5,20 @@ import { Formik } from 'formik';
 import { firebaseDb } from '../../../services/firebase';
 
 export const CreateCity = () => {
-	const [admin, adminDispatch] = useContext(AdminContext);
-	const stateAbr = admin.location ? admin.location.state : null;
-	const adminCities = admin.cities ? Object.entries(admin.cities).map(([city, val]) => val.name) : [];
+	const [{ selectedState, cities }, adminDispatch] = useContext(AdminContext);
+	// const adminCities = cities ? Object.entries(admin.cities).map(([city, val]) => val.name) : [];
 
 	const createCity = async values => {
-		const city = values.city;
-		const collectionId = `${stateAbr}_${city}`;
-		firebaseDb.ref(`locations/${stateAbr}/${city}`).set({
-			name: city,
-			state: stateAbr,
+		const newCity = values.city;
+		const collectionId = `${selectedState}_${newCity}`;
+		firebaseDb.ref(`locations/${selectedState}/${newCity}`).set({
+			name: newCity,
+			state: selectedState,
 			collectionId
 		});
 	};
 
-	if (!stateAbr) {
+	if (!selectedState) {
 		return 'Please select a state';
 	}
 
@@ -31,7 +30,7 @@ export const CreateCity = () => {
 				if (!values.city) {
 					errors.city = 'Required';
 				}
-				if (adminCities.includes(values.city)) {
+				if (cities.includes(values.city)) {
 					errors.city = 'Duplicate city';
 				}
 				return errors;
@@ -52,19 +51,24 @@ export const CreateCity = () => {
 				/* and other goodies */
 			}) => (
 				<Form onSubmit={handleSubmit}>
-					<Form.Control
-						size="lg"
-						type="text"
-						placeholder="City"
-						name="city"
-						onChange={handleChange}
-						onBlur={handleBlur}
-						// value={values.name}
-					/>
-					{errors.city && touched.city && errors.city}
-					<Button type="submit" disabled={isSubmitting}>
-						Save
-					</Button>
+					<Form.Label>Add a city</Form.Label>
+					<Form.Row>
+						<Col>
+							<Form.Control
+								size="lg"
+								type="text"
+								placeholder="City"
+								name="city"
+								onChange={handleChange}
+								onBlur={handleBlur}
+								// value={values.name}
+							/>
+							{errors.city && touched.city && errors.city}
+							<Button type="submit" disabled={isSubmitting}>
+								Save
+							</Button>
+						</Col>
+					</Form.Row>
 				</Form>
 			)}
 		</Formik>

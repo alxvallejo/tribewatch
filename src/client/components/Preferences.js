@@ -25,7 +25,6 @@ export const Preferences = () => {
 					return errors;
 				}}
 				onSubmit={async (values, { setSubmitting }) => {
-					console.log('values: ', values);
 					const newPreferences = {
 						canDrive: !!values.canDrive,
 						atRisk: !!values.atRisk
@@ -62,7 +61,7 @@ export const Preferences = () => {
 						<Form.Check
 							custom
 							type="checkbox"
-							label="I am in a high risk demographic (and will be given higher visibility)."
+							label="I am a high risk demographic (and will be given higher visibility)."
 							name="atRisk"
 							id="atRisk"
 							onChange={handleChange}

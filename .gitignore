@@ -5,5 +5,5 @@ dist
 yarn.lock
 .env
 
-src/client/services/config.js
+# src/client/services/config.js
 .firebase

@@ -6,7 +6,8 @@ const initialUser = {
 	user: null,
 	location: null,
 	preferences: null,
-	profile: null
+	profile: null,
+	storeList: null
 };
 
 const UserReducer = (state, action) => {
@@ -33,6 +34,12 @@ const UserReducer = (state, action) => {
 			return {
 				...state,
 				profile: action.profile
+			};
+
+		case 'SET_STORE_LIST':
+			return {
+				...state,
+				storeList: action.storeList
 			};
 
 		default:

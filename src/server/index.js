@@ -6,8 +6,21 @@ const app = express();
 const path = require('path');
 
 // const shopify = require('./shopify');
+const yelp = require('./yelp');
 
 app.use(express.static('dist'));
+app.use(express.json());
+
+app.get('/api/getStoresByLocation', async (req, res) => {
+	try {
+		const { location, term } = req.query;
+		const stores = await yelp.getStoresByLocation(location, term);
+		res.send({ stores });
+	} catch (error) {
+		// console.log('error: ', error);
+		throw Error(error);
+	}
+});
 
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 

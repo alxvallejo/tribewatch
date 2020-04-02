@@ -1,6 +1,6 @@
 import React, { useContext, useReducer } from 'react';
 import { AdminContext } from '../../../context/AdminContext';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { firebaseDb } from '../../../services/firebase';
 
@@ -11,7 +11,7 @@ export const CreateCity = () => {
 	const createCity = async values => {
 		const newCity = values.city;
 		const collectionId = `${selectedState}_${newCity}`;
-		firebaseDb.ref(`locations/${selectedState}/${newCity}`).set({
+		firebaseDb.ref(`locations/${selectedState}/${newCity}/info`).set({
 			name: newCity,
 			state: selectedState,
 			collectionId
@@ -23,37 +23,37 @@ export const CreateCity = () => {
 	}
 
 	return (
-		<Formik
-			initialValues={{ city: '' }}
-			validate={values => {
-				const errors = {};
-				if (!values.city) {
-					errors.city = 'Required';
-				}
-				if (cities.includes(values.city)) {
-					errors.city = 'Duplicate city';
-				}
-				return errors;
-			}}
-			onSubmit={async (values, { setSubmitting }) => {
-				await createCity(values);
-				setSubmitting(false);
-			}}
-		>
-			{({
-				values,
-				errors,
-				touched,
-				handleChange,
-				handleBlur,
-				handleSubmit,
-				isSubmitting
-				/* and other goodies */
-			}) => (
-				<Form onSubmit={handleSubmit}>
-					<Form.Label>Add a city</Form.Label>
-					<Form.Row>
-						<Col>
+		<Card>
+			<Card.Body>
+				<Formik
+					initialValues={{ city: '' }}
+					validate={values => {
+						const errors = {};
+						if (!values.city) {
+							errors.city = 'Required';
+						}
+						if (cities.includes(values.city)) {
+							errors.city = 'Duplicate city';
+						}
+						return errors;
+					}}
+					onSubmit={async (values, { setSubmitting }) => {
+						await createCity(values);
+						setSubmitting(false);
+					}}
+				>
+					{({
+						values,
+						errors,
+						touched,
+						handleChange,
+						handleBlur,
+						handleSubmit,
+						isSubmitting
+						/* and other goodies */
+					}) => (
+						<Form onSubmit={handleSubmit} inline className="ml-3">
+							<Form.Label>Add a city</Form.Label>
 							<Form.Control
 								size="lg"
 								type="text"
@@ -67,10 +67,10 @@ export const CreateCity = () => {
 							<Button type="submit" disabled={isSubmitting}>
 								Save
 							</Button>
-						</Col>
-					</Form.Row>
-				</Form>
-			)}
-		</Formik>
+						</Form>
+					)}
+				</Formik>
+			</Card.Body>
+		</Card>
 	);
 };

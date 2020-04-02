@@ -10,12 +10,13 @@ import { Preferences } from './Preferences';
 import { Profile } from './Profile';
 import { LocationSelection } from './LocationSelection';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Stores } from './stores';
 
 // import { getLocation } from '../services/geolocate';
 
 export const Dashboard = props => {
-	const [{ user, location, preferences, profile }, userDispatch] = useContext(UserContext);
+	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
+	console.log('location: ', location);
 
 	if (!user) {
 		return;
@@ -34,7 +35,7 @@ export const Dashboard = props => {
 	if (!preferences) {
 		return (
 			<Container>
-				<Row>
+				<Row className="align-items-center">
 					<h2>{`${location.city}, ${location.state}`}</h2>
 				</Row>
 				<Row className="justify-content-md-center">
@@ -47,11 +48,11 @@ export const Dashboard = props => {
 	if (!profile) {
 		return (
 			<Container fluid>
-				<Row>
+				<Row className="align-items-center">
 					<h2>{`${location.city}, ${location.state}`}</h2>
 					{preferences.canDrive && (
 						<Badge variant="light" className="ml-3">
-							<FontAwesomeIcon icon="car" /> Driver
+							<i className="fas fa-car" /> Driver
 						</Badge>
 					)}
 				</Row>
@@ -64,7 +65,18 @@ export const Dashboard = props => {
 
 	return (
 		<Container fluid>
+			<Row className="align-items-center">
+				<h2>{`${location.city}, ${location.state}`}</h2>
+				{preferences.canDrive && (
+					<Badge variant="light" className="ml-3">
+						<i className="fas fa-car" /> Driver
+					</Badge>
+				)}
+			</Row>
 			<Row>
+				<Stores />
+			</Row>
+			{/* <Row>
 				<Col>
 					<h2>Stores</h2>
 				</Col>
@@ -74,7 +86,7 @@ export const Dashboard = props => {
 				<Col>
 					<h2>Drivers</h2>
 				</Col>
-			</Row>
+			</Row> */}
 		</Container>
 	);
 };

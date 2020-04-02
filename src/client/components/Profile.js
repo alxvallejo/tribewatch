@@ -9,13 +9,10 @@ import { states } from './admin/states';
 export const Profile = () => {
 	const [{ user, profile }, userDispatch] = useContext(UserContext);
 
-	useEffect(() => {}, []);
-
 	const initFields = {
 		...profile
 	};
 
-	const createProfile = values => {};
 	return (
 		<div>
 			<h2>Profile</h2>
@@ -26,7 +23,6 @@ export const Profile = () => {
 					if (!values.name) {
 						errors.name = 'Required';
 					}
-					console.log('errors: ', errors);
 					return errors;
 				}}
 				onSubmit={async (values, { setSubmitting }) => {
@@ -37,7 +33,7 @@ export const Profile = () => {
 						city: values.city,
 						state: values.state
 					};
-					await firebaseDb.ref(`users/${user.uid}/profile}`).set(newProfile);
+					await firebaseDb.ref(`users/${user.uid}/profile`).set(newProfile);
 
 					userDispatch({
 						type: 'SET_PROFILE',

@@ -5,7 +5,8 @@ export const AdminContext = React.createContext();
 const initialAdmin = {
 	selectedState: null,
 	city: null,
-	cities: null
+	cities: null,
+	storeList: null
 };
 
 const AdminReducer = (state, action) => {
@@ -26,6 +27,12 @@ const AdminReducer = (state, action) => {
 			return {
 				...state,
 				city: action.city
+			};
+
+		case 'SET_STORE_LIST':
+			return {
+				...state,
+				storeList: action.storeList
 			};
 
 		default:

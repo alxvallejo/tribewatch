@@ -1,7 +1,7 @@
 /* eslint-disable no-tabs */
 import React, { useState, useEffect, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './app.css';
+import './app.scss';
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from './context/UserContext';
 import { AdminContextProvider } from './context/AdminContext';
@@ -49,7 +49,7 @@ const App = props => {
 						if (userInfo.profile) {
 							userDispatch({
 								type: 'SET_PROFILE',
-								location: userInfo.profile
+								profile: userInfo.profile
 							});
 						}
 					}

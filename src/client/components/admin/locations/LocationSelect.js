@@ -2,8 +2,9 @@ import React, { useState, useContext, useReducer } from 'react';
 
 import { states } from '../states';
 import { firebaseApp, firebaseAuth, firebaseDb } from '../../../services/firebase';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { CreateCity } from './CreateCity';
+import { NewStore } from '../stores/NewStore';
 import { AdminContext } from '../../../context/AdminContext';
 
 export const LocationSelect = () => {
@@ -35,8 +36,8 @@ export const LocationSelect = () => {
 	};
 
 	return (
-		<Container>
-			<Row className="justify-content-md-center">
+		<Card>
+			<Card.Body>
 				<Form>
 					<Form.Row>
 						<Form.Group as={Col} controlId="locationSelect.state">
@@ -70,10 +71,11 @@ export const LocationSelect = () => {
 						)}
 					</Form.Row>
 				</Form>
-			</Row>
-			<Row className="justify-content-md-center">
+			</Card.Body>
+			<Card.Body>
 				<CreateCity />
-			</Row>
-		</Container>
+				<NewStore />
+			</Card.Body>
+		</Card>
 	);
 };

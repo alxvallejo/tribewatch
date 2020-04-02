@@ -53,9 +53,8 @@ const App = props => {
 							});
 						}
 					}
-
-					setLoading(false);
 				}
+				setLoading(false);
 			});
 		};
 		if (!user) {

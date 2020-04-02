@@ -6,3 +6,4 @@ yarn.lock
 .env
 
 src/client/services/config.js
+.firebase

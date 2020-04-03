@@ -52,7 +52,7 @@ export const StoreItems = [
 	{
 		id: 'paper-towels',
 		name: 'Paper Towels',
-		icon: 'fa-toilet-paper'
+		icon: 'fa-scroll'
 	},
 	{
 		id: 'hand-sanitizer',
@@ -67,7 +67,7 @@ export const StoreItems = [
 	{
 		id: 'thermometer',
 		name: 'Thermometer',
-		icon: 'fa-thermometer'
+		icon: 'fa-thermometer-half'
 	}
 ];
 

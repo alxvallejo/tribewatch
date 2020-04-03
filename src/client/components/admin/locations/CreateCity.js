@@ -7,7 +7,6 @@ import { map } from 'lodash';
 
 export const CreateCity = () => {
 	const [{ selectedState, cities }, adminDispatch] = useContext(AdminContext);
-	// const adminCities = cities ? Object.entries(admin.cities).map(([city, val]) => val.name) : [];
 
 	const createCity = async values => {
 		const newCity = values.city;
@@ -16,6 +15,11 @@ export const CreateCity = () => {
 			name: newCity,
 			state: selectedState,
 			collectionId
+		});
+
+		adminDispatch({
+			type: 'SET_CITY',
+			newCity
 		});
 
 		return;
@@ -35,7 +39,6 @@ export const CreateCity = () => {
 						if (!values.city) {
 							errors.city = 'Required';
 						}
-						console.log('cities: ', cities);
 						if (cities && map(cities, 'name').includes(values.city)) {
 							errors.city = 'Duplicate city';
 						}

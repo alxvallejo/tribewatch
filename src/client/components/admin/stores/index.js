@@ -25,7 +25,7 @@ export const Stores = () => {
 			});
 		};
 		listStores();
-	}, []);
+	}, [city]);
 
 	const overwriteAllStores = async () => {
 		const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).set(storeList);

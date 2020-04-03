@@ -86,17 +86,17 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 	const showItem = (item, i) => {
 		const itemStatus = checkStatus(item.id);
 		return (
-			<Card border="info" key={i}>
+			<Card key={i} className="mb-3">
 				<Card.Header>
-					<h4>
+					<h3>
 						<i className={`mr-3 fas ${item.icon}`} />
 						{item.name}
-					</h4>
+					</h3>
 				</Card.Header>
 				<Card.Body>
 					<ButtonGroup>
 						{ItemStatuses.map((s, i) => {
-							const variantName = itemStatus && itemStatus == s.name ? s.variant : 'outline-secondary';
+							const variantName = itemStatus && itemStatus == s.name ? s.variant : 'outline-dark';
 							return (
 								<Button key={i} variant={variantName} onClick={e => setItemStatus(s, item)}>
 									{s.name}
@@ -111,15 +111,15 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 
 	const trafficCard = () => {
 		return (
-			<Card border="info">
+			<Card className="mb-3">
 				<Card.Header>
-					<h4>Occupancy</h4>
+					<h3>Occupancy</h3>
 				</Card.Header>
 				<Card.Body>
 					<ButtonGroup>
 						{TrafficStatuses.map((s, index) => {
 							const variantName =
-								store.traffic && store.traffic.status == s.name ? s.variant : 'outline-secondary';
+								store.traffic && store.traffic.status == s.name ? s.variant : 'outline-dark';
 							return (
 								<Button key={index} variant={variantName} onClick={e => setTrafficStatus(s)}>
 									<i className={`mr-2 fas fa-${s.icon}`} />

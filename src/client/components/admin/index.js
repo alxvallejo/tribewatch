@@ -13,7 +13,7 @@ export const AdminDash = props => {
 
 	return (
 		<Container>
-			<h2>Admin Dashboard</h2>
+			<h2 className="mb-3">Admin Dashboard</h2>
 			<Card>
 				<LocationSelect />
 			</Card>

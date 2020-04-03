@@ -112,11 +112,10 @@ export const StoreList = () => {
 	return (
 		<div>
 			<div>
-				<h3>Filters</h3>
 				<Form>
-					<Form.Group controlId="searchFilter">
-						<Form.Label>Search</Form.Label>
-						<Form.Control type="text" onChange={e => search(e)} />
+					<Form.Group controlId="searchFilter" className="has-icon">
+						<Form.Control placeholder="Search Stores" type="text" onChange={e => search(e)} />
+						<i className="fas fa-search"></i>
 					</Form.Group>
 				</Form>
 			</div>

@@ -12,3 +12,18 @@ textarea,
     border-radius: 20px;
     border: 1px solid #d6d3d3;
 }
+
+.has-icon {
+    position: relative;
+
+    .form-control {
+        padding-right: 35px;
+    }
+
+    i {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

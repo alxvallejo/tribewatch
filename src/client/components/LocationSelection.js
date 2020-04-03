@@ -8,7 +8,7 @@ import { UserContext } from '../context/UserContext';
 
 import { map } from 'lodash';
 
-export const LocationSelection = () => {
+export const LocationSelection = ({ handleClose }) => {
 	const [{ user, location }, userDispatch] = useContext(UserContext);
 	const [locations, setLocations] = useState();
 	const [cityOptions, setCityOptions] = useState();
@@ -18,6 +18,7 @@ export const LocationSelection = () => {
 		const getLocations = async () => {
 			const resp = await firebaseDb.ref(`locations`).once('value');
 			const locations = resp.val();
+			console.log('locations: ', locations);
 			setLocations(locations);
 		};
 		getLocations();
@@ -70,6 +71,8 @@ export const LocationSelection = () => {
 					type: 'SET_LOCATION',
 					location
 				});
+
+				handleClose();
 			}}
 		>
 			{({

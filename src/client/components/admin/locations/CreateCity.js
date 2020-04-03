@@ -11,11 +11,13 @@ export const CreateCity = () => {
 	const createCity = async values => {
 		const newCity = values.city;
 		const collectionId = `${selectedState}_${newCity}`;
-		firebaseDb.ref(`locations/${selectedState}/${newCity}/info`).set({
+		await firebaseDb.ref(`locations/${selectedState}/${newCity}`).set({
 			name: newCity,
 			state: selectedState,
 			collectionId
 		});
+
+		return;
 	};
 
 	if (!selectedState) {
@@ -32,7 +34,7 @@ export const CreateCity = () => {
 						if (!values.city) {
 							errors.city = 'Required';
 						}
-						if (cities.includes(values.city)) {
+						if (cities && cities.includes(values.city)) {
 							errors.city = 'Duplicate city';
 						}
 						return errors;

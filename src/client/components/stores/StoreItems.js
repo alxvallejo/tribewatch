@@ -18,7 +18,7 @@ export const ItemStatuses = [
 	{
 		name: 'Plenty',
 		class: 'plenty',
-		variant: 'primary'
+		variant: 'success'
 	}
 ];
 

@@ -5,7 +5,7 @@ import { sortBy, reverse } from 'lodash';
 const moment = require('moment');
 import { UserContext } from '../context/UserContext';
 import { Route, Switch } from 'react-router-dom';
-import { Container, Row, Col, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Modal } from 'react-bootstrap';
 import { Preferences } from './Preferences';
 import { Profile } from './Profile';
 import { LocationSelection } from './LocationSelection';
@@ -16,17 +16,21 @@ import { Stores } from './stores';
 
 export const Dashboard = props => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
-	console.log('location: ', location);
+	const [showLocationModal, setLocationModal] = useState();
 
 	if (!user) {
 		return;
 	}
 
+	const handleClose = () => {
+		setLocationModal(null);
+	};
+
 	if (!location) {
 		return (
 			<Container>
 				<Row className="justify-content-md-center">
-					<LocationSelection />
+					<LocationSelection handleClose={handleClose} />
 				</Row>
 			</Container>
 		);
@@ -72,10 +76,23 @@ export const Dashboard = props => {
 						<i className="fas fa-car" /> Driver
 					</Badge>
 				)}
+				<a role="button" onClick={() => setLocationModal(true)}>
+					Change Location
+				</a>
 			</Row>
 			<Row>
 				<Stores />
 			</Row>
+			{showLocationModal && (
+				<Modal show={!!showLocationModal} onHide={handleClose} centered>
+					<Modal.Header closeButton>
+						<Modal.Title>Change Location</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<LocationSelection handleClose={handleClose} />
+					</Modal.Body>
+				</Modal>
+			)}
 			{/* <Row>
 				<Col>
 					<h2>Stores</h2>

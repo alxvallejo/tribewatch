@@ -45,8 +45,14 @@ export const StoreList = () => {
 							{store.location.city}
 						</Card.Text>
 						<div className="badges">
+							<label>Traffic</label>
 							<TrafficStatusBadge store={store} />
-							<div>{items && items.map((item, i) => <ItemStatusBadge key={i} item={item} />)}</div>
+						</div>
+						<div className="badges">
+							<label>
+								Inventory
+							</label>
+							{items && items.map((item, i) => <ItemStatusBadge key={i} item={item} />)}
 						</div>
 					</Card.Body>
 

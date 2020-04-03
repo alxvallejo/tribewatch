@@ -1,5 +1,23 @@
 .badge {
-    padding: 5px 7px;
+    padding: 7px 9px;
     margin-right: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.badges {
+
+    + .badges {
+        margin-top: 12px;
+    }
+
+    label {
+        display: block;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+        font-weight: bold;
+        font-size: 12px;
+        color: $gray-900;
+    }
 }

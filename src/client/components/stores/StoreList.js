@@ -1,19 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { firebaseDb } from '../../services/firebase';
 import { UserContext } from '../../context/UserContext';
-import {
-	Container,
-	Row,
-	Col,
-	Button,
-	Form,
-	Card,
-	CardDeck,
-	Modal,
-	Badge,
-	OverlayTrigger,
-	Tooltip
-} from 'react-bootstrap';
+import { Form, Card, Modal } from 'react-bootstrap';
 import { ItemStatuses, StoreItems, StoreItemsModal, TrafficStatuses } from './StoreItems';
 import { ItemStatusBadge, TrafficStatusBadge } from './badges';
 import { map, words } from 'lodash';
@@ -49,9 +37,7 @@ export const StoreList = () => {
 							<TrafficStatusBadge store={store} />
 						</div>
 						<div className="badges">
-							<label>
-								Inventory
-							</label>
+							<label>Inventory</label>
 							{items && items.map((item, i) => <ItemStatusBadge key={i} item={item} />)}
 						</div>
 					</Card.Body>

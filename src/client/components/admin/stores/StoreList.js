@@ -3,27 +3,48 @@ import { firebaseDb } from '../../../services/firebase';
 import { AdminContext } from '../../../context/AdminContext';
 import { Container, Row, Col, Button, Form, Card, CardDeck, ListGroup } from 'react-bootstrap';
 import { getStoresByLocation } from '../../../services/yelp';
+import { map, merge, differenceBy, concat } from 'lodash';
 
 export const StoreList = () => {
 	const [{ cities, selectedState, city, storeList }, adminDispatch] = useContext(AdminContext);
+	const [combinedStores, setCombinedStores] = useState();
 
-	const locationQuery = `${city.name}, state`;
+	const locationQuery = `${city.name}, ${city.state}`;
+
+	const listStores = async () => {
+		// First get existing stores and prevent overwrite
+		const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).once('value');
+		const assignedStores = resp.val();
+		console.log('assignedStores: ', assignedStores);
+		// const assignedList = assignedStores;
+
+		const groceryStores = await getStoresByLocation(locationQuery, 'grocery');
+		const pharmacies = await getStoresByLocation(locationQuery, 'pharmacy');
+		const storeList = merge(groceryStores.stores, pharmacies.stores);
+		const newStores = differenceBy(storeList, assignedStores, 'id');
+		const combinedList = concat(assignedStores, newStores);
+		console.log('combinedList: ', combinedList);
+
+		// console.log('newStores: ', newStores);
+		adminDispatch({
+			type: 'SET_STORE_LIST',
+			storeList: newStores
+		});
+		// Since firebase has no concept of arrays, we need to set the combined store list
+		setCombinedStores(combinedList);
+	};
 
 	useEffect(() => {
-		// const mergeStoreList = async () => {
-		// 	const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).once('value');
-		// 	const assignedStores = resp.val();
-		// 	console.log('assignedStores: ', assignedStores);
-		// 	const list = await getStoresByLocation(locationQuery, 'grocery');
-		// 	const mergedStoreList = list.map(store => {
-		// 		if (assignedStores)
-		// 	})
-		// 	adminDispatch({
-		// 		type: 'SET_STORE_LIST',
-		// 		storeList: list.stores
-		// 	});
-		// }
-	}, []);
+		console.log('city changed', city);
+		listStores();
+	}, [city]);
+
+	const addStores = async () => {
+		if (!combinedStores) {
+			return;
+		}
+		const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).set(combinedStores);
+	};
 
 	const storeListItem = (store, i) => {
 		return (
@@ -49,10 +70,13 @@ export const StoreList = () => {
 	}
 
 	return (
-		<CardDeck>
-			{storeList.map((store, i) => {
-				return storeListItem(store, i);
-			})}
-		</CardDeck>
+		<Container>
+			<Button onClick={() => addStores()}>Add New Stores</Button>
+			<CardDeck>
+				{storeList.map((store, i) => {
+					return storeListItem(store, i);
+				})}
+			</CardDeck>
+		</Container>
 	);
 };

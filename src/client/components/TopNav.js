@@ -28,7 +28,10 @@ export const TopNav = () => {
 		return (
 			<Navbar expand="lg">
 				<div className="container">
-					<Navbar.Brand>Tribewatch</Navbar.Brand>
+					<Navbar.Brand>
+						<i className="fas fa-campground mr-2"></i>
+						Tribewatch
+					</Navbar.Brand>
 				</div>
 			</Navbar>
 		);
@@ -41,7 +44,10 @@ export const TopNav = () => {
 		return (
 			<Navbar expand="lg">
 				<div className="container">
-					<Navbar.Brand>Tribewatch</Navbar.Brand>
+					<Navbar.Brand>
+						<i className="fas fa-campground mr-2"></i>
+						Tribewatch
+					</Navbar.Brand>
 					<Navbar.Collapse id="basic-navbar-nav">
 					</Navbar.Collapse>
 					<Nav className="mr-auto">{/* <Nav.Link href="#home">Home</Nav.Link> */}</Nav>

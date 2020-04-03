@@ -52,7 +52,7 @@ export const Dashboard = props => {
 
 	if (!profile) {
 		return (
-			<Container fluid>
+			<Container>
 				<Row className="align-items-center">
 					<h2>{`${location.city}, ${location.state}`}</h2>
 					{preferences.canDrive && (
@@ -69,8 +69,8 @@ export const Dashboard = props => {
 	}
 
 	return (
-		<Container fluid>
-			<Row className="align-items-center">
+		<Container>
+			<div className="d-flex align-items-center">
 				<h2>{`${location.city}, ${location.state}`}</h2>
 				{preferences.canDrive && (
 					<Badge variant="light" className="ml-3">
@@ -80,10 +80,10 @@ export const Dashboard = props => {
 				<a role="button" onClick={() => setLocationModal(true)}>
 					Change Location
 				</a>
-			</Row>
-			<Row>
+			</div>
+			<div>
 				<Stores />
-			</Row>
+			</div>
 			{showLocationModal && (
 				<Modal show={!!showLocationModal} onHide={handleClose} centered>
 					<Modal.Header closeButton>

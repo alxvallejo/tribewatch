@@ -1,7 +1,6 @@
 /* eslint-disable no-tabs */
 import React, { useState, useEffect, useContext } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './app.scss';
+import './sass/globals.scss';
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from './context/UserContext';
 import { AdminContextProvider } from './context/AdminContext';
@@ -107,13 +106,11 @@ const App = props => {
 	// currently assumes admin
 	return (
 		<BrowserRouter>
-			<Container>
-				<TopNav />
-				<Switch>
-					<Route path="/admin" component={AdminDash} />
-					<Route path="/" component={Dashboard} />
-				</Switch>
-			</Container>
+			<TopNav />
+			<Switch>
+				<Route path="/admin" component={AdminDash} />
+				<Route path="/" component={Dashboard} />
+			</Switch>
 		</BrowserRouter>
 	);
 };

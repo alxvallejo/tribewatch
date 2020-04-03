@@ -1,0 +1,13 @@
+input[type='text'],
+input[type='email'],
+input[type='search'],
+input[type='password'],
+input[type='number'],
+input[type='tel'],
+select,
+textarea,
+.form-control {
+    @extend .form-control;
+    border-radius: 0;
+    border: 1px solid $gray-400;
+}

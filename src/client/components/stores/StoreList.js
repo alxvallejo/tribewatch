@@ -14,7 +14,8 @@ import {
 	OverlayTrigger,
 	Tooltip
 } from 'react-bootstrap';
-import { ItemStatuses, StoreItems, StoreItemsModal } from './StoreItems';
+import { ItemStatuses, StoreItems, StoreItemsModal, TrafficStatuses } from './StoreItems';
+import { ItemStatusBadge, TrafficStatusBadge } from './badges';
 import { map, words } from 'lodash';
 const moment = require('moment');
 
@@ -32,33 +33,6 @@ export const StoreList = () => {
 			console.log('items: ', items);
 		}
 
-		const showItemStatus = (item, i) => {
-			const status = ItemStatuses.find(x => x.name == item.status);
-			const storeItem = StoreItems.find(x => x.name == item.item);
-			if (!status) {
-				return;
-			}
-			const dateChecked = moment.unix(item.time).format('M/D h:m a');
-			return (
-				<OverlayTrigger
-					key={i}
-					placement="top"
-					overlay={
-						<Tooltip id={`${storeItem.id}_${i}`}>
-							{item.item}
-							<br />
-							{dateChecked} - {item.user}
-						</Tooltip>
-					}
-				>
-					<Badge variant={status.variant}>
-						<i className={`mr-1 fas ${storeItem.icon}`} />
-						{item.status}
-					</Badge>
-				</OverlayTrigger>
-			);
-		};
-
 		return (
 			<div key={i} className="col-md-4 mb-4 d-flex">
 				<Card>
@@ -70,7 +44,10 @@ export const StoreList = () => {
 							<br />
 							{store.location.city}
 						</Card.Text>
-						<div className="badges">{items && items.map((item, i) => showItemStatus(item, i))}</div>
+						<div className="badges">
+							<TrafficStatusBadge store={store} />
+							<div>{items && items.map((item, i) => <ItemStatusBadge key={i} item={item} />)}</div>
+						</div>
 					</Card.Body>
 
 					<Card.Footer>
@@ -115,6 +92,17 @@ export const StoreList = () => {
 			.set(newAvailability);
 	};
 
+	const setTrafficStatus = async trafficStatus => {
+		const unix = moment().unix();
+		const newTrafficStatus = {
+			user: profile.name,
+			time: unix,
+			status: trafficStatus.name
+		};
+		handleClose();
+		await firebaseDb.ref(`locations/${state}/${city}/stores/${selectedStoreIndex}/traffic`).set(newTrafficStatus);
+	};
+
 	return (
 		<div>
 			<div>
@@ -137,7 +125,11 @@ export const StoreList = () => {
 						<Modal.Title>Set Availability for {selectedStore.name}</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<StoreItemsModal store={selectedStore} setItemStatus={setItemStatus} />
+						<StoreItemsModal
+							store={selectedStore}
+							setItemStatus={setItemStatus}
+							setTrafficStatus={setTrafficStatus}
+						/>
 					</Modal.Body>
 				</Modal>
 			)}

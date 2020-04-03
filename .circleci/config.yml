@@ -4,6 +4,10 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
+    filters:
+      branches:
+        only:
+          - master
     working_directory: ~/tribewatch
     steps:
       - checkout

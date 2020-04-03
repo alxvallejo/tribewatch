@@ -4,6 +4,27 @@ import { UserContext } from '../../context/UserContext';
 import { Container, Row, Col, Button, ButtonGroup, Form, Modal } from 'react-bootstrap';
 import Card, { CardBody } from 'react-bootstrap/Card';
 
+export const TrafficStatuses = [
+	{
+		name: 'Empty',
+		class: 'empty',
+		variant: 'secondary',
+		icon: 'user'
+	},
+	{
+		name: 'Busy',
+		class: 'busy',
+		variant: 'info',
+		icon: 'user-friends'
+	},
+	{
+		name: 'Long Line',
+		class: 'long-line',
+		variant: 'danger',
+		icon: 'users'
+	}
+];
+
 export const ItemStatuses = [
 	{
 		name: 'Out',
@@ -50,7 +71,7 @@ export const StoreItems = [
 	}
 ];
 
-export const StoreItemsModal = ({ store, setItemStatus }) => {
+export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
 	console.log('user: ', user);
 	const { city, state } = location;
@@ -88,8 +109,33 @@ export const StoreItemsModal = ({ store, setItemStatus }) => {
 		);
 	};
 
+	const trafficCard = () => {
+		return (
+			<Card border="info">
+				<Card.Header>
+					<h4>Occupancy</h4>
+				</Card.Header>
+				<Card.Body>
+					<ButtonGroup>
+						{TrafficStatuses.map((s, index) => {
+							const variantName =
+								store.traffic && store.traffic.status == s.name ? s.variant : 'outline-secondary';
+							return (
+								<Button key={index} variant={variantName} onClick={e => setTrafficStatus(s)}>
+									<i className={`mr-2 fas fa-${s.icon}`} />
+									{s.name}
+								</Button>
+							);
+						})}
+					</ButtonGroup>
+				</Card.Body>
+			</Card>
+		);
+	};
+
 	return (
 		<div>
+			{trafficCard()}
 			{StoreItems.map((item, i) => {
 				return showItem(item, i);
 			})}

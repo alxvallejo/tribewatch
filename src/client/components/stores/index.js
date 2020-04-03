@@ -20,7 +20,7 @@ export const Stores = () => {
 			});
 		};
 		cityStores();
-	}, []);
+	}, [location]);
 
 	return (
 		<Container fluid>

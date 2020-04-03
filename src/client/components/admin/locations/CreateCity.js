@@ -3,6 +3,7 @@ import { AdminContext } from '../../../context/AdminContext';
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { firebaseDb } from '../../../services/firebase';
+import { map } from 'lodash';
 
 export const CreateCity = () => {
 	const [{ selectedState, cities }, adminDispatch] = useContext(AdminContext);
@@ -34,7 +35,8 @@ export const CreateCity = () => {
 						if (!values.city) {
 							errors.city = 'Required';
 						}
-						if (cities && cities.includes(values.city)) {
+						console.log('cities: ', cities);
+						if (cities && map(cities, 'name').includes(values.city)) {
 							errors.city = 'Duplicate city';
 						}
 						return errors;

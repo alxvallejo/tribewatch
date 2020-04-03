@@ -72,7 +72,7 @@ export const LocationSelection = ({ handleClose }) => {
 					location
 				});
 
-				handleClose();
+				handleClose(location);
 			}}
 		>
 			{({

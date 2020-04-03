@@ -16,13 +16,14 @@ import { Stores } from './stores';
 
 export const Dashboard = props => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
+	console.log('new location: ', location);
 	const [showLocationModal, setLocationModal] = useState();
 
 	if (!user) {
 		return;
 	}
 
-	const handleClose = () => {
+	const handleClose = location => {
 		setLocationModal(null);
 	};
 

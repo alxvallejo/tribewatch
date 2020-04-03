@@ -86,7 +86,7 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 	const showItem = (item, i) => {
 		const itemStatus = checkStatus(item.id);
 		return (
-			<Card key={i} className="mb-3">
+			<Card key={i} className="modal-card">
 				<Card.Header>
 					<h3>
 						<i className={`mr-3 fas ${item.icon}`} />
@@ -111,9 +111,12 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 
 	const trafficCard = () => {
 		return (
-			<Card className="mb-3">
+			<Card className="modal-card">
 				<Card.Header>
-					<h3>Traffic</h3>
+					<h3>
+						<i className="mr-3 fas fa-users"></i>
+						Traffic
+					</h3>
 				</Card.Header>
 				<Card.Body>
 					<ButtonGroup>
@@ -122,7 +125,6 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 								store.traffic && store.traffic.status == s.name ? s.variant : 'outline-dark';
 							return (
 								<Button key={index} variant={variantName} onClick={e => setTrafficStatus(s)}>
-									<i className={`mr-2 fas fa-${s.icon}`} />
 									{s.name}
 								</Button>
 							);

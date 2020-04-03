@@ -23,9 +23,9 @@ export const Stores = () => {
 	}, [location]);
 
 	return (
-		<Container fluid>
+		<div>
 			<h2>Stores</h2>
 			<StoreList />
-		</Container>
+		</div>
 	);
 };

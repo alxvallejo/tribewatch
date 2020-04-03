@@ -34,10 +34,10 @@ export const Stores = () => {
 	};
 
 	return (
-		<Container fluid>
+		<div>
 			<h2>Stores</h2>
 			<Button onClick={() => overwriteAllStores()}>Overwrite All Store Data</Button>
 			<StoreList />
-		</Container>
+		</div>
 	);
 };

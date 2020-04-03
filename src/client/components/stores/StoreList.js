@@ -62,29 +62,33 @@ export const StoreList = () => {
 		};
 
 		return (
-			<Card key={i} style={{ minWidth: '18rem', height: 300 }}>
-				<Card.Img
-					variant="top"
-					src={store.image_url}
-					className="h-25"
-					style={{ objectFit: 'none', objectPosition: 'center' }}
-				/>
-				<Card.Body>
-					<Card.Title>{store.name}</Card.Title>
-					<Card.Text>
-						{store.location.address1}
-						<br />
-						{store.location.city}
-					</Card.Text>
-					<Card.Text>
-						<a role="button" onClick={() => setSelectedStoreIndex(i)} className="text-primary">
+			<div class="col-md-4 mb-4 d-flex">
+				<Card key={i}>
+					<Card.Img
+						variant="top"
+						src={store.image_url}
+					/>
+					<Card.Body>
+						<h3>
+							{store.name}
+						</h3>
+						<Card.Text>
+							{store.location.address1}
+							<br />
+							{store.location.city}
+						</Card.Text>
+						<div className="badges">
+							{items && items.map((item, i) => showItemStatus(item, i))}
+						</div>
+					</Card.Body>
+
+					<Card.Footer>
+						<a className="update-status" role="button" onClick={() => setSelectedStoreIndex(i)}>
 							Update Status
 						</a>
-					</Card.Text>
-				</Card.Body>
-
-				<Card.Footer>{items && items.map((item, i) => showItemStatus(item, i))}</Card.Footer>
-			</Card>
+					</Card.Footer>
+				</Card>
+			</div>
 		);
 	};
 
@@ -121,8 +125,8 @@ export const StoreList = () => {
 	};
 
 	return (
-		<Container fluid>
-			<Card>
+		<div>
+			<div>
 				<h3>Filters</h3>
 				<Form>
 					<Form.Group controlId="searchFilter">
@@ -130,12 +134,12 @@ export const StoreList = () => {
 						<Form.Control type="text" onChange={e => search(e)} />
 					</Form.Group>
 				</Form>
-			</Card>
-			<CardDeck>
+			</div>
+			<div class="row mt-5">
 				{filteredStores.map((store, i) => {
 					return storeCard(store, i);
 				})}
-			</CardDeck>
+			</div>
 			{selectedStore && (
 				<Modal show={!!selectedStore} onHide={handleClose} centered>
 					<Modal.Header closeButton>
@@ -146,6 +150,6 @@ export const StoreList = () => {
 					</Modal.Body>
 				</Modal>
 			)}
-		</Container>
+		</div>
 	);
 };

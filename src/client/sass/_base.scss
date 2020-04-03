@@ -1,0 +1,39 @@
+/* ==============================================================
+   BASE
+   - Styles for default/global HTML elements (ex. body, a, h1-h6)
+   - ALWAYS check to see if you can achieve your styles first by
+     overriding bootstrap variables
+   - MISC items can also go here (not ideal)
+============================================================== */
+
+/* Smoother fonts */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 300;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+/* Links */
+a {
+    cursor: pointer;
+    font-weight: 400;
+}

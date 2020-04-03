@@ -1,43 +1,59 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { firebaseDb } from '../../../services/firebase';
 import { AdminContext } from '../../../context/AdminContext';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Card, Button, Form, Modal } from 'react-bootstrap';
 import { NewStore } from './NewStore';
 import { StoreList } from './StoreList';
 import { getStoresByLocation } from '../../../services/yelp';
+import { map, merge, differenceBy, concat } from 'lodash';
 
 export const Stores = () => {
 	const [{ cities, selectedState, city, storeList }, adminDispatch] = useContext(AdminContext);
-	const locationQuery = `${city.name}, state`;
+	console.log('cities: ', cities);
+	const [updating, setUpdating] = useState();
+	const [updateCount, setUpdateCount] = useState(0);
 
-	useEffect(() => {
-		console.log('city changed', city);
-		const cityStores = async () => {
-			const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).once('value');
+	const updateAllStoresInState = async () => {
+		setUpdating(true);
+		const cityList = map(cities);
+		console.log('cityList: ', cityList);
+		cityList.map(async c => {
+			console.log('c: ', c);
+			const resp = await firebaseDb.ref(`locations/${c.state}/${c.name}/stores`).once('value');
 			const assignedStores = resp.val();
-			console.log('assignedStores: ', assignedStores);
-		};
-		cityStores();
-		const listStores = async () => {
-			const list = await getStoresByLocation(locationQuery, 'grocery');
-			adminDispatch({
-				type: 'SET_STORE_LIST',
-				storeList: list.stores
-			});
-		};
-		listStores();
-	}, [city]);
-
-	const overwriteAllStores = async () => {
-		const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).set(storeList);
-		console.log('resp: ', resp);
+			const locationQuery = `${c.name}, ${c.state}`;
+			const groceryStores = await getStoresByLocation(locationQuery, 'grocery');
+			const pharmacies = await getStoresByLocation(locationQuery, 'pharmacy');
+			const storeList = merge(groceryStores.stores, pharmacies.stores);
+			const newStores = differenceBy(storeList, assignedStores, 'id');
+			const newStoreCount = newStores.length;
+			setUpdateCount(updateCount + newStoreCount);
+			const combinedList = concat(assignedStores, newStores);
+			firebaseDb.ref(`locations/${c.state}/${c.name}/stores`).set(combinedList);
+		});
+		setUpdating(null);
 	};
+
+	const updateButtonLabel = updating ? `Saving` : `Update all ${selectedState} stores`;
 
 	return (
 		<div>
-			<h2>Stores</h2>
-			<Button onClick={() => overwriteAllStores()}>Overwrite All Store Data</Button>
-			<StoreList />
+			{selectedState && (
+				<div>
+					<Button disabled={updating} onClick={() => updateAllStoresInState()}>
+						Update All Stores in State
+					</Button>
+					<div>{updateCount > 0 && `${updateCount} Stores Added.`}</div>
+				</div>
+			)}
+
+			{city && (
+				<Card>
+					<h2>New Stores</h2>
+
+					<StoreList />
+				</Card>
+			)}
 		</div>
 	);
 };

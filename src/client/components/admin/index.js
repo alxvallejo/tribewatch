@@ -18,7 +18,9 @@ export const AdminDash = props => {
 				<LocationSelect />
 			</Card>
 
-			<Row className="justify-content-md-center">{city && <Stores />}</Row>
+			<Row className="justify-content-md-center">
+				<Stores />
+			</Row>
 		</Container>
 	);
 };

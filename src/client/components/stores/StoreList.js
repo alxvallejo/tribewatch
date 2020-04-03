@@ -77,14 +77,16 @@ export const StoreList = () => {
 							<br />
 							{store.location.city}
 						</Card.Text>
-						<Card.Text>
-							<a role="button" onClick={() => setSelectedStoreIndex(i)}>
-								Update Status
-							</a>
-						</Card.Text>
+						<div className="badges">
+							{items && items.map((item, i) => showItemStatus(item, i))}
+						</div>
 					</Card.Body>
 
-					<Card.Footer>{items && items.map((item, i) => showItemStatus(item, i))}</Card.Footer>
+					<Card.Footer>
+						<a className="update-status" role="button" onClick={() => setSelectedStoreIndex(i)}>
+							Update Status
+						</a>
+					</Card.Footer>
 				</Card>
 			</div>
 		);

@@ -9,6 +9,10 @@
         justify-content: space-between;
         font-size: 17px;
     }
+
+    .badges {
+        margin-bottom: -6px;
+    }
 }
 
 .card-img-top {
@@ -21,6 +25,14 @@
 .card-footer {
     background: none;
     border: 0;
-    padding-top: 0;
-    padding-bottom: 20px;
+    padding: 0;
+
+    a.update-status {
+        font-weight: bold;
+        color: $white;
+        text-align: center;
+        background: $darkTeal;
+        padding: 10px 20px;
+        display: block;
+    }
 }

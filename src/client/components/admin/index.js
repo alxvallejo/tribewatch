@@ -9,6 +9,8 @@ import { Stores } from './stores';
 
 export const AdminDash = props => {
 	const [{ cities, selectedState, city }, adminDispatch] = useContext(AdminContext);
+	console.log('city at admin index: ', city);
+
 	return (
 		<Container>
 			<h2>Admin Dashboard</h2>

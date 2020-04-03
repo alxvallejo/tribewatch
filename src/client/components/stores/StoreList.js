@@ -24,8 +24,6 @@ export const StoreList = () => {
 	const [searchFilter, setSearchFilter] = useState();
 	const [selectedStoreIndex, setSelectedStoreIndex] = useState();
 
-	console.log('storeList', storeList);
-	console.log('selectedStoreIndex', selectedStoreIndex);
 	const selectedStore = selectedStoreIndex || selectedStoreIndex === 0 ? storeList[selectedStoreIndex] : null;
 
 	const storeCard = (store, i) => {
@@ -62,24 +60,17 @@ export const StoreList = () => {
 		};
 
 		return (
-			<div class="col-md-4 mb-4 d-flex">
-				<Card key={i}>
-					<Card.Img
-						variant="top"
-						src={store.image_url}
-					/>
+			<div key={i} className="col-md-4 mb-4 d-flex">
+				<Card>
+					<Card.Img variant="top" src={store.image_url} />
 					<Card.Body>
-						<h3>
-							{store.name}
-						</h3>
+						<h3>{store.name}</h3>
 						<Card.Text>
 							{store.location.address1}
 							<br />
 							{store.location.city}
 						</Card.Text>
-						<div className="badges">
-							{items && items.map((item, i) => showItemStatus(item, i))}
-						</div>
+						<div className="badges">{items && items.map((item, i) => showItemStatus(item, i))}</div>
 					</Card.Body>
 
 					<Card.Footer>
@@ -98,7 +89,7 @@ export const StoreList = () => {
 
 	let filteredStores = storeList;
 	if (searchFilter) {
-		filteredStores = storeList.filter(store => store.name.search(searchFilter) != -1);
+		filteredStores = storeList.filter(store => store.name.toLowerCase().search(searchFilter.toLowerCase()) != -1);
 	}
 
 	const search = e => {
@@ -135,7 +126,7 @@ export const StoreList = () => {
 					</Form.Group>
 				</Form>
 			</div>
-			<div class="row mt-5">
+			<div className="row mt-5">
 				{filteredStores.map((store, i) => {
 					return storeCard(store, i);
 				})}

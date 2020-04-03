@@ -27,7 +27,7 @@ export const TopNav = () => {
 	if (!user) {
 		return (
 			<Navbar expand="lg">
-				<div class="container">
+				<div className="container">
 					<Navbar.Brand>Tribewatch</Navbar.Brand>
 				</div>
 			</Navbar>
@@ -40,14 +40,11 @@ export const TopNav = () => {
 
 		return (
 			<Navbar expand="lg">
-				<div class="container">
+				<div className="container">
 					<Navbar.Brand>Tribewatch</Navbar.Brand>
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="mr-auto">{/* <Nav.Link href="#home">Home</Nav.Link> */}</Nav>
-						<NavDropdown
-							title={<Image src={photoURL} className="img-thumbnail" />}
-							id="basic-nav-dropdown"
-						>
+						<NavDropdown title={<Image src={photoURL} className="img-thumbnail" />} id="basic-nav-dropdown">
 							<NavDropdown.Item href="/admin">Admin</NavDropdown.Item>
 							<NavDropdown.Item onClick={() => signOut()}>Logout</NavDropdown.Item>
 						</NavDropdown>

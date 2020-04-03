@@ -19,7 +19,7 @@ export const CreateCity = () => {
 
 		adminDispatch({
 			type: 'SET_CITY',
-			newCity
+			city: newCity
 		});
 
 		return;

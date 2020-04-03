@@ -92,12 +92,12 @@ const App = props => {
 		console.log('no user');
 		return (
 			<BrowserRouter>
+				<TopNav />
 				<Container>
-					<TopNav />
-					<Col>
+					<div className="text-center mb-4">
 						Tribewatch is designed to help communities address needs in an efficient, trustworthy manner.
-						<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
-					</Col>
+					</div>
+					<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
 				</Container>
 			</BrowserRouter>
 		);

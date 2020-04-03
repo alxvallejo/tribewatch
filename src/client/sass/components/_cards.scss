@@ -26,14 +26,10 @@
 .card-footer {
     background: none;
     border: 0;
-    padding: 0;
+    text-align: center;
+    padding-top: 0;
 
     a.update-status {
-        font-weight: bold;
-        color: $white;
-        text-align: center;
-        background: $darkTeal;
-        padding: 10px 20px;
-        display: block;
+        
     }
 }

@@ -1,0 +1,9 @@
+.btn {
+
+    &.btn-outline-dark {
+        &:hover {
+            color: $white;
+        }
+    }
+
+}

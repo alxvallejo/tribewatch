@@ -34,7 +34,7 @@ export const StoreList = () => {
 		}
 
 		return (
-			<div key={i} className="col-md-4 mb-4 d-flex">
+			<div key={i} className="col-md-6 col-lg-4 mb-4 d-flex">
 				<Card>
 					<Card.Img variant="top" src={store.image_url} />
 					<Card.Body>
@@ -127,7 +127,10 @@ export const StoreList = () => {
 			{selectedStore && (
 				<Modal show={!!selectedStore} onHide={handleClose} centered>
 					<Modal.Header closeButton>
-						<Modal.Title>Set Availability for {selectedStore.name}</Modal.Title>
+						<Modal.Title>
+							<div className="h5 mb-1">Report Status for:</div>
+							{selectedStore.name}
+						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
 						<StoreItemsModal

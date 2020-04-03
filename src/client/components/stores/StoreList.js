@@ -47,9 +47,9 @@ export const StoreList = () => {
 					placement="top"
 					overlay={
 						<Tooltip id={`${storeItem.id}_${i}`}>
-							{item.user}
+							{item.item}
 							<br />
-							{dateChecked}
+							{dateChecked} - {item.user}
 						</Tooltip>
 					}
 				>

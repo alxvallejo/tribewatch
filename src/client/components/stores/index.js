@@ -24,7 +24,6 @@ export const Stores = () => {
 
 	return (
 		<div>
-			<h2>Stores</h2>
 			<StoreList />
 		</div>
 	);

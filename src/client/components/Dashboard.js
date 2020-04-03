@@ -70,15 +70,15 @@ export const Dashboard = props => {
 
 	return (
 		<Container>
-			<div className="d-flex align-items-center">
-				<h2>{`${location.city}, ${location.state}`}</h2>
+			<div className="location-header mb-3">
+				<h2>Stores in {`${location.city}, ${location.state}`}</h2>
 				{preferences.canDrive && (
 					<Badge variant="light" className="ml-3">
 						<i className="fas fa-car" /> Driver
 					</Badge>
 				)}
 				<a role="button" onClick={() => setLocationModal(true)}>
-					Change Location
+					<i className="mr-2 fas fa-map-marker-alt"></i>Change Location
 				</a>
 			</div>
 			<div>

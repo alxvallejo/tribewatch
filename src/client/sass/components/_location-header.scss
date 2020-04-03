@@ -1,0 +1,7 @@
+.location-header {
+    @include media-breakpoint-up(md) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

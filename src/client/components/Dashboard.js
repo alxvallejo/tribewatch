@@ -71,7 +71,7 @@ export const Dashboard = props => {
 	return (
 		<Container>
 			<div className="location-header mb-3">
-				<h2>Stores in {`${location.city}, ${location.state}`}</h2>
+				<h2><span>Stores in </span>{`${location.city}, ${location.state}`}</h2>
 				{preferences.canDrive && (
 					<Badge variant="light" className="ml-3">
 						<i className="fas fa-car" /> Driver

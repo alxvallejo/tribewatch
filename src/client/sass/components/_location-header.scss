@@ -1,7 +1,20 @@
 .location-header {
+    h2  {
+        margin-bottom: 15px;
+        span {
+            display: block;
+        }
+    }
     @include media-breakpoint-up(md) {
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        h2  {
+            margin-bottom: 8px;
+            span {
+                display: inline;
+            }
+        }
     }
 }

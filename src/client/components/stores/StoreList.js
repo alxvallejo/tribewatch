@@ -1,9 +1,21 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { firebaseDb } from '../../services/firebase';
 import { UserContext } from '../../context/UserContext';
-import { Container, Row, Col, Button, Form, Card, CardDeck, Modal, Badge } from 'react-bootstrap';
+import {
+	Container,
+	Row,
+	Col,
+	Button,
+	Form,
+	Card,
+	CardDeck,
+	Modal,
+	Badge,
+	OverlayTrigger,
+	Tooltip
+} from 'react-bootstrap';
 import { ItemStatuses, StoreItems, StoreItemsModal } from './StoreItems';
-import { map } from 'lodash';
+import { map, words } from 'lodash';
 const moment = require('moment');
 
 export const StoreList = () => {
@@ -25,15 +37,27 @@ export const StoreList = () => {
 		const showItemStatus = (item, i) => {
 			const status = ItemStatuses.find(x => x.name == item.status);
 			const storeItem = StoreItems.find(x => x.name == item.item);
-			console.log('storeItem: ', storeItem);
 			if (!status) {
 				return;
 			}
+			const dateChecked = moment.unix(item.time).format('M/D h:m a');
 			return (
-				<Badge key={i} variant={status.variant}>
-					<i className={`mr-1 fas ${storeItem.icon}`} />
-					{item.status}
-				</Badge>
+				<OverlayTrigger
+					key={i}
+					placement="top"
+					overlay={
+						<Tooltip id={`${storeItem.id}_${i}`}>
+							{item.user}
+							<br />
+							{dateChecked}
+						</Tooltip>
+					}
+				>
+					<Badge variant={status.variant}>
+						<i className={`mr-1 fas ${storeItem.icon}`} />
+						{item.status}
+					</Badge>
+				</OverlayTrigger>
 			);
 		};
 

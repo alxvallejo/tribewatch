@@ -14,8 +14,18 @@
 
 // Btn Group
 .btn-group {
+
+    @include media-breakpoint-down(md) {
+        display: block;
+
+        .btn {
+            display: block;
+        }
+    }
+
     .btn {
         border: 0 !important;
         border-radius: 4px !important;
+        font-weight: normal;
     }
 }

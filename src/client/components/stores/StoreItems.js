@@ -113,7 +113,7 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 		return (
 			<Card className="mb-3">
 				<Card.Header>
-					<h3>Occupancy</h3>
+					<h3>Traffic</h3>
 				</Card.Header>
 				<Card.Body>
 					<ButtonGroup>

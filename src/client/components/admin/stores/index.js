@@ -11,6 +11,7 @@ export const Stores = () => {
 	const locationQuery = `${city.name}, state`;
 
 	useEffect(() => {
+		console.log('city changed', city);
 		const cityStores = async () => {
 			const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).once('value');
 			const assignedStores = resp.val();

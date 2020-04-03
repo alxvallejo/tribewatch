@@ -107,12 +107,7 @@ export const StoreList = () => {
 	};
 
 	const setItemStatus = async (status, item) => {
-		console.log('selectedStoreIndex', selectedStoreIndex);
-		console.log('item: ', item);
-		console.log('user', user);
-		console.log('profile', profile);
 		const unix = moment().unix();
-		console.log('unix: ', unix);
 		const newAvailability = {
 			item: item.name,
 			user: profile.name,

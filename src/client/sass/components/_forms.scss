@@ -8,6 +8,7 @@ select,
 textarea,
 .form-control {
     @extend .form-control;
-    border-radius: 0;
-    border: 1px solid $gray-400;
+    box-shadow: 1px 2px 4px 0 rgba(34, 34, 34, 0.1) inset;
+    border-radius: 20px;
+    border: 1px solid #d6d3d3;
 }

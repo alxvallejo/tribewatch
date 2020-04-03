@@ -1,17 +1,9 @@
 .navbar {
-    background: $teal;
+    border-bottom: 1px solid $gray-400;
     margin-bottom: 40px;
 
     .navbar-brand {
-        color: #fff;
         font-weight: bold;
-        &:hover {
-            color: #fff;
-        }
-    }
-
-    .dropdown-toggle::after {
-        border-top-color: #fff;
     }
 
     .img-thumbnail {

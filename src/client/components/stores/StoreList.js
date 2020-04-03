@@ -58,7 +58,7 @@ export const StoreList = () => {
 
 					<Card.Footer>
 						<a className="btn btn-outline-dark" role="button" onClick={() => setSelectedStoreIndex(i)}>
-							Update Status
+							Report Status
 						</a>
 					</Card.Footer>
 				</Card>

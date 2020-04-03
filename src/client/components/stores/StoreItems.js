@@ -8,13 +8,13 @@ export const TrafficStatuses = [
 	{
 		name: 'Empty',
 		class: 'empty',
-		variant: 'secondary',
+		variant: 'success',
 		icon: 'user'
 	},
 	{
 		name: 'Busy',
 		class: 'busy',
-		variant: 'info',
+		variant: 'warning',
 		icon: 'user-friends'
 	},
 	{
@@ -29,7 +29,7 @@ export const ItemStatuses = [
 	{
 		name: 'Out',
 		class: 'out',
-		variant: 'light'
+		variant: 'danger'
 	},
 	{
 		name: 'Running Low',

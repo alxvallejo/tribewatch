@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { firebaseDb } from '../../services/firebase';
 import { UserContext } from '../../context/UserContext';
-import { Form, Card, Modal } from 'react-bootstrap';
+import { Button, Form, Card, Modal } from 'react-bootstrap';
 import { ItemStatuses, StoreItems, StoreItemsModal, TrafficStatuses } from './StoreItems';
 import { ItemStatusBadge, TrafficStatusBadge } from './badges';
-import { map, words } from 'lodash';
+import { map, concat, reverse, words, intersectionBy } from 'lodash';
 const moment = require('moment');
 
 export const StoreList = () => {
-	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
+	const [{ user, location, preferences, profile, favorites, storeList }, userDispatch] = useContext(UserContext);
 	const { city, state } = location;
 	const [searchFilter, setSearchFilter] = useState();
 	const [selectedStoreIndex, setSelectedStoreIndex] = useState();
@@ -20,6 +20,25 @@ export const StoreList = () => {
 		if (items) {
 			console.log('items: ', items);
 		}
+		console.log('favorites', favorites);
+		const isStarred = favorites && favorites.includes(store.id);
+		// const isStarred = false;
+
+		const star = () => {
+			if (isStarred) {
+				return (
+					<Button style={{ border: 'none' }} className="bg-transparent" onClick={() => removeFavorite(store)}>
+						<i className="fas fa-star text-warning" />
+					</Button>
+				);
+			} else {
+				return (
+					<Button style={{ border: 'none' }} className="bg-transparent" onClick={() => addFavorite(store)}>
+						<i className="far fa-star text-warning" />
+					</Button>
+				);
+			}
+		};
 
 		return (
 			<div key={i} className="col-md-6 col-lg-4 mb-4 d-flex">
@@ -27,6 +46,7 @@ export const StoreList = () => {
 					<Card.Img variant="top" src={store.image_url} />
 					<Card.Body>
 						<h3>{store.name}</h3>
+						{star()}
 						<Card.Text>
 							{store.location.address1}
 							<br />
@@ -60,6 +80,19 @@ export const StoreList = () => {
 	if (searchFilter) {
 		filteredStores = storeList.filter(store => store.name.toLowerCase().search(searchFilter.toLowerCase()) != -1);
 	}
+	// Priotitize favorites
+	if (favorites && favorites.length > 0) {
+		let favoriteStores = [];
+		filteredStores = filteredStores.filter(s => {
+			if (favorites.includes(s.id)) {
+				favoriteStores.push(s);
+				return false;
+			} else {
+				return true;
+			}
+		});
+		filteredStores = concat(favoriteStores, filteredStores);
+	}
 
 	const search = e => {
 		const term = e.target.value;
@@ -74,7 +107,7 @@ export const StoreList = () => {
 		const unix = moment().unix();
 		const newAvailability = {
 			item: item.name,
-			user: profile.name,
+			user: user.displayName,
 			time: unix,
 			status: status.name
 		};
@@ -87,12 +120,34 @@ export const StoreList = () => {
 	const setTrafficStatus = async trafficStatus => {
 		const unix = moment().unix();
 		const newTrafficStatus = {
-			user: profile.name,
+			user: user.displayName,
 			time: unix,
 			status: trafficStatus.name
 		};
 		handleClose();
 		await firebaseDb.ref(`locations/${state}/${city}/stores/${selectedStoreIndex}/traffic`).set(newTrafficStatus);
+	};
+
+	const addFavorite = async store => {
+		console.log('store: ', store);
+		console.log('favorites: ', favorites);
+		let newFavorites = favorites;
+		newFavorites.push(store.id);
+
+		userDispatch({
+			type: 'SET_FAVORITES',
+			favorites: newFavorites
+		});
+		await firebaseDb.ref(`users/${user.uid}/favorites`).set(newFavorites);
+	};
+
+	const removeFavorite = async store => {
+		const newFavorites = favorites.filter(f => f !== store.id);
+		userDispatch({
+			type: 'SET_FAVORITES',
+			favorites: newFavorites
+		});
+		await firebaseDb.ref(`users/${user.uid}/favorites`).set(newFavorites);
 	};
 
 	return (

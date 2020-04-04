@@ -9,7 +9,9 @@ import { Route, Switch } from 'react-router-dom';
 
 import { TopNav } from './components/TopNav';
 import { Dashboard } from './components/Dashboard';
+import { Footer } from './components/Footer';
 import { AdminDash } from './components/admin';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 
 import { firebaseAuth, firebaseDb } from './services/firebase';
 import firebase from 'firebase';
@@ -51,6 +53,12 @@ const App = props => {
 								profile: userInfo.profile
 							});
 						}
+						if (userInfo.favorites) {
+							userDispatch({
+								type: 'SET_FAVORITES',
+								favorites: userInfo.favorites
+							});
+						}
 					}
 				}
 				setLoading(false);
@@ -88,17 +96,27 @@ const App = props => {
 		return 'Loading...';
 	}
 
+	const LoginForm = () => {
+		return (
+			<Container>
+				<div className="text-center mb-4">
+					Tribewatch is designed to help communities address needs in an efficient, trustworthy manner.
+				</div>
+				<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
+			</Container>
+		);
+	};
+
 	if (!user) {
 		console.log('no user');
 		return (
 			<BrowserRouter>
 				<TopNav />
-				<Container>
-					<div className="text-center mb-4">
-						Tribewatch is designed to help communities address needs in an efficient, trustworthy manner.
-					</div>
-					<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
-				</Container>
+				<Switch>
+					<Route path="/privacy" component={PrivacyPolicy} />
+					<Route path="/" component={LoginForm} />
+				</Switch>
+				<Footer />
 			</BrowserRouter>
 		);
 	}
@@ -108,9 +126,11 @@ const App = props => {
 		<BrowserRouter>
 			<TopNav />
 			<Switch>
+				<Route path="/privacy" component={PrivacyPolicy} />
 				<Route path="/admin" component={AdminDash} />
 				<Route path="/" component={Dashboard} />
 			</Switch>
+			<Footer />
 		</BrowserRouter>
 	);
 };

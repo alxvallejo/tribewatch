@@ -7,7 +7,8 @@ const initialUser = {
 	location: null,
 	preferences: null,
 	profile: null,
-	storeList: null
+	storeList: null,
+	favorites: []
 };
 
 const UserReducer = (state, action) => {
@@ -40,6 +41,12 @@ const UserReducer = (state, action) => {
 			return {
 				...state,
 				storeList: action.storeList
+			};
+
+		case 'SET_FAVORITES':
+			return {
+				...state,
+				favorites: action.favorites
 			};
 
 		default:

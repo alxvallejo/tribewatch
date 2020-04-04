@@ -50,23 +50,23 @@ export const Dashboard = props => {
 		);
 	}
 
-	if (!profile) {
-		return (
-			<Container>
-				<Row className="align-items-center">
-					<h2>{`${location.city}, ${location.state}`}</h2>
-					{preferences.canDrive && (
-						<Badge variant="light" className="ml-3">
-							<i className="fas fa-car" /> Driver
-						</Badge>
-					)}
-				</Row>
-				<Row className="justify-content-md-center">
-					<Profile />
-				</Row>
-			</Container>
-		);
-	}
+	// if (!profile) {
+	// 	return (
+	// 		<Container>
+	// 			<Row className="align-items-center">
+	// 				<h2>{`${location.city}, ${location.state}`}</h2>
+	// 				{preferences.canDrive && (
+	// 					<Badge variant="light" className="ml-3">
+	// 						<i className="fas fa-car" /> Driver
+	// 					</Badge>
+	// 				)}
+	// 			</Row>
+	// 			<Row className="justify-content-md-center">
+	// 				<Profile />
+	// 			</Row>
+	// 		</Container>
+	// 	);
+	// }
 
 	return (
 		<Container>
@@ -94,17 +94,6 @@ export const Dashboard = props => {
 					</Modal.Body>
 				</Modal>
 			)}
-			{/* <Row>
-				<Col>
-					<h2>Stores</h2>
-				</Col>
-				<Col>
-					<h2>Community</h2>
-				</Col>
-				<Col>
-					<h2>Drivers</h2>
-				</Col>
-			</Row> */}
 		</Container>
 	);
 };

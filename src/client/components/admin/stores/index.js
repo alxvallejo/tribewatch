@@ -16,9 +16,7 @@ export const Stores = () => {
 	const updateAllStoresInState = async () => {
 		setUpdating(true);
 		const cityList = map(cities);
-		console.log('cityList: ', cityList);
 		cityList.map(async c => {
-			console.log('c: ', c);
 			const resp = await firebaseDb.ref(`locations/${c.state}/${c.name}/stores`).once('value');
 			const assignedStores = resp.val();
 			const locationQuery = `${c.name}, ${c.state}`;

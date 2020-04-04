@@ -15,17 +15,12 @@ export const StoreList = () => {
 		// First get existing stores and prevent overwrite
 		const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).once('value');
 		const assignedStores = resp.val();
-		console.log('assignedStores: ', assignedStores);
-		// const assignedList = assignedStores;
 
 		const groceryStores = await getStoresByLocation(locationQuery, 'grocery');
 		const pharmacies = await getStoresByLocation(locationQuery, 'pharmacy');
 		const storeList = merge(groceryStores.stores, pharmacies.stores);
 		const newStores = differenceBy(storeList, assignedStores, 'id');
 		const combinedList = concat(assignedStores, newStores);
-		console.log('combinedList: ', combinedList);
-
-		// console.log('newStores: ', newStores);
 		adminDispatch({
 			type: 'SET_STORE_LIST',
 			storeList: newStores

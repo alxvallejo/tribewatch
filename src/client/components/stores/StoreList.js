@@ -20,9 +20,7 @@ export const StoreList = () => {
 		if (items) {
 			console.log('items: ', items);
 		}
-		console.log('favorites', favorites);
 		const isStarred = favorites && favorites.includes(store.id);
-		// const isStarred = false;
 
 		const star = () => {
 			if (isStarred) {

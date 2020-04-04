@@ -15,19 +15,26 @@ export const Stores = () => {
 
 	const updateAllStoresInState = async () => {
 		setUpdating(true);
+		adminDispatch({
+			type: 'SET_STORE_LIST',
+			storeList: null
+		});
 		const cityList = map(cities);
 		cityList.map(async c => {
 			const resp = await firebaseDb.ref(`locations/${c.state}/${c.name}/stores`).once('value');
 			const assignedStores = resp.val();
 			const locationQuery = `${c.name}, ${c.state}`;
-			const groceryStores = await getStoresByLocation(locationQuery, 'grocery');
-			const pharmacies = await getStoresByLocation(locationQuery, 'pharmacy');
-			const storeList = merge(groceryStores.stores, pharmacies.stores);
+			const yelpResponse = await getStoresByLocation(locationQuery);
+			const storeList = yelpResponse.stores;
 			const newStores = differenceBy(storeList, assignedStores, 'id');
+			adminDispatch({
+				type: 'SET_STORE_LIST',
+				storeList: newStores
+			});
 			const newStoreCount = newStores.length;
 			setUpdateCount(updateCount + newStoreCount);
 			const combinedList = concat(assignedStores, newStores);
-			firebaseDb.ref(`locations/${c.state}/${c.name}/stores`).set(combinedList);
+			await firebaseDb.ref(`locations/${c.state}/${c.name}/stores`).set(combinedList);
 		});
 		setUpdating(null);
 	};
@@ -39,7 +46,7 @@ export const Stores = () => {
 			{selectedState && (
 				<div>
 					<Button disabled={updating} onClick={() => updateAllStoresInState()}>
-						Update All Stores in State
+						{updateButtonLabel}
 					</Button>
 					<div>{updateCount > 0 && `${updateCount} Stores Added.`}</div>
 				</div>

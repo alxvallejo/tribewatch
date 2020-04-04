@@ -11,9 +11,9 @@ export const StoreList = () => {
 	const [{ user, location, preferences, profile, favorites, storeList }, userDispatch] = useContext(UserContext);
 	const { city, state } = location;
 	const [searchFilter, setSearchFilter] = useState();
-	const [selectedStoreIndex, setSelectedStoreIndex] = useState();
+	const [selectedStore, setSelectedStore] = useState();
 
-	const selectedStore = selectedStoreIndex || selectedStoreIndex === 0 ? storeList[selectedStoreIndex] : null;
+	// const selectedStore = selectedStoreIndex || selectedStoreIndex === 0 ? storeList[selectedStoreIndex] : null;
 
 	const storeCard = (store, i) => {
 		const items = store.items ? map(store.items) : null;
@@ -58,7 +58,7 @@ export const StoreList = () => {
 					</Card.Body>
 
 					<Card.Footer>
-						<a className="btn btn-outline-dark" role="button" onClick={() => setSelectedStoreIndex(i)}>
+						<a className="btn btn-outline-dark" role="button" onClick={() => setSelectedStore(store)}>
 							Report Status
 						</a>
 					</Card.Footer>
@@ -95,7 +95,7 @@ export const StoreList = () => {
 	};
 
 	const handleClose = () => {
-		setSelectedStoreIndex(null);
+		setSelectedStore(null);
 	};
 
 	const setItemStatus = async (status, item) => {
@@ -107,7 +107,7 @@ export const StoreList = () => {
 			status: status.name
 		};
 		handleClose();
-		await firebaseDb.ref(`stores/${state}/${city}/${selectedStoreIndex}/items/${item.id}`).set(newAvailability);
+		await firebaseDb.ref(`stores/${state}/${city}/${selectedStore.id}/items/${item.id}`).set(newAvailability);
 	};
 
 	const setTrafficStatus = async trafficStatus => {
@@ -118,7 +118,7 @@ export const StoreList = () => {
 			status: trafficStatus.name
 		};
 		handleClose();
-		await firebaseDb.ref(`stores/${state}/${city}/${selectedStoreIndex}/traffic`).set(newTrafficStatus);
+		await firebaseDb.ref(`stores/${state}/${city}/${selectedStore.id}/traffic`).set(newTrafficStatus);
 	};
 
 	const addFavorite = async store => {

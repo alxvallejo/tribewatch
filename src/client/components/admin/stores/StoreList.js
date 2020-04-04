@@ -19,6 +19,7 @@ export const StoreList = () => {
 		const storeList = yelpResponse.stores;
 		const newStores = differenceBy(storeList, assignedStores, 'id');
 		const combinedList = concat(assignedStores, newStores);
+		console.log('combinedList: ', combinedList);
 		adminDispatch({
 			type: 'SET_STORE_LIST',
 			storeList: newStores

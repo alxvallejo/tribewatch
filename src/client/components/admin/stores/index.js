@@ -5,7 +5,7 @@ import { Card, Button, Form, Modal } from 'react-bootstrap';
 import { NewStore } from './NewStore';
 import { StoreList } from './StoreList';
 import { getStoresByLocation } from '../../../services/yelp';
-import { map, merge, differenceBy, concat } from 'lodash';
+import { map, keyBy, merge, differenceBy, concat } from 'lodash';
 
 export const Stores = () => {
 	const [{ cities, selectedState, city, storeList }, adminDispatch] = useContext(AdminContext);
@@ -33,7 +33,8 @@ export const Stores = () => {
 			});
 			const newStoreCount = newStores.length;
 			setUpdateCount(updateCount + newStoreCount);
-			const combinedList = concat(assignedStores, newStores);
+			let combinedList = concat(assignedStores, newStores);
+			combinedList = keyBy(combinedList, 'id');
 			await firebaseDb.ref(`stores/${c.state}/${c.name}`).set(combinedList);
 		});
 		setUpdating(null);

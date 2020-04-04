@@ -21,7 +21,7 @@ export const Stores = () => {
 		});
 		const cityList = map(cities);
 		cityList.map(async c => {
-			const resp = await firebaseDb.ref(`locations/${c.state}/${c.name}/stores`).once('value');
+			const resp = await firebaseDb.ref(`stores/${c.state}/${c.name}`).once('value');
 			const assignedStores = resp.val();
 			const locationQuery = `${c.name}, ${c.state}`;
 			const yelpResponse = await getStoresByLocation(locationQuery);
@@ -34,7 +34,7 @@ export const Stores = () => {
 			const newStoreCount = newStores.length;
 			setUpdateCount(updateCount + newStoreCount);
 			const combinedList = concat(assignedStores, newStores);
-			await firebaseDb.ref(`locations/${c.state}/${c.name}/stores`).set(combinedList);
+			await firebaseDb.ref(`stores/${c.state}/${c.name}`).set(combinedList);
 		});
 		setUpdating(null);
 	};

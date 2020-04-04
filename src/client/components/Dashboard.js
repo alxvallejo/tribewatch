@@ -16,7 +16,6 @@ import { Stores } from './stores';
 
 export const Dashboard = props => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
-	console.log('new location: ', location);
 	const [showLocationModal, setLocationModal] = useState();
 
 	if (!user) {
@@ -71,7 +70,10 @@ export const Dashboard = props => {
 	return (
 		<Container>
 			<div className="location-header mb-3">
-				<h2><span>Stores in </span>{`${location.city}, ${location.state}`}</h2>
+				<h2>
+					<span>Stores in </span>
+					{`${location.city}, ${location.state}`}
+				</h2>
 				{preferences.canDrive && (
 					<Badge variant="light" className="ml-3">
 						<i className="fas fa-car" /> Driver

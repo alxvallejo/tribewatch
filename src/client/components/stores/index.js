@@ -10,7 +10,7 @@ export const Stores = () => {
 
 	useEffect(() => {
 		const cityStores = async () => {
-			firebaseDb.ref(`locations/${state}/${city}/stores`).on('value', snapshot => {
+			firebaseDb.ref(`stores/${state}/${city}`).on('value', snapshot => {
 				const assignedStores = snapshot.val();
 
 				userDispatch({

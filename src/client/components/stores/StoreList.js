@@ -17,9 +17,6 @@ export const StoreList = () => {
 
 	const storeCard = (store, i) => {
 		const items = store.items ? map(store.items) : null;
-		if (items) {
-			console.log('items: ', items);
-		}
 		const isStarred = favorites && favorites.includes(store.id);
 
 		const star = () => {
@@ -110,9 +107,7 @@ export const StoreList = () => {
 			status: status.name
 		};
 		handleClose();
-		await firebaseDb
-			.ref(`locations/${state}/${city}/stores/${selectedStoreIndex}/items/${item.id}`)
-			.set(newAvailability);
+		await firebaseDb.ref(`stores/${state}/${city}/${selectedStoreIndex}/items/${item.id}`).set(newAvailability);
 	};
 
 	const setTrafficStatus = async trafficStatus => {
@@ -123,7 +118,7 @@ export const StoreList = () => {
 			status: trafficStatus.name
 		};
 		handleClose();
-		await firebaseDb.ref(`locations/${state}/${city}/stores/${selectedStoreIndex}/traffic`).set(newTrafficStatus);
+		await firebaseDb.ref(`stores/${state}/${city}/${selectedStoreIndex}/traffic`).set(newTrafficStatus);
 	};
 
 	const addFavorite = async store => {

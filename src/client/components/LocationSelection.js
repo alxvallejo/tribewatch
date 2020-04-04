@@ -18,7 +18,6 @@ export const LocationSelection = ({ handleClose }) => {
 		const getLocations = async () => {
 			const resp = await firebaseDb.ref(`locations`).once('value');
 			const locations = resp.val();
-			console.log('locations: ', locations);
 			setLocations(locations);
 		};
 		getLocations();

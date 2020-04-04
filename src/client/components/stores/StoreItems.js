@@ -73,7 +73,6 @@ export const StoreItems = [
 
 export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
-	console.log('user: ', user);
 	const { city, state } = location;
 
 	const checkStatus = id => {

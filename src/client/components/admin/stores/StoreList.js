@@ -13,14 +13,11 @@ export const StoreList = () => {
 
 	const listStores = async () => {
 		// First get existing stores and prevent overwrite
-		const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).once('value');
+		const resp = await firebaseDb.ref(`stores/${selectedState}/${city.name}`).once('value');
 		const assignedStores = resp.val();
-		console.log('assignedStores: ', assignedStores);
 		const yelpResponse = await getStoresByLocation(locationQuery);
 		const storeList = yelpResponse.stores;
-		console.log('storeList: ', storeList);
 		const newStores = differenceBy(storeList, assignedStores, 'id');
-		console.log('newStores: ', newStores);
 		const combinedList = concat(assignedStores, newStores);
 		adminDispatch({
 			type: 'SET_STORE_LIST',
@@ -40,7 +37,7 @@ export const StoreList = () => {
 			return;
 		}
 		console.log('combinedStores: ', combinedStores);
-		const resp = await firebaseDb.ref(`locations/${selectedState}/${city.name}/stores`).set(combinedStores);
+		const resp = await firebaseDb.ref(`stores/${selectedState}/${city.name}`).set(combinedStores);
 	};
 
 	const storeListItem = (store, i) => {

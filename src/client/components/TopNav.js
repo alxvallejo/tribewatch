@@ -44,10 +44,10 @@ export const TopNav = () => {
 		return (
 			<Navbar expand="lg">
 				<div className="container">
-					<Navbar.Brand>
+					<a href="/" className="navbar-brand">
 						<i className="fas fa-campground mr-2"></i>
 						Tribewatch
-					</Navbar.Brand>
+					</a>
 					<Navbar.Collapse id="basic-navbar-nav">
 					</Navbar.Collapse>
 					<Nav className="mr-auto">{/* <Nav.Link href="#home">Home</Nav.Link> */}</Nav>

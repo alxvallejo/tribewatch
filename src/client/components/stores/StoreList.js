@@ -27,15 +27,15 @@ export const StoreList = () => {
 		const star = () => {
 			if (isStarred) {
 				return (
-					<Button style={{ border: 'none' }} className="bg-transparent" onClick={() => removeFavorite(store)}>
-						<i className="fas fa-star text-warning" />
-					</Button>
+					<a className="favorite selected" onClick={() => removeFavorite(store)}>
+						<i className="fas fa-star" />
+					</a>
 				);
 			} else {
 				return (
-					<Button style={{ border: 'none' }} className="bg-transparent" onClick={() => addFavorite(store)}>
-						<i className="far fa-star text-warning" />
-					</Button>
+					<a className="favorite" onClick={() => addFavorite(store)}>
+						<i className="far fa-star" />
+					</a>
 				);
 			}
 		};

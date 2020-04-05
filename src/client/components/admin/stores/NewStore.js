@@ -12,42 +12,44 @@ export const NewStore = () => {
 	const [admin, adminDispatch] = useContext(AdminContext);
 
 	return (
-		<div>
-			<Formik
-				initialValues={{ name: '' }}
-				validate={values => {
-					const errors = {};
-					if (!values.name) {
-						errors.name = 'Required';
-					}
-					return errors;
-				}}
-				onSubmit={(values, { setSubmitting }) => {
-					// setTimeout(() => {
-					// 	alert(JSON.stringify(values, null, 2));
-					// 	setSubmitting(false);
-					// }, 400);
-				}}
-			>
-				{({
-					values,
-					errors,
-					touched,
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					isSubmitting
-					/* and other goodies */
-				}) => (
-					<Form onSubmit={handleSubmit}>
-						<Form.Control size="lg" type="text" placeholder="Store Name" name="name" />
-						{errors.email && touched.email && errors.email}
-						<Button type="submit" disabled={isSubmitting}>
-							Submit
-						</Button>
-					</Form>
-				)}
-			</Formik>
-		</div>
+		<Card>
+			<Card.Body>
+				<Formik
+					initialValues={{ name: '' }}
+					validate={values => {
+						const errors = {};
+						if (!values.name) {
+							errors.name = 'Required';
+						}
+						return errors;
+					}}
+					onSubmit={(values, { setSubmitting }) => {
+						// setTimeout(() => {
+						// 	alert(JSON.stringify(values, null, 2));
+						// 	setSubmitting(false);
+						// }, 400);
+					}}
+				>
+					{({
+						values,
+						errors,
+						touched,
+						handleChange,
+						handleBlur,
+						handleSubmit,
+						isSubmitting
+						/* and other goodies */
+					}) => (
+						<Form onSubmit={handleSubmit}>
+							<Form.Control size="lg" type="text" placeholder="Store Name" name="name" />
+							{errors.email && touched.email && errors.email}
+							<Button type="submit" disabled={isSubmitting}>
+								Submit
+							</Button>
+						</Form>
+					)}
+				</Formik>
+			</Card.Body>
+		</Card>
 	);
 };

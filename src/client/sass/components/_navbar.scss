@@ -12,4 +12,16 @@
         width: 40px;
         padding: 2px;
     }
+
+    .nav-item .dropdown-menu {
+        left: auto;
+        right: 0;
+        border-radius: 0;
+        border-color: #ccc;
+
+        .dropdown-item {
+            font-size: 15px;
+            font-weight: bold;
+        }
+    }
 }

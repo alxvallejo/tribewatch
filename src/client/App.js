@@ -76,6 +76,9 @@ const App = props => {
 			checkUser();
 		}
 		const checkAdmin = async u => {
+			if (!u) {
+				return;
+			}
 			// Check admins
 			const resp = await firebaseDb
 				.ref(`admins`)

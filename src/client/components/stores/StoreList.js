@@ -108,7 +108,13 @@ export const StoreList = () => {
 	}
 
 	const search = e => {
+		e.preventDefault();
+		if (e.keyCode === 13) {
+			return;
+		}
+
 		const term = e.target.value;
+
 		setSearchFilter(term);
 	};
 
@@ -171,7 +177,7 @@ export const StoreList = () => {
 	return (
 		<div>
 			<div>
-				<Form>
+				<Form onSubmit={e => e.preventDefault()}>
 					<Form.Group controlId="searchFilter" className="has-icon">
 						<Form.Control placeholder="Search Stores" type="text" onChange={e => search(e)} />
 						<i className="fas fa-search"></i>

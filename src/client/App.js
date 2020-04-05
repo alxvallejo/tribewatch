@@ -104,7 +104,7 @@ const App = props => {
 		return (
 			<Container>
 				<div className="text-center mb-4">
-					Tribewatch is designed to help communities address needs in an efficient, trustworthy manner.
+					<b>Real-time reporting of essential items.</b>
 				</div>
 				<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
 			</Container>

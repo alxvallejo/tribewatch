@@ -5,10 +5,11 @@ import { sortBy, reverse } from 'lodash';
 const moment = require('moment');
 import { UserContext } from '../context/UserContext';
 import { Route, Switch } from 'react-router-dom';
-import { Container, Row, Col, Badge, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Card, Modal } from 'react-bootstrap';
 import { Preferences } from './Preferences';
 import { Profile } from './Profile';
 import { LocationSelection } from './LocationSelection';
+import { SuggestCity } from './SuggestCity';
 
 import { Stores } from './stores';
 
@@ -17,6 +18,7 @@ import { Stores } from './stores';
 export const Dashboard = props => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
 	const [showLocationModal, setLocationModal] = useState();
+	const [selectedState, setSelectedState] = useState();
 
 	if (!user) {
 		return;
@@ -30,7 +32,23 @@ export const Dashboard = props => {
 		return (
 			<Container>
 				<Row className="justify-content-md-center">
-					<LocationSelection handleClose={handleClose} />
+					<Col>
+						<h3>To get started, select your city.</h3>
+						<ul>
+							<li>We'll show stores in your area.</li>
+							<li>Report how busy stores are.</li>
+							<li>Report whether stores carry essential items.</li>
+							<li>Help others and profit!</li>
+						</ul>
+						<div>
+							<LocationSelection handleClose={handleClose} setSelectedState={setSelectedState} />
+						</div>
+						{selectedState && (
+							<div>
+								<SuggestCity state={selectedState} />
+							</div>
+						)}
+					</Col>
 				</Row>
 			</Container>
 		);

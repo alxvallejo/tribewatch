@@ -8,16 +8,21 @@
 
 /* Smoother fonts */
 body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 300;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-weight: 300;
+	min-height: 100vh;
+}
+
+#root > .container {
+	min-height: 83vh;
 }
 
 /* Responsive images */
 img {
-    max-width: 100%;
-    height: auto;
-    width: auto;
+	max-width: 100%;
+	height: auto;
+	width: auto;
 }
 
 /* Headings */
@@ -27,13 +32,13 @@ h3,
 h4,
 h5,
 h6 {
-    &:first-child {
-        margin-top: 0;
-    }
+	&:first-child {
+		margin-top: 0;
+	}
 }
 
 /* Links */
 a {
-    cursor: pointer;
-    font-weight: 400;
+	cursor: pointer;
+	font-weight: 400;
 }

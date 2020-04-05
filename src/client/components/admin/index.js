@@ -14,13 +14,13 @@ export const AdminDash = props => {
 	return (
 		<Container>
 			<h2 className="mb-3">Admin Dashboard</h2>
-			<Card>
+			<div>
 				<LocationSelect />
-			</Card>
+			</div>
 
-			<Row className="justify-content-md-center">
+			<div>
 				<Stores />
-			</Row>
+			</div>
 		</Container>
 	);
 };

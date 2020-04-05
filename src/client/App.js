@@ -93,7 +93,11 @@ const App = props => {
 	};
 
 	if (loading) {
-		return 'Loading...';
+		return (
+			<div className="loading">
+				<div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+			</div>
+		);
 	}
 
 	const LoginForm = () => {

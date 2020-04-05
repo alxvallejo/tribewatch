@@ -27,3 +27,12 @@ textarea,
         transform: translateY(-50%);
     }
 }
+
+label {
+    display: block;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 12px;
+    color: #222;
+}

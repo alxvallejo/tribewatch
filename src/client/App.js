@@ -67,8 +67,9 @@ const App = props => {
 							});
 						}
 					}
+					await checkAdmin(u);
 				}
-				await checkAdmin(u);
+
 				setLoading(false);
 			});
 		};

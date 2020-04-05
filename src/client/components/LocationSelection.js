@@ -90,41 +90,47 @@ export const LocationSelection = ({ handleClose, setSelectedState }) => {
 					<Form.Row className="align-items-center">
 						<Form.Group as={Col}>
 							<Form.Label>Select State</Form.Label>
-							<Form.Control
-								as="select"
-								onChange={(e, val) => {
-									selectState(e, setFieldValue);
-								}}
-								name="state"
-							>
-								<option key="selectState" value="">
-									Select State
-								</option>
-								{stateOptions.map(s => {
-									return (
-										<option key={s.abr} value={s.abr}>
-											{s.state}
-										</option>
-									);
-								})}
-							</Form.Control>
+							<div className="has-icon">
+								<Form.Control
+									as="select"
+									onChange={(e, val) => {
+										selectState(e, setFieldValue);
+									}}
+									name="state"
+								>
+									<option key="selectState" value="">
+										Select State
+									</option>
+									{stateOptions.map(s => {
+										return (
+											<option key={s.abr} value={s.abr}>
+												{s.state}
+											</option>
+										);
+									})}
+								</Form.Control>
+								<i className="fas fa-caret-down"></i>
+							</div>
 							{errors.state && touched.state && errors.state}
 						</Form.Group>
 						{values.state && (
 							<Form.Group as={Col}>
 								<Form.Label>Select City</Form.Label>
-								<Form.Control as="select" onChange={handleChange} name="city">
-									<option key="selectCity" value="">
-										Select City
-									</option>
-									{cityOptions.map(c => {
-										return (
-											<option key={c.name} value={c.name}>
-												{c.name}
-											</option>
-										);
-									})}
-								</Form.Control>
+								<div className="has-icon">
+									<Form.Control as="select" onChange={handleChange} name="city">
+										<option key="selectCity" value="">
+											Select City
+										</option>
+										{cityOptions.map(c => {
+											return (
+												<option key={c.name} value={c.name}>
+													{c.name}
+												</option>
+											);
+										})}
+									</Form.Control>
+									<i className="fas fa-caret-down"></i>
+								</div>
 								{errors.city && touched.city && errors.city}
 							</Form.Group>
 						)}

@@ -77,8 +77,8 @@ export const StoreItems = [
 		icon: 'fa-thermometer-half'
 	},
 	{
-		id: 'diaper',
-		name: 'Diaper',
+		id: 'diapers',
+		name: 'Diapers',
 		img: diaperIcon
 	}
 ];

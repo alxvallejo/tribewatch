@@ -41,7 +41,10 @@ export const Dashboard = props => {
 							<li>Help others and profit!</li>
 						</ul>
 						<div>
-							<LocationSelection handleClose={handleClose} setSelectedState={setSelectedState} />
+							<LocationSelection
+								handleClose={handleClose}
+								onSelectState={state => setSelectedState(state)}
+							/>
 						</div>
 						{selectedState && (
 							<div>
@@ -110,7 +113,7 @@ export const Dashboard = props => {
 						<Modal.Title>Change Location</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<LocationSelection handleClose={handleClose} />
+						<LocationSelection handleClose={handleClose} onSelectState={state => setSelectedState(state)} />
 					</Modal.Body>
 				</Modal>
 			)}

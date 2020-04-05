@@ -8,7 +8,7 @@ import { UserContext } from '../context/UserContext';
 
 import { map } from 'lodash';
 
-export const LocationSelection = ({ handleClose, setSelectedState }) => {
+export const LocationSelection = ({ handleClose, onSelectState }) => {
 	const [{ user, location }, userDispatch] = useContext(UserContext);
 	const [locations, setLocations] = useState();
 	const [cityOptions, setCityOptions] = useState();
@@ -36,7 +36,7 @@ export const LocationSelection = ({ handleClose, setSelectedState }) => {
 		setFieldValue('state', abr);
 		let stateCities = map(locations[abr]);
 		setCityOptions(stateCities);
-		setSelectedState(abr);
+		onSelectState(abr);
 	};
 	const stateAbrs = Object.entries(locations).map(([abr, city]) => abr);
 	const stateOptions = stateAbrs.map(abr => {

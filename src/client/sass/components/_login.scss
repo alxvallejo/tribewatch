@@ -1,0 +1,27 @@
+#root > .container.login {
+	min-height: calc(100vh - 257px);
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include media-breakpoint-up(md) {
+        min-height: calc(100vh - 223px);
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 23px;
+        line-height: 1.5;
+
+        em {
+            font-weight: normal;
+        }
+    }
+
+    .icons {
+        i:nth-child(2n) {
+            position: relative;
+            top: -5px;
+        }
+    }
+}

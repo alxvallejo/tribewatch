@@ -102,9 +102,17 @@ const App = props => {
 
 	const LoginForm = () => {
 		return (
-			<Container>
+			<Container className="login">
 				<div className="text-center mb-4">
-					<b>Real-time reporting of essential items.</b>
+					<div className="icons h2 mb-4">
+						<i className="fas fa-pump-soap mr-4 pr-2"></i>
+						<i className="fas fa-toilet-paper"></i>
+						<i className="fas fa-thermometer-half ml-4 pl-2"></i>
+					</div>
+					<h2>Real-time reporting<br />of <em>essential items</em><br />in your community.</h2>
+					<div>
+
+					</div>
 				</div>
 				<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
 			</Container>

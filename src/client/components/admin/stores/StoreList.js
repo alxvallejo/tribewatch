@@ -52,9 +52,6 @@ export const StoreList = () => {
 				/>
 				<Card.Body>
 					<Card.Title>{store.name}</Card.Title>
-					<Card.Text>
-						<i className="fas fa-toilet-paper" />
-					</Card.Text>
 				</Card.Body>
 			</Card>
 		);
@@ -67,11 +64,11 @@ export const StoreList = () => {
 	return (
 		<Container>
 			<Button onClick={() => addStores()}>Add New Stores</Button>
-			<CardDeck>
+			<ul>
 				{storeList.map((store, i) => {
-					return storeListItem(store, i);
+					return <li>{store.name}</li>;
 				})}
-			</CardDeck>
+			</ul>
 		</Container>
 	);
 };

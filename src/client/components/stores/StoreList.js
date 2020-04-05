@@ -14,13 +14,8 @@ export const StoreList = () => {
 	const [itemFilters, setItemFilters] = useState();
 	const [selectedStore, setSelectedStore] = useState();
 
-	// const selectedStore = selectedStoreIndex || selectedStoreIndex === 0 ? storeList[selectedStoreIndex] : null;
-
 	const storeCard = (store, i) => {
 		const items = store.items ? map(store.items) : null;
-		if (items) {
-			console.log('items: ', items);
-		}
 		const isStarred = favorites && favorites.includes(store.id);
 
 		const star = () => {
@@ -113,7 +108,13 @@ export const StoreList = () => {
 	}
 
 	const search = e => {
+		e.preventDefault();
+		if (e.keyCode === 13) {
+			return;
+		}
+
 		const term = e.target.value;
+
 		setSearchFilter(term);
 	};
 
@@ -176,7 +177,7 @@ export const StoreList = () => {
 	return (
 		<div>
 			<div>
-				<Form>
+				<Form onSubmit={e => e.preventDefault()}>
 					<Form.Group controlId="searchFilter" className="has-icon">
 						<Form.Control placeholder="Search Stores" type="text" onChange={e => search(e)} />
 						<i className="fas fa-search"></i>

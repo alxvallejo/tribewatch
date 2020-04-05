@@ -11,11 +11,14 @@ export const Stores = () => {
 	useEffect(() => {
 		const cityStores = async () => {
 			firebaseDb.ref(`stores/${state}/${city}`).on('value', snapshot => {
-				const assignedStores = Object.values(snapshot.val());
-				userDispatch({
-					type: 'SET_STORE_LIST',
-					storeList: assignedStores
-				});
+				const values = snapshot.val();
+				if (values) {
+					const assignedStores = Object.values(snapshot.val());
+					userDispatch({
+						type: 'SET_STORE_LIST',
+						storeList: assignedStores
+					});
+				}
 			});
 		};
 		cityStores();

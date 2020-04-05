@@ -13,6 +13,10 @@
         padding: 2px;
     }
 
+    .dropdown-toggle.nav-link {
+        padding-right: 0;
+    }
+
     .nav-item .dropdown-menu {
         left: auto;
         right: 0;

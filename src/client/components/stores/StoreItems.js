@@ -4,6 +4,7 @@ import { UserContext } from '../../context/UserContext';
 import { Container, Row, Col, Button, Badge, ButtonGroup, Form, Modal } from 'react-bootstrap';
 import Card, { CardBody } from 'react-bootstrap/Card';
 const sheetsIcon = require('./sheets.png');
+const diaperIcon = require('./diaper.png');
 
 export const TrafficStatuses = [
 	{
@@ -74,6 +75,11 @@ export const StoreItems = [
 		id: 'thermometer',
 		name: 'Thermometer',
 		icon: 'fa-thermometer-half'
+	},
+	{
+		id: 'diaper',
+		name: 'Diaper',
+		img: diaperIcon
 	}
 ];
 
@@ -81,7 +87,8 @@ export const StoreItemsFilter = ({ itemFilters, setItemFilter }) => {
 	return (
 		<div className="filters">
 			{StoreItems.map((item, i) => {
-				const variant = itemFilters && itemFilters.includes(item.id) ? 'primary badge-pill' : 'outline-primary badge-pill';
+				const variant =
+					itemFilters && itemFilters.includes(item.id) ? 'primary badge-pill' : 'outline-primary badge-pill';
 				return (
 					<Badge key={i} onClick={e => setItemFilter(item)} variant={variant}>
 						{item.name}

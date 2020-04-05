@@ -8,7 +8,8 @@ const initialUser = {
 	preferences: null,
 	profile: null,
 	storeList: null,
-	favorites: []
+	favorites: [],
+	tutorial: null
 };
 
 const UserReducer = (state, action) => {
@@ -47,6 +48,12 @@ const UserReducer = (state, action) => {
 			return {
 				...state,
 				favorites: action.favorites
+			};
+
+		case 'SET_TUTORIAL':
+			return {
+				...state,
+				tutorial: action.tutorial
 			};
 
 		default:

@@ -14,13 +14,8 @@ export const StoreList = () => {
 	const [itemFilters, setItemFilters] = useState();
 	const [selectedStore, setSelectedStore] = useState();
 
-	// const selectedStore = selectedStoreIndex || selectedStoreIndex === 0 ? storeList[selectedStoreIndex] : null;
-
 	const storeCard = (store, i) => {
 		const items = store.items ? map(store.items) : null;
-		if (items) {
-			console.log('items: ', items);
-		}
 		const isStarred = favorites && favorites.includes(store.id);
 
 		const star = () => {

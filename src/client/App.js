@@ -59,6 +59,12 @@ const App = props => {
 								favorites: userInfo.favorites
 							});
 						}
+						if (userInfo.seenTutorial) {
+							userDispatch({
+								type: 'SET_SEEN_TUTORIAL',
+								seenTutorial: userInfo.seenTutorial
+							});
+						}
 					}
 				}
 				setLoading(false);
@@ -95,7 +101,12 @@ const App = props => {
 	if (loading) {
 		return (
 			<div className="loading">
-				<div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+				<div className="lds-ring">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
 			</div>
 		);
 	}

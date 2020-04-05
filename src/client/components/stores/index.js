@@ -6,16 +6,20 @@ import { StoreList } from './StoreList';
 
 export const Stores = () => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
+	console.log('location: ', location);
 	const { city, state } = location;
 
 	useEffect(() => {
 		const cityStores = async () => {
 			firebaseDb.ref(`stores/${state}/${city}`).on('value', snapshot => {
-				const assignedStores = Object.values(snapshot.val());
-				userDispatch({
-					type: 'SET_STORE_LIST',
-					storeList: assignedStores
-				});
+				const values = snapshot.val();
+				if (values) {
+					const assignedStores = Object.values(snapshot.val());
+					userDispatch({
+						type: 'SET_STORE_LIST',
+						storeList: assignedStores
+					});
+				}
 			});
 		};
 		cityStores();

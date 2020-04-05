@@ -1,19 +1,7 @@
 import React from 'react';
-import {
-	Container,
-	Row,
-	Col,
-	Button,
-	Form,
-	Card,
-	CardDeck,
-	Modal,
-	Badge,
-	OverlayTrigger,
-	Tooltip
-} from 'react-bootstrap';
+import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { ItemStatuses, StoreItems, StoreItemsModal, TrafficStatuses } from '../StoreItems';
+import { ItemStatuses, StoreItems, TrafficStatuses } from '../StoreItems';
 
 const moment = require('moment');
 
@@ -51,7 +39,7 @@ export const TrafficStatusBadge = ({ store }) => {
 	}
 	const storeTrafficHoursAgo = traffic && moment.unix(traffic.time).diff(Date.now(), 'hours');
 
-	if (storeTrafficHoursAgo > 2) {
+	if (storeTrafficHoursAgo > 0) {
 		// Stale traffic report
 		return null;
 	}

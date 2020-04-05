@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { firebaseDb } from '../../services/firebase';
 import { UserContext } from '../../context/UserContext';
-import { Container, Row, Col, Button, ButtonGroup, Form, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Button, Badge, ButtonGroup, Form, Modal } from 'react-bootstrap';
 import Card, { CardBody } from 'react-bootstrap/Card';
 const sheetsIcon = require('./sheets.png');
 
@@ -81,11 +81,11 @@ export const StoreItemsFilter = ({ itemFilters, setItemFilter }) => {
 	return (
 		<div>
 			{StoreItems.map((item, i) => {
-				const variant = itemFilters && itemFilters.includes(item.id) ? 'primary' : 'outline-primary';
+				const variant = itemFilters && itemFilters.includes(item.id) ? 'primary badge-pill' : 'outline-primary badge-pill';
 				return (
-					<Button key={i} onClick={e => setItemFilter(item)} variant={variant}>
+					<Badge key={i} onClick={e => setItemFilter(item)} variant={variant}>
 						{item.name}
-					</Button>
+					</Badge>
 				);
 			})}
 		</div>

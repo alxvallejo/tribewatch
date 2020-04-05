@@ -14,13 +14,6 @@ export const AdminDash = props => {
 	const [{ cities, selectedState, city }, adminDispatch] = useContext(AdminContext);
 	console.log('city at admin index: ', city);
 
-	const setAdmin = () => {
-		firebaseDb.ref(`admins`).push({
-			uid: user.uid,
-			name: user.displayName
-		});
-	};
-
 	return (
 		<Tab.Container id="left-tabs-example" defaultActiveKey="first">
 			<h3 className="mb-3">Admin Dashboard</h3>

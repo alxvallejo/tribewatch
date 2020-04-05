@@ -20,6 +20,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 const App = props => {
 	const [{ user }, userDispatch] = useContext(UserContext);
 	const [loading, setLoading] = useState(true);
+	const [isAdmin, setIsAdmin] = useState();
 
 	useEffect(() => {
 		const checkUser = async () => {
@@ -67,12 +68,26 @@ const App = props => {
 						}
 					}
 				}
+				await checkAdmin(u);
 				setLoading(false);
 			});
 		};
 		if (!user) {
 			checkUser();
 		}
+		const checkAdmin = async u => {
+			// Check admins
+			const resp = await firebaseDb
+				.ref(`admins`)
+				.orderByChild('uid')
+				.equalTo(u.uid)
+				.once('value');
+			const adminObj = resp.val();
+			console.log('adminObj: ', adminObj);
+			if (adminObj) {
+				setIsAdmin(true);
+			}
+		};
 	}, []);
 
 	// Configure FirebaseUI.
@@ -120,10 +135,14 @@ const App = props => {
 						<i className="fas fa-toilet-paper"></i>
 						<i className="fas fa-thermometer-half ml-4 pl-2"></i>
 					</div>
-					<h2>Real-time reporting<br />of <em>essential items</em><br />in your community.</h2>
-					<div>
-
-					</div>
+					<h2>
+						Real-time reporting
+						<br />
+						of <em>essential items</em>
+						<br />
+						in your community.
+					</h2>
+					<div></div>
 				</div>
 				<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
 			</Container>
@@ -150,7 +169,8 @@ const App = props => {
 			<TopNav />
 			<Switch>
 				<Route path="/privacy" component={PrivacyPolicy} />
-				<Route path="/admin" component={AdminDash} />
+				{isAdmin && <Route path="/admin" component={AdminDash} />}
+
 				<Route path="/" component={Dashboard} />
 			</Switch>
 			<Footer />

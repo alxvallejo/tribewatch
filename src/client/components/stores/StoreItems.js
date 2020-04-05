@@ -3,6 +3,7 @@ import { firebaseDb } from '../../services/firebase';
 import { UserContext } from '../../context/UserContext';
 import { Container, Row, Col, Button, ButtonGroup, Form, Modal } from 'react-bootstrap';
 import Card, { CardBody } from 'react-bootstrap/Card';
+const sheetsIcon = require('./sheets.png');
 
 export const TrafficStatuses = [
 	{
@@ -55,6 +56,11 @@ export const StoreItems = [
 		icon: 'fa-scroll'
 	},
 	{
+		id: 'disinfectant-wipes',
+		name: 'Disinfectant Wipes',
+		img: sheetsIcon
+	},
+	{
 		id: 'hand-sanitizer',
 		name: 'Hand Sanitizer',
 		icon: 'fa-pump-soap'
@@ -70,6 +76,21 @@ export const StoreItems = [
 		icon: 'fa-thermometer-half'
 	}
 ];
+
+export const StoreItemsFilter = ({ itemFilters, setItemFilter }) => {
+	return (
+		<div>
+			{StoreItems.map((item, i) => {
+				const variant = itemFilters && itemFilters.includes(item.id) ? 'primary' : 'outline-primary';
+				return (
+					<Button key={i} onClick={e => setItemFilter(item)} variant={variant}>
+						{item.name}
+					</Button>
+				);
+			})}
+		</div>
+	);
+};
 
 export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
@@ -88,7 +109,8 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 			<Card key={i} className="modal-card">
 				<Card.Header>
 					<h3>
-						<i className={`mr-3 fas ${item.icon}`} />
+						{item.icon && <i className={`mr-3 fas ${item.icon}`} />}
+						{item.img && <img src={item.img} style={{ width: 17 }} className="mr-3" />}
 						{item.name}
 					</h3>
 				</Card.Header>

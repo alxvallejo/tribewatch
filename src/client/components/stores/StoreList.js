@@ -2,21 +2,25 @@ import React, { useEffect, useContext, useState } from 'react';
 import { firebaseDb } from '../../services/firebase';
 import { UserContext } from '../../context/UserContext';
 import { Button, Form, Card, Modal } from 'react-bootstrap';
-import { ItemStatuses, StoreItems, StoreItemsModal, TrafficStatuses } from './StoreItems';
+import { ItemStatuses, StoreItems, StoreItemsModal, TrafficStatuses, StoreItemsFilter } from './StoreItems';
 import { ItemStatusBadge, TrafficStatusBadge } from './badges';
-import { map, concat, reverse, words, intersectionBy } from 'lodash';
+import { map, keys, concat, reverse, words, intersectionBy } from 'lodash';
 const moment = require('moment');
 
 export const StoreList = () => {
 	const [{ user, location, preferences, profile, favorites, storeList }, userDispatch] = useContext(UserContext);
 	const { city, state } = location;
 	const [searchFilter, setSearchFilter] = useState();
+	const [itemFilters, setItemFilters] = useState();
 	const [selectedStore, setSelectedStore] = useState();
 
 	// const selectedStore = selectedStoreIndex || selectedStoreIndex === 0 ? storeList[selectedStoreIndex] : null;
 
 	const storeCard = (store, i) => {
 		const items = store.items ? map(store.items) : null;
+		if (items) {
+			console.log('items: ', items);
+		}
 		const isStarred = favorites && favorites.includes(store.id);
 
 		const star = () => {
@@ -75,7 +79,26 @@ export const StoreList = () => {
 	if (searchFilter) {
 		filteredStores = storeList.filter(store => store.name.toLowerCase().search(searchFilter.toLowerCase()) != -1);
 	}
-	// Priotitize favorites
+	if (itemFilters && itemFilters.length > 0) {
+		filteredStores = filteredStores.filter(store => {
+			if (!store.items) {
+				return false;
+			}
+			const storeItemKeys = keys(store.items);
+
+			let hasItem = false;
+			itemFilters.map(id => {
+				if (storeItemKeys.includes(id)) {
+					const itemStatus = store.items[id].status;
+					if (itemStatus != 'Empty') {
+						hasItem = true;
+					}
+				}
+			});
+			return hasItem;
+		});
+	}
+	// Prioritize favorites
 	if (favorites && favorites.length > 0) {
 		let favoriteStores = [];
 		filteredStores = filteredStores.filter(s => {
@@ -122,11 +145,8 @@ export const StoreList = () => {
 	};
 
 	const addFavorite = async store => {
-		console.log('store: ', store);
-		console.log('favorites: ', favorites);
 		let newFavorites = favorites;
 		newFavorites.push(store.id);
-
 		userDispatch({
 			type: 'SET_FAVORITES',
 			favorites: newFavorites
@@ -143,6 +163,16 @@ export const StoreList = () => {
 		await firebaseDb.ref(`users/${user.uid}/favorites`).set(newFavorites);
 	};
 
+	const setItemFilter = item => {
+		let newItemFilters;
+		if (itemFilters && itemFilters.includes(item.id)) {
+			newItemFilters = itemFilters.filter(id => id != item.id);
+		} else {
+			newItemFilters = itemFilters ? [...itemFilters, item.id] : [item.id];
+		}
+		setItemFilters(newItemFilters);
+	};
+
 	return (
 		<div>
 			<div>
@@ -151,6 +181,7 @@ export const StoreList = () => {
 						<Form.Control placeholder="Search Stores" type="text" onChange={e => search(e)} />
 						<i className="fas fa-search"></i>
 					</Form.Group>
+					<StoreItemsFilter itemFilters={itemFilters} setItemFilter={setItemFilter} />
 				</Form>
 			</div>
 			<div className="row mt-5">

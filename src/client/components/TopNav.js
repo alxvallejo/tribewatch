@@ -37,9 +37,6 @@ export const TopNav = () => {
 		);
 	} else {
 		const { displayName, photoURL } = user;
-		console.log('displayName: ', displayName);
-		console.log('photoURL: ', photoURL);
-		console.log('user: ', user);
 
 		return (
 			<Navbar expand="lg">
@@ -48,8 +45,7 @@ export const TopNav = () => {
 						<i className="fas fa-campground mr-2"></i>
 						Tribewatch
 					</a>
-					<Navbar.Collapse id="basic-navbar-nav">
-					</Navbar.Collapse>
+					<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
 					<Nav className="mr-auto">{/* <Nav.Link href="#home">Home</Nav.Link> */}</Nav>
 					<NavDropdown title={<Image src={photoURL} className="img-thumbnail" />} id="basic-nav-dropdown">
 						<NavDropdown.Item href="/admin">Admin</NavDropdown.Item>

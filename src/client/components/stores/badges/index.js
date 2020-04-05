@@ -36,7 +36,8 @@ export const ItemStatusBadge = ({ item }) => {
 			}
 		>
 			<Badge variant={status.variant}>
-				<i className={`mr-1 fas ${storeItem.icon}`} />
+				{storeItem.icon && <i className={`mr-1 fas ${storeItem.icon}`} />}
+				{storeItem.img && <img src={storeItem.img} style={{ width: 17 }} className="mr-1" />}
 				{item.status}
 			</Badge>
 		</OverlayTrigger>

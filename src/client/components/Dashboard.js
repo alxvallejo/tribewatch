@@ -36,18 +36,18 @@ export const Dashboard = props => {
 		);
 	}
 
-	if (!preferences) {
-		return (
-			<Container>
-				<Row className="align-items-center">
-					<h2>{`${location.city}, ${location.state}`}</h2>
-				</Row>
-				<Row className="justify-content-md-center">
-					<Preferences />
-				</Row>
-			</Container>
-		);
-	}
+	// if (!preferences) {
+	// 	return (
+	// 		<Container>
+	// 			<Row className="align-items-center">
+	// 				<h2>{`${location.city}, ${location.state}`}</h2>
+	// 			</Row>
+	// 			<Row className="justify-content-md-center">
+	// 				<Preferences />
+	// 			</Row>
+	// 		</Container>
+	// 	);
+	// }
 
 	// if (!profile) {
 	// 	return (
@@ -74,11 +74,11 @@ export const Dashboard = props => {
 					<span>Stores in </span>
 					{`${location.city}, ${location.state}`}
 				</h2>
-				{preferences.canDrive && (
+				{/* {preferences.canDrive && (
 					<Badge variant="light" className="ml-3">
 						<i className="fas fa-car" /> Driver
 					</Badge>
-				)}
+				)} */}
 				<a role="button" onClick={() => setLocationModal(true)}>
 					<i className="mr-2 fas fa-map-marker-alt"></i>Change Location
 				</a>

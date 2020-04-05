@@ -22,7 +22,7 @@
 $white: #fff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
-$gray-300: #E3E3E3;
+$gray-300: #e3e3e3;
 $gray-400: #ccc;
 $gray-500: #c3c2c2;
 $gray-600: #6c757d !default;
@@ -32,15 +32,15 @@ $gray-900: #222;
 $black: #000 !default;
 
 // // Brand Color Overrides
-$navy: #0E1241;
-$blue: #292F7C;
-$orange: #FF5C35;
-$orangeLight: #FF783D;
-$orangeDark: #BB2906;
-$green: #86C992;
-$cyan: #79A3DC;
-$lightBlue: #C0DBFF;
-$red: #BB2906;
+$navy: #0e1241;
+$blue: #292f7c;
+$orange: #ff5c35;
+$orangeLight: #ff783d;
+$orangeDark: #bb2906;
+$green: #86c992;
+$cyan: #79a3dc;
+$lightBlue: #c0dbff;
+$red: #bb2906;
 $pink: #e98;
 
 $indigo: #6610f2 !default;
@@ -50,7 +50,6 @@ $yellow: #fdd55f;
 $yellowBold: #ffc314;
 $teal: #88bdbc;
 $darkTeal: #1c8aa5;
-
 
 // // Brand Colors
 $primary: $blue;
@@ -139,11 +138,11 @@ $line-height-sm: 1; // 20
 // adapting to different screen sizes, for use in media queries.
 
 $grid-breakpoints: (
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1200px
 ) !default;
 
 // Grid containers
@@ -151,10 +150,10 @@ $grid-breakpoints: (
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: (
-    sm: 540px,
-    md: 720px,
-    lg: 960px,
-    xl: 1170px,
+	sm: 540px,
+	md: 720px,
+	lg: 960px,
+	xl: 1170px
 );
 
 // Grid columns

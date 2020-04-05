@@ -79,7 +79,7 @@ export const StoreItems = [
 
 export const StoreItemsFilter = ({ itemFilters, setItemFilter }) => {
 	return (
-		<div>
+		<div className="filters">
 			{StoreItems.map((item, i) => {
 				const variant = itemFilters && itemFilters.includes(item.id) ? 'primary badge-pill' : 'outline-primary badge-pill';
 				return (

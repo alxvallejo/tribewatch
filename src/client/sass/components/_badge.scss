@@ -22,3 +22,13 @@
         margin-bottom: 3px;
     }
 }
+
+.filters {
+    .badge {
+        cursor: pointer;
+        &:hover {
+            background: $dark;
+            color: $white;
+        }
+    }
+}

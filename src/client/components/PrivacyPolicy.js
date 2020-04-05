@@ -5,8 +5,8 @@ import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
 export const PrivacyPolicy = () => {
 	return (
 		<Container>
-			<h1>Welcome to our Privacy Policy</h1>
-			<h3>Your privacy is critically important to us.</h3>
+			<h1 className="mb-4">Welcome to our Privacy Policy</h1>
+			<h3 className="mb-3 mt-4">Your privacy is critically important to us.</h3>
 			Tribewatch is located at:
 			<br />
 			<address>
@@ -33,7 +33,7 @@ export const PrivacyPolicy = () => {
 				rules and policies governing your use of our Website. Depending on your activities when visiting our
 				Website, you may be required to agree to additional terms of service.
 			</p>
-			<h2>Website Visitors</h2>
+			<h2 className="mb-3 mt-4">Website Visitors</h2>
 			<p>
 				Like most website operators, Tribewatch collects non-personally-identifying information of the sort that
 				web browsers and servers typically make available, such as the browser type, language preference,
@@ -48,21 +48,21 @@ export const PrivacyPolicy = () => {
 				Tribewatch only discloses logged in user and commenter IP addresses under the same circumstances that it
 				uses and discloses personally-identifying information as described below.
 			</p>
-			<h2>Gathering of Personally-Identifying Information</h2>
+			<h2 className="mb-3 mt-4">Gathering of Personally-Identifying Information</h2>
 			<p>
 				Certain visitors to Tribewatch's websites choose to interact with Tribewatch in ways that require
 				Tribewatch to gather personally-identifying information. The amount and type of information that
 				Tribewatch gathers depends on the nature of the interaction. For example, we ask visitors who sign up
 				for a blog at https://tribewatch.us to provide a username and email address.
 			</p>
-			<h2>Security</h2>
+			<h2 className="mb-3 mt-4">Security</h2>
 			<p>
 				The security of your Personal Information is important to us, but remember that no method of
 				transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use
 				commercially acceptable means to protect your Personal Information, we cannot guarantee its absolute
 				security.
 			</p>
-			<h2>Advertisements</h2>
+			<h2 className="mb-3 mt-4">Advertisements</h2>
 			<p>
 				Ads appearing on our website may be delivered to users by advertising partners, who may set cookies.
 				These cookies allow the ad server to recognize your computer each time they send you an online
@@ -71,7 +71,7 @@ export const PrivacyPolicy = () => {
 				interest to you. This Privacy Policy covers the use of cookies by Tribewatch and does not cover the use
 				of cookies by any advertisers.
 			</p>
-			<h2>Links To External Sites</h2>
+			<h2 className="mb-3 mt-4">Links To External Sites</h2>
 			<p>
 				Our Service may contain links to external sites that are not operated by us. If you click on a third
 				party link, you will be directed to that third party's site. We strongly advise you to review the
@@ -81,13 +81,13 @@ export const PrivacyPolicy = () => {
 				We have no control over, and assume no responsibility for the content, privacy policies or practices of
 				any third party sites, products or services.
 			</p>
-			<h2>Aggregated Statistics</h2>
+			<h2 className="mb-3 mt-4">Aggregated Statistics</h2>
 			<p>
 				Tribewatch may collect statistics about the behavior of visitors to its website. Tribewatch may display
 				this information publicly or provide it to others. However, Tribewatch does not disclose your
 				personally-identifying information.
 			</p>
-			<h2>Cookies</h2>
+			<h2 className="mb-3 mt-4">Cookies</h2>
 			<p>
 				To enrich and perfect your online experience, Tribewatch uses "Cookies", similar technologies and
 				services provided by others to display personalized content, appropriate advertising and store your
@@ -105,14 +105,14 @@ export const PrivacyPolicy = () => {
 				By continuing to navigate our website without changing your cookie settings, you hereby acknowledge and
 				agree to Tribewatch's use of cookies.
 			</p>
-			<h2>Privacy Policy Changes</h2>
+			<h2 className="mb-3 mt-4">Privacy Policy Changes</h2>
 			<p>
 				Although most changes are likely to be minor, Tribewatch may change its Privacy Policy from time to
 				time, and in Tribewatch's sole discretion. Tribewatch encourages visitors to frequently check this page
 				for any changes to its Privacy Policy. Your continued use of this site after any change in this Privacy
 				Policy will constitute your acceptance of such change.
 			</p>
-			<h2>Credit & Contact Information</h2>
+			<h2 className="mb-3 mt-4">Credit &amp; Contact Information</h2>
 			<p>
 				This privacy policy was created at{' '}
 				<a

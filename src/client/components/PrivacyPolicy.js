@@ -12,10 +12,10 @@ export const PrivacyPolicy = () => {
 			<address>
 				Tribewatch
 				<br />
-				133 State Road #3 Kittery <br />
+				Kittery <br />
 				03904 - Maine , United States
 				<br />
-				9782704786
+				alxvallejo@gmail.com
 			</address>
 			<p>
 				It is Tribewatch's policy to respect your privacy regarding any information we may collect while

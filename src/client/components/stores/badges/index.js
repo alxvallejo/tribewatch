@@ -12,21 +12,21 @@ export const ItemStatusBadge = ({ item }) => {
 	if (!status) {
 		return null;
 	}
-	const dateChecked = moment.unix(item.time).format('M/D h:m a');
+	const dateChecked = moment.unix(item.time).fromNow();
 	const userName = words(item.user)[0];
 	return (
 		<OverlayTrigger
 			placement="top"
 			overlay={
-				<Tooltip id={`${item.name}_${item.time}`}>
+				<Tooltip id={`${storeItem.id}_${item.time}`}>
 					{item.status}
 					<br />
-					{dateChecked} - {userName}
+					{userName} - {dateChecked}
 				</Tooltip>
 			}
 		>
 			<Badge variant={status.variant}>
-				{storeItem.icon && <i className={`mr-1 fas ${storeItem.icon}`} />}
+				{storeItem.icon && <i className={`mr-1 fas ${storeItem.icon} ${storeItem.id}`} />}
 				{storeItem.img && <img src={storeItem.img} style={{ width: 12 }} className="mr-1" />}
 				{item.item}
 			</Badge>
@@ -47,14 +47,14 @@ export const TrafficStatusBadge = ({ store }) => {
 	}
 
 	const trafficStatus = TrafficStatuses.find((x) => x.name == traffic.status);
-	const dateChecked = moment.unix(traffic.time).format('M/D h:m a');
+	const dateChecked = moment.unix(traffic.time).fromNow();
 	const userName = words(traffic.user)[0];
 	return (
 		<OverlayTrigger
 			placement="top"
 			overlay={
 				<Tooltip id={`${store.id}_traffic`}>
-					{dateChecked} - {userName}
+					{userName} - {dateChecked}
 				</Tooltip>
 			}
 		>

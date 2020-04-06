@@ -60,7 +60,7 @@ export const StoreItems = [
 	{
 		id: 'paper-towels',
 		name: 'Paper Towels',
-		icon: 'fa-scroll',
+		icon: 'fa-toilet-paper',
 	},
 	{
 		id: 'disinfectant-wipes',
@@ -117,12 +117,13 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 	};
 
 	const showItem = (item, i) => {
+		console.log('item: ', item);
 		const itemStatus = checkStatus(item.id);
 		return (
 			<Card key={i} className="modal-card">
 				<Card.Header>
 					<h3>
-						{item.icon && <i className={`mr-3 fas ${item.icon}`} />}
+						{item.icon && <i className={`mr-3 fas ${item.icon} ${item.id}`} />}
 						{item.img && <img src={item.img} style={{ width: 17 }} className="mr-3" />}
 						{item.name}
 					</h3>

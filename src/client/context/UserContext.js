@@ -9,7 +9,8 @@ const initialUser = {
 	profile: null,
 	storeList: null,
 	favorites: [],
-	tutorial: null
+	tutorial: null,
+	featuredStores: null,
 };
 
 const UserReducer = (state, action) => {
@@ -17,43 +18,49 @@ const UserReducer = (state, action) => {
 		case 'SET_USER':
 			return {
 				...state,
-				user: action.user
+				user: action.user,
 			};
 
 		case 'SET_LOCATION':
 			return {
 				...state,
-				location: action.location
+				location: action.location,
 			};
 
 		case 'SET_PREFERENCES':
 			return {
 				...state,
-				preferences: action.preferences
+				preferences: action.preferences,
 			};
 
 		case 'SET_PROFILE':
 			return {
 				...state,
-				profile: action.profile
+				profile: action.profile,
 			};
 
 		case 'SET_STORE_LIST':
 			return {
 				...state,
-				storeList: action.storeList
+				storeList: action.storeList,
 			};
 
 		case 'SET_FAVORITES':
 			return {
 				...state,
-				favorites: action.favorites
+				favorites: action.favorites,
 			};
 
 		case 'SET_TUTORIAL':
 			return {
 				...state,
-				tutorial: action.tutorial
+				tutorial: action.tutorial,
+			};
+
+		case 'SET_FEATURED_STORES':
+			return {
+				...state,
+				featuredStores: action.featuredStores,
 			};
 
 		default:
@@ -61,7 +68,7 @@ const UserReducer = (state, action) => {
 	}
 };
 
-export const UserContextProvider = props => {
+export const UserContextProvider = (props) => {
 	const [state, dispatch] = useReducer(UserReducer, initialUser);
 
 	return <UserContext.Provider value={[state, dispatch]}>{props.children}</UserContext.Provider>;

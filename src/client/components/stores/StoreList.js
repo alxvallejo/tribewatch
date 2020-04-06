@@ -4,15 +4,19 @@ import { UserContext } from '../../context/UserContext';
 import { Button, Form, Card, Modal } from 'react-bootstrap';
 import { ItemStatuses, StoreItems, StoreItemsModal, TrafficStatuses, StoreItemsFilter } from './StoreItems';
 import { ItemStatusBadge, TrafficStatusBadge } from './badges';
-import { map, keys, concat, reverse, words, intersectionBy } from 'lodash';
+import { map, keys, concat, reverse, words, groupBy } from 'lodash';
+import Ticker from 'react-ticker';
 const moment = require('moment');
 
 export const StoreList = () => {
-	const [{ user, location, preferences, profile, favorites, storeList }, userDispatch] = useContext(UserContext);
+	const [{ user, location, preferences, profile, favorites, storeList, featuredStores }, userDispatch] = useContext(
+		UserContext
+	);
 	const { city, state } = location;
 	const [searchFilter, setSearchFilter] = useState();
 	const [itemFilters, setItemFilters] = useState();
 	const [selectedStore, setSelectedStore] = useState();
+	const [featuredStore, setFeaturedStore] = useState();
 
 	const storeCard = (store, i) => {
 		const items = store.items ? map(store.items) : null;
@@ -72,17 +76,17 @@ export const StoreList = () => {
 
 	let filteredStores = storeList;
 	if (searchFilter) {
-		filteredStores = storeList.filter(store => store.name.toLowerCase().search(searchFilter.toLowerCase()) != -1);
+		filteredStores = storeList.filter((store) => store.name.toLowerCase().search(searchFilter.toLowerCase()) != -1);
 	}
 	if (itemFilters && itemFilters.length > 0) {
-		filteredStores = filteredStores.filter(store => {
+		filteredStores = filteredStores.filter((store) => {
 			if (!store.items) {
 				return false;
 			}
 			const storeItemKeys = keys(store.items);
 
 			let hasItem = false;
-			itemFilters.map(id => {
+			itemFilters.map((id) => {
 				if (storeItemKeys.includes(id)) {
 					const itemStatus = store.items[id].status;
 					if (itemStatus != 'Empty') {
@@ -96,7 +100,7 @@ export const StoreList = () => {
 	// Prioritize favorites
 	if (favorites && favorites.length > 0) {
 		let favoriteStores = [];
-		filteredStores = filteredStores.filter(s => {
+		filteredStores = filteredStores.filter((s) => {
 			if (favorites.includes(s.id)) {
 				favoriteStores.push(s);
 				return false;
@@ -107,7 +111,7 @@ export const StoreList = () => {
 		filteredStores = concat(favoriteStores, filteredStores);
 	}
 
-	const search = e => {
+	const search = (e) => {
 		e.preventDefault();
 		if (e.keyCode === 13) {
 			return;
@@ -128,58 +132,84 @@ export const StoreList = () => {
 			item: item.name,
 			user: user.displayName,
 			time: unix,
-			status: status.name
+			status: status.name,
 		};
 		handleClose();
 		await firebaseDb.ref(`stores/${state}/${city}/${selectedStore.id}/items/${item.id}`).set(newAvailability);
 	};
 
-	const setTrafficStatus = async trafficStatus => {
+	const setTrafficStatus = async (trafficStatus) => {
 		const unix = moment().unix();
 		const newTrafficStatus = {
 			user: user.displayName,
 			time: unix,
-			status: trafficStatus.name
+			status: trafficStatus.name,
 		};
 		handleClose();
 		await firebaseDb.ref(`stores/${state}/${city}/${selectedStore.id}/traffic`).set(newTrafficStatus);
 	};
 
-	const addFavorite = async store => {
+	const addFavorite = async (store) => {
 		let newFavorites = favorites;
 		newFavorites.push(store.id);
 		userDispatch({
 			type: 'SET_FAVORITES',
-			favorites: newFavorites
+			favorites: newFavorites,
 		});
 		await firebaseDb.ref(`users/${user.uid}/favorites`).set(newFavorites);
 	};
 
-	const removeFavorite = async store => {
-		const newFavorites = favorites.filter(f => f !== store.id);
+	const removeFavorite = async (store) => {
+		const newFavorites = favorites.filter((f) => f !== store.id);
 		userDispatch({
 			type: 'SET_FAVORITES',
-			favorites: newFavorites
+			favorites: newFavorites,
 		});
 		await firebaseDb.ref(`users/${user.uid}/favorites`).set(newFavorites);
 	};
 
-	const setItemFilter = item => {
+	const setItemFilter = (item) => {
 		let newItemFilters;
 		if (itemFilters && itemFilters.includes(item.id)) {
-			newItemFilters = itemFilters.filter(id => id != item.id);
+			newItemFilters = itemFilters.filter((id) => id != item.id);
 		} else {
 			newItemFilters = itemFilters ? [...itemFilters, item.id] : [item.id];
 		}
 		setItemFilters(newItemFilters);
 	};
 
+	// types: positive, neutral, negative
+	const buildMarqueeItems = (text, type, store) => {};
+
+	const StoreReportMarquee = () => {
+		if (!featuredStores) {
+			return null;
+		}
+		let positives = [],
+			neutrals = [],
+			negatives = [];
+		featuredStores.map((store) => {
+			console.log('store: ', store);
+			if (store.items) {
+				const groupedItems = groupBy(store.items, 'status');
+				console.log('groupedItems: ', groupedItems);
+
+				ItemStatuses;
+			}
+		});
+
+		return null;
+	};
+
 	return (
 		<div>
 			<div>
-				<Form onSubmit={e => e.preventDefault()}>
+				<StoreReportMarquee />
+			</div>
+			<div>
+				<Form onSubmit={(e) => e.preventDefault()}>
 					<Form.Group controlId="searchFilter" className="has-icon">
-						<Form.Control placeholder="Search Stores" type="text" onChange={e => search(e)} />
+						<Form.Control placeholder="Search Stores" type="text" onChange={(e) => search(e)} />
 						<i className="fas fa-search"></i>
 					</Form.Group>
 					<StoreItemsFilter itemFilters={itemFilters} setItemFilter={setItemFilter} />

@@ -10,13 +10,21 @@ export const Stores = () => {
 
 	useEffect(() => {
 		const cityStores = async () => {
-			firebaseDb.ref(`stores/${state}/${city}`).on('value', snapshot => {
+			firebaseDb.ref(`stores/${state}/${city}`).on('value', (snapshot) => {
 				const values = snapshot.val();
 				if (values) {
 					const assignedStores = Object.values(snapshot.val());
+					const featuredStores = assignedStores.filter((store) => store.items || store.traffic);
+					console.log('featuredStores: ', featuredStores);
+
 					userDispatch({
 						type: 'SET_STORE_LIST',
-						storeList: assignedStores
+						storeList: assignedStores,
+					});
+
+					userDispatch({
+						type: 'SET_FEATURED_STORES',
+						featuredStores: featuredStores,
 					});
 				}
 			});

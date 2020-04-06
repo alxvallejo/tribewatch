@@ -4,11 +4,10 @@ import { Card, Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { firebaseAuth, firebaseDb } from '../services/firebase';
 import { UserContext } from '../context/UserContext';
 import { Formik } from 'formik';
+const moment = require('moment');
 
 export const SuggestCity = ({ state }) => {
-	console.log('state: ', state);
 	const [{ user, profile }, userDispatch] = useContext(UserContext);
-	console.log('user: ', user);
 	const [submitted, setSubmitted] = useState();
 
 	if (submitted) {
@@ -26,7 +25,7 @@ export const SuggestCity = ({ state }) => {
 		return (
 			<Formik
 				initialValues={{ city: '' }}
-				validate={values => {
+				validate={(values) => {
 					const errors = {};
 					if (!values.city) {
 						errors.city = 'Required';
@@ -34,11 +33,16 @@ export const SuggestCity = ({ state }) => {
 					return errors;
 				}}
 				onSubmit={async (values, { setSubmitting }) => {
+					const unix = moment.unix();
 					const newSuggestion = {
 						user: user.uid,
-						city: values.city
+						userEmail: user.email,
+						userName: user.displayName,
+						time: unix,
+						state: state,
+						city: values.city,
 					};
-					await firebaseDb.ref(`suggestions/locations/${state}`).push(newSuggestion);
+					await firebaseDb.ref(`suggestions/cities`).push(newSuggestion);
 					setSubmitted(true);
 				}}
 			>

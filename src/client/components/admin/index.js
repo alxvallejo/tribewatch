@@ -5,11 +5,12 @@ import { AdminContext } from '../../context/AdminContext';
 import { Container, Row, Col, Button, Card, Tab, Nav } from 'react-bootstrap';
 import { LocationSelect } from './locations/LocationSelect';
 import { Users } from './users';
+import { Suggestions } from './suggestions';
 import { firebaseDb } from '../../services/firebase';
 
 import { Stores } from './stores';
 
-export const AdminDash = props => {
+export const AdminDash = (props) => {
 	const [{ user }, userDispatch] = useContext(UserContext);
 	const [{ cities, selectedState, city }, adminDispatch] = useContext(AdminContext);
 	console.log('city at admin index: ', city);
@@ -26,6 +27,9 @@ export const AdminDash = props => {
 						<Nav.Item>
 							<Nav.Link eventKey="second">Users</Nav.Link>
 						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link eventKey="suggestions">Suggestions</Nav.Link>
+						</Nav.Item>
 					</Nav>
 				</Col>
 				<Col sm={9}>
@@ -36,6 +40,9 @@ export const AdminDash = props => {
 						</Tab.Pane>
 						<Tab.Pane eventKey="second">
 							<Users />
+						</Tab.Pane>
+						<Tab.Pane eventKey="suggestions">
+							<Suggestions />
 						</Tab.Pane>
 					</Tab.Content>
 				</Col>

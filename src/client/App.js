@@ -107,7 +107,7 @@ const App = (props) => {
 					});
 					localStorage.setItem('authUser', JSON.stringify(authResult.user));
 				}
-				return false;
+				return true;
 			},
 		},
 	};

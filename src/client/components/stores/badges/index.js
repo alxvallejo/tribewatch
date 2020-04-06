@@ -6,8 +6,8 @@ import { ItemStatuses, StoreItems, TrafficStatuses } from '../StoreItems';
 const moment = require('moment');
 
 export const ItemStatusBadge = ({ item }) => {
-	const status = ItemStatuses.find(x => x.name == item.status);
-	const storeItem = StoreItems.find(x => x.name == item.item);
+	const status = ItemStatuses.find((x) => x.name == item.status);
+	const storeItem = StoreItems.find((x) => x.name == item.item);
 	if (!status) {
 		return null;
 	}
@@ -37,14 +37,14 @@ export const TrafficStatusBadge = ({ store }) => {
 	if (!traffic) {
 		return null;
 	}
-	const storeTrafficHoursAgo = traffic && moment.unix(traffic.time).diff(Date.now(), 'hours');
+	const storeTrafficHoursDiff = traffic && moment.unix(traffic.time).diff(Date.now(), 'hours');
 
-	if (storeTrafficHoursAgo > 0) {
+	if (storeTrafficHoursDiff < 1) {
 		// Stale traffic report
 		return null;
 	}
 
-	const trafficStatus = TrafficStatuses.find(x => x.name == traffic.status);
+	const trafficStatus = TrafficStatuses.find((x) => x.name == traffic.status);
 	const dateChecked = moment.unix(traffic.time).format('M/D h:m a');
 	return (
 		<OverlayTrigger

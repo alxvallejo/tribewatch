@@ -17,19 +17,19 @@ import { firebaseAuth, firebaseDb } from './services/firebase';
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
-const App = props => {
+const App = (props) => {
 	const [{ user }, userDispatch] = useContext(UserContext);
 	const [loading, setLoading] = useState(true);
 	const [isAdmin, setIsAdmin] = useState();
 
 	useEffect(() => {
 		const checkUser = async () => {
-			firebaseAuth.onAuthStateChanged(async u => {
+			firebaseAuth.onAuthStateChanged(async (u) => {
 				console.log('user on app load: ', u);
 				if (u) {
 					userDispatch({
 						type: 'SET_USER',
-						user: u
+						user: u,
 					});
 					// Get user info
 					const resp = await firebaseDb.ref(`users/${u.uid}`).once('value');
@@ -39,31 +39,31 @@ const App = props => {
 						if (userInfo.location) {
 							userDispatch({
 								type: 'SET_LOCATION',
-								location: userInfo.location
+								location: userInfo.location,
 							});
 						}
 						if (userInfo.preferences) {
 							userDispatch({
 								type: 'SET_PREFERENCES',
-								preferences: userInfo.preferences
+								preferences: userInfo.preferences,
 							});
 						}
 						if (userInfo.profile) {
 							userDispatch({
 								type: 'SET_PROFILE',
-								profile: userInfo.profile
+								profile: userInfo.profile,
 							});
 						}
 						if (userInfo.favorites) {
 							userDispatch({
 								type: 'SET_FAVORITES',
-								favorites: userInfo.favorites
+								favorites: userInfo.favorites,
 							});
 						}
 						if (userInfo.seenTutorial) {
 							userDispatch({
 								type: 'SET_SEEN_TUTORIAL',
-								seenTutorial: userInfo.seenTutorial
+								seenTutorial: userInfo.seenTutorial,
 							});
 						}
 					}
@@ -76,18 +76,13 @@ const App = props => {
 		if (!user) {
 			checkUser();
 		}
-		const checkAdmin = async u => {
+		const checkAdmin = async (u) => {
 			if (!u) {
 				return;
 			}
 			// Check admins
-			const resp = await firebaseDb
-				.ref(`admins`)
-				.orderByChild('uid')
-				.equalTo(u.uid)
-				.once('value');
+			const resp = await firebaseDb.ref(`admins`).orderByChild('uid').equalTo(u.uid).once('value');
 			const adminObj = resp.val();
-			console.log('adminObj: ', adminObj);
 			if (adminObj) {
 				setIsAdmin(true);
 			}
@@ -108,13 +103,13 @@ const App = props => {
 				if (authResult.user) {
 					userDispatch({
 						type: 'SET_USER',
-						user: authResult.user
+						user: authResult.user,
 					});
 					localStorage.setItem('authUser', JSON.stringify(authResult.user));
 				}
-				false;
-			}
-		}
+				return false;
+			},
+		},
 	};
 
 	if (loading) {

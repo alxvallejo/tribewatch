@@ -11,76 +11,82 @@ export const TrafficStatuses = [
 		name: 'Empty',
 		class: 'empty',
 		variant: 'success',
-		icon: 'user'
+		icon: 'user',
+	},
+	{
+		name: 'Normal',
+		class: 'normal',
+		variant: 'success',
+		icon: 'user',
 	},
 	{
 		name: 'Busy',
 		class: 'busy',
 		variant: 'warning',
-		icon: 'user-friends'
+		icon: 'user-friends',
 	},
 	{
 		name: 'Long Line',
 		class: 'long-line',
 		variant: 'danger',
-		icon: 'users'
-	}
+		icon: 'users',
+	},
 ];
 
 export const ItemStatuses = [
 	{
 		name: 'Out',
 		class: 'out',
-		variant: 'danger'
+		variant: 'danger',
 	},
 	{
 		name: 'Running Low',
 		class: 'running-low',
-		variant: 'warning'
+		variant: 'warning',
 	},
 	{
 		name: 'Plenty',
 		class: 'plenty',
-		variant: 'success'
-	}
+		variant: 'success',
+	},
 ];
 
 export const StoreItems = [
 	{
 		id: 'toilet-paper',
 		name: 'Toilet Paper',
-		icon: 'fa-toilet-paper'
+		icon: 'fa-toilet-paper',
 	},
 	{
 		id: 'paper-towels',
 		name: 'Paper Towels',
-		icon: 'fa-scroll'
+		icon: 'fa-scroll',
 	},
 	{
 		id: 'disinfectant-wipes',
 		name: 'Disinfectant Wipes',
-		img: sheetsIcon
+		img: sheetsIcon,
 	},
 	{
 		id: 'hand-sanitizer',
 		name: 'Hand Sanitizer',
-		icon: 'fa-pump-soap'
+		icon: 'fa-pump-soap',
 	},
 	{
 		id: 'tissues',
 		name: 'Tissues',
-		icon: 'fa-box-tissue'
+		icon: 'fa-box-tissue',
 	},
 	{
 		id: 'thermometer',
 		name: 'Thermometer',
-		icon: 'fa-thermometer-half'
+		icon: 'fa-thermometer-half',
 	},
 	{
 		id: 'diapers',
 		name: 'Diapers',
-		img: diaperIcon
-	}
+		img: diaperIcon,
+	},
 ];
 
 export const StoreItemsFilter = ({ itemFilters, setItemFilter }) => {
@@ -90,7 +96,7 @@ export const StoreItemsFilter = ({ itemFilters, setItemFilter }) => {
 				const variant =
 					itemFilters && itemFilters.includes(item.id) ? 'primary badge-pill' : 'outline-primary badge-pill';
 				return (
-					<Badge key={i} onClick={e => setItemFilter(item)} variant={variant}>
+					<Badge key={i} onClick={(e) => setItemFilter(item)} variant={variant}>
 						{item.name}
 					</Badge>
 				);
@@ -103,7 +109,7 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
 	const { city, state } = location;
 
-	const checkStatus = id => {
+	const checkStatus = (id) => {
 		if (store.items && store.items[id]) {
 			return store.items[id].status;
 		}
@@ -126,7 +132,7 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 						{ItemStatuses.map((s, i) => {
 							const variantName = itemStatus && itemStatus == s.name ? s.variant : 'outline-dark';
 							return (
-								<Button key={i} variant={variantName} onClick={e => setItemStatus(s, item)}>
+								<Button key={i} variant={variantName} onClick={(e) => setItemStatus(s, item)}>
 									{s.name}
 								</Button>
 							);
@@ -152,7 +158,7 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 							const variantName =
 								store.traffic && store.traffic.status == s.name ? s.variant : 'outline-dark';
 							return (
-								<Button key={index} variant={variantName} onClick={e => setTrafficStatus(s)}>
+								<Button key={index} variant={variantName} onClick={(e) => setTrafficStatus(s)}>
 									{s.name}
 								</Button>
 							);

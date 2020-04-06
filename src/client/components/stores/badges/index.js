@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { ItemStatuses, StoreItems, TrafficStatuses } from '../StoreItems';
+import { words } from 'lodash';
 
 const moment = require('moment');
 
@@ -12,14 +13,15 @@ export const ItemStatusBadge = ({ item }) => {
 		return null;
 	}
 	const dateChecked = moment.unix(item.time).format('M/D h:m a');
+	const userName = words(item.user)[0];
 	return (
 		<OverlayTrigger
 			placement="top"
 			overlay={
 				<Tooltip id={`${item.name}_${item.time}`}>
-					{item.item}
+					{item.status}
 					<br />
-					{dateChecked} - {item.user}
+					{dateChecked} - {userName}
 				</Tooltip>
 			}
 		>
@@ -46,12 +48,13 @@ export const TrafficStatusBadge = ({ store }) => {
 
 	const trafficStatus = TrafficStatuses.find((x) => x.name == traffic.status);
 	const dateChecked = moment.unix(traffic.time).format('M/D h:m a');
+	const userName = words(traffic.user)[0];
 	return (
 		<OverlayTrigger
 			placement="top"
 			overlay={
 				<Tooltip id={`${store.id}_traffic`}>
-					{dateChecked} - {traffic.user}
+					{dateChecked} - {userName}
 				</Tooltip>
 			}
 		>

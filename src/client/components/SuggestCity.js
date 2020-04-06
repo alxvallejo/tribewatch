@@ -33,7 +33,7 @@ export const SuggestCity = ({ state }) => {
 					return errors;
 				}}
 				onSubmit={async (values, { setSubmitting }) => {
-					const unix = moment.unix();
+					const unix = moment().unix();
 					const newSuggestion = {
 						user: user.uid,
 						userEmail: user.email,

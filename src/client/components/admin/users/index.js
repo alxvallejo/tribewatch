@@ -34,7 +34,7 @@ export const Users = () => {
 	};
 
 	const createAdmin = (user) => {
-		const unix = moment.unix();
+		const unix = moment().unix();
 		const adminData = {
 			uid: user.uid,
 			time: unix,

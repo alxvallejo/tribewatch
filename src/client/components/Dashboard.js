@@ -15,7 +15,7 @@ import { Stores } from './stores';
 
 // import { getLocation } from '../services/geolocate';
 
-export const Dashboard = props => {
+export const Dashboard = (props) => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
 	const [showLocationModal, setLocationModal] = useState();
 	const [selectedState, setSelectedState] = useState();
@@ -24,7 +24,7 @@ export const Dashboard = props => {
 		return;
 	}
 
-	const handleClose = location => {
+	const handleClose = (location) => {
 		setLocationModal(null);
 	};
 
@@ -43,7 +43,7 @@ export const Dashboard = props => {
 						<div>
 							<LocationSelection
 								handleClose={handleClose}
-								onSelectState={state => setSelectedState(state)}
+								onSelectState={(state) => setSelectedState(state)}
 							/>
 						</div>
 						{selectedState && (
@@ -113,7 +113,15 @@ export const Dashboard = props => {
 						<Modal.Title>Change Location</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<LocationSelection handleClose={handleClose} onSelectState={state => setSelectedState(state)} />
+						<LocationSelection
+							handleClose={handleClose}
+							onSelectState={(state) => setSelectedState(state)}
+						/>
+						{selectedState && (
+							<div>
+								<SuggestCity state={selectedState} />
+							</div>
+						)}
 					</Modal.Body>
 				</Modal>
 			)}

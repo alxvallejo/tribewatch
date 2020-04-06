@@ -39,7 +39,7 @@ export const TrafficStatusBadge = ({ store }) => {
 	}
 	const storeTrafficHoursDiff = traffic && moment.unix(traffic.time).diff(Date.now(), 'hours');
 
-	if (storeTrafficHoursDiff < 1) {
+	if (storeTrafficHoursDiff < -1) {
 		// Stale traffic report
 		return null;
 	}

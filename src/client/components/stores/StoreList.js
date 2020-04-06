@@ -1,22 +1,19 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { firebaseDb } from '../../services/firebase';
 import { UserContext } from '../../context/UserContext';
 import { Button, Form, Card, Modal } from 'react-bootstrap';
-import { ItemStatuses, StoreItems, StoreItemsModal, TrafficStatuses, StoreItemsFilter } from './StoreItems';
+import { StoreItemsModal, StoreItemsFilter, ItemStatuses } from './StoreItems';
 import { ItemStatusBadge, TrafficStatusBadge } from './badges';
-import { map, keys, concat, reverse, words, groupBy } from 'lodash';
+import { map, keys, concat, join, groupBy } from 'lodash';
 import Ticker from 'react-ticker';
 const moment = require('moment');
 
 export const StoreList = () => {
-	const [{ user, location, preferences, profile, favorites, storeList, featuredStores }, userDispatch] = useContext(
-		UserContext
-	);
+	const [{ user, location, favorites, storeList, featuredStores }, userDispatch] = useContext(UserContext);
 	const { city, state } = location;
 	const [searchFilter, setSearchFilter] = useState();
 	const [itemFilters, setItemFilters] = useState();
 	const [selectedStore, setSelectedStore] = useState();
-	const [featuredStore, setFeaturedStore] = useState();
 
 	const storeCard = (store, i) => {
 		const items = store.items ? map(store.items) : null;
@@ -179,31 +176,50 @@ export const StoreList = () => {
 	};
 
 	// types: positive, neutral, negative
-	const buildMarqueeItems = (text, type, store) => {};
+	const buildMarqueeItems = (storeHighlight) => {
+		return storeHighlight.map(highlights);
+	};
 
 	const StoreReportMarquee = () => {
 		if (!featuredStores) {
 			return null;
 		}
-		let positives = [],
-			neutrals = [],
-			negatives = [];
-		featuredStores.map((store) => {
-			console.log('store: ', store);
+		let storeHighlights = featuredStores.map((store) => {
 			if (store.items) {
-				const groupedItems = groupBy(store.items, 'status');
-				console.log('groupedItems: ', groupedItems);
-
-				ItemStatuses;
+				let groupedItems = groupBy(store.items, 'status');
+				groupedItems = keys(groupedItems).map((key) => {
+					const items = groupedItems[key].map((item) => item.item);
+					return {
+						store: store.name,
+						status: key,
+						items,
+					};
+				});
+				return groupedItems;
 			}
 		});
 
-		return null;
+		const highlightMarkup = storeHighlights.map((highlights) => {
+			return highlights.map((highlight, i) => {
+				const items = join(highlight.items, ', ');
+				const itemStatus = ItemStatuses.find((x) => x.name == highlight.status);
+				const className = itemStatus ? itemStatus.variant : '';
+				const highlighTxt = `${highlight.store} is ${highlight.status} of ${items}`;
+
+				return (
+					<span key={i} className={`bg-${className} font-weight-bold`} style={{ marginRight: '8rem' }}>
+						{highlighTxt}
+					</span>
+				);
+			});
+		});
+
+		return <Ticker speed={3}>{(index) => <div style={{ whiteSpace: 'nowrap' }}>{highlightMarkup}</div>}</Ticker>;
 	};
 
 	return (
 		<div>
-			<div>
+			<div className="mb-4">
 				<StoreReportMarquee />
 			</div>
 			<div>

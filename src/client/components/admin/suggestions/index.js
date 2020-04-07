@@ -20,16 +20,17 @@ export const Suggestions = () => {
 	}, []);
 
 	const getSuggestions = async () => {
-		const resp = await firebaseDb.ref(`suggestions/cities`).once('value');
-		const results = resp.val();
-		setSuggestions(
-			keys(results).map((key) => {
-				return {
-					...results[key],
-					key,
-				};
-			})
-		);
+		await firebaseDb.ref(`suggestions/cities`).on('value', (snapshot) => {
+			const results = snapshot.val();
+			setSuggestions(
+				keys(results).map((key) => {
+					return {
+						...results[key],
+						key,
+					};
+				})
+			);
+		});
 	};
 
 	const removeSuggestion = async (sug) => {

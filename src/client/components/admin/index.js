@@ -16,37 +16,39 @@ export const AdminDash = (props) => {
 	console.log('city at admin index: ', city);
 
 	return (
-		<Tab.Container id="left-tabs-example" defaultActiveKey="first">
-			<h3 className="mb-3">Admin Dashboard</h3>
-			<Row>
-				<Col sm={3}>
-					<Nav variant="pills" className="flex-column">
-						<Nav.Item>
-							<Nav.Link eventKey="first">Locations</Nav.Link>
-						</Nav.Item>
-						<Nav.Item>
-							<Nav.Link eventKey="second">Users</Nav.Link>
-						</Nav.Item>
-						<Nav.Item>
-							<Nav.Link eventKey="suggestions">Suggestions</Nav.Link>
-						</Nav.Item>
-					</Nav>
-				</Col>
-				<Col sm={9}>
-					<Tab.Content>
-						<Tab.Pane eventKey="first">
-							<LocationSelect />
-							<Stores />
-						</Tab.Pane>
-						<Tab.Pane eventKey="second">
-							<Users />
-						</Tab.Pane>
-						<Tab.Pane eventKey="suggestions">
-							<Suggestions />
-						</Tab.Pane>
-					</Tab.Content>
-				</Col>
-			</Row>
-		</Tab.Container>
+		<Container>
+			<Tab.Container id="left-tabs-example" defaultActiveKey="suggestions">
+				<h3 className="mb-3">Admin Dashboard</h3>
+				<Row>
+					<Col sm={3}>
+						<Nav variant="pills" className="flex-column">
+							<Nav.Item>
+								<Nav.Link eventKey="suggestions">Suggestions</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="first">Locations</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="second">Users</Nav.Link>
+							</Nav.Item>
+						</Nav>
+					</Col>
+					<Col sm={9}>
+						<Tab.Content>
+							<Tab.Pane eventKey="suggestions">
+								<Suggestions />
+							</Tab.Pane>
+							<Tab.Pane eventKey="first">
+								<LocationSelect />
+								<Stores />
+							</Tab.Pane>
+							<Tab.Pane eventKey="second">
+								<Users />
+							</Tab.Pane>
+						</Tab.Content>
+					</Col>
+				</Row>
+			</Tab.Container>
+		</Container>
 	);
 };

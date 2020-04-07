@@ -22,7 +22,7 @@ export const StoreList = () => {
 		console.log('combinedList: ', combinedList);
 		adminDispatch({
 			type: 'SET_STORE_LIST',
-			storeList: newStores
+			storeList: newStores,
 		});
 		// Since firebase has no concept of arrays, we need to set the combined store list
 		setCombinedStores(combinedList);
@@ -41,22 +41,6 @@ export const StoreList = () => {
 		const resp = await firebaseDb.ref(`stores/${selectedState}/${city.name}`).set(combinedStores);
 	};
 
-	const storeListItem = (store, i) => {
-		return (
-			<Card key={i} style={{ minWidth: '18rem', height: 200 }}>
-				<Card.Img
-					variant="top"
-					src={store.image_url}
-					className="h-25"
-					style={{ objectFit: 'none', objectPosition: 'center' }}
-				/>
-				<Card.Body>
-					<Card.Title>{store.name}</Card.Title>
-				</Card.Body>
-			</Card>
-		);
-	};
-
 	if (!storeList) {
 		return 'Loading';
 	}
@@ -66,7 +50,7 @@ export const StoreList = () => {
 			<Button onClick={() => addStores()}>Add New Stores</Button>
 			<ul>
 				{storeList.map((store, i) => {
-					return <li>{store.name}</li>;
+					return <li key={i}>{store.name}</li>;
 				})}
 			</ul>
 		</Container>

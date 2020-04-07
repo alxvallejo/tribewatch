@@ -200,6 +200,9 @@ export const StoreList = () => {
 		});
 
 		const highlightMarkup = storeHighlights.map((highlights) => {
+			if (!highlights) {
+				return null;
+			}
 			return highlights.map((highlight, i) => {
 				const items = join(highlight.items, ', ');
 				const itemStatus = ItemStatuses.find((x) => x.name == highlight.status);

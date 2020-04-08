@@ -16,9 +16,6 @@ export const StoreList = () => {
 	const [selectedStore, setSelectedStore] = useState();
 
 	const storeCard = (store, i) => {
-		if (store.id == '65nq65lXTLueX8CIIGJg0A') {
-			console.log('store: ', store);
-		}
 		if (!store.location) {
 			return null;
 		}

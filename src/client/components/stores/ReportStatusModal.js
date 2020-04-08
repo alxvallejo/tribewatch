@@ -10,12 +10,10 @@ import { map, keys, concat, join, groupBy } from 'lodash';
 const moment = require('moment');
 
 export const ReportStatusModal = ({ selectedStore, handleItemFormClose }) => {
-	console.log('selectedStore: ', selectedStore);
 	const [{ user, location, favorites, storeList, featuredStores }, userDispatch] = useContext(UserContext);
 	const { city, state } = location;
 
 	const setItemStatus = async (status, item) => {
-		console.log('status: ', status);
 		const unix = moment().unix();
 		const newAvailability = {
 			item: item.name,
@@ -23,7 +21,6 @@ export const ReportStatusModal = ({ selectedStore, handleItemFormClose }) => {
 			time: unix,
 			status: status.name,
 		};
-		console.log('newAvailability: ', newAvailability);
 		firebaseDb.ref(`stores/${state}/${city}/${selectedStore.id}/items/${item.id}`).set(newAvailability);
 		handleItemFormClose();
 	};

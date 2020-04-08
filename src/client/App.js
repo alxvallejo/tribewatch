@@ -24,7 +24,7 @@ const App = (props) => {
 	useEffect(() => {
 		const checkUser = async () => {
 			firebaseAuth.onAuthStateChanged(async (u) => {
-				console.log('user on app load: ', u);
+				// console.log('user on app load: ', u);
 				if (u) {
 					if (!user) {
 						userDispatch({

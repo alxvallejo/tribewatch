@@ -16,13 +16,9 @@ import { Stores } from './stores';
 // import { getLocation } from '../services/geolocate';
 
 export const Dashboard = (props) => {
-	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
+	const [{ location }, userDispatch] = useContext(UserContext);
 	const [showLocationModal, setLocationModal] = useState();
 	const [selectedState, setSelectedState] = useState();
-
-	// if (!user) {
-	// 	return;
-	// }
 
 	const handleClose = (location) => {
 		setLocationModal(null);

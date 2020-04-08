@@ -21,7 +21,6 @@ export const StoreList = () => {
 		const newStores = differenceBy(storeList, assignedStores, 'id');
 		let combinedList = concat(assignedStores, newStores).filter((x) => x !== undefined);
 		combinedList = keyBy(combinedList, 'id');
-		console.log('combinedList: ', combinedList);
 		adminDispatch({
 			type: 'SET_STORE_LIST',
 			storeList: newStores,
@@ -40,7 +39,6 @@ export const StoreList = () => {
 			return;
 		}
 		setSaving(true);
-		console.log('combinedStores: ', combinedStores);
 		const resp = await firebaseDb.ref(`stores/${selectedState}/${city.name}`).set(combinedStores);
 
 		setSaving(null);

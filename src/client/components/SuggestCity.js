@@ -35,9 +35,9 @@ export const SuggestCity = ({ state }) => {
 				onSubmit={async (values, { setSubmitting }) => {
 					const unix = moment().unix();
 					const newSuggestion = {
-						user: user.uid,
-						userEmail: user.email,
-						userName: user.displayName,
+						user: user ? user.uid : null,
+						userEmail: user ? user.email : null,
+						userName: user ? user.displayName : null,
 						time: unix,
 						state: state,
 						city: values.city,

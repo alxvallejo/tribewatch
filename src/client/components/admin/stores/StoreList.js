@@ -7,6 +7,7 @@ import { keyBy, map, merge, differenceBy, concat } from 'lodash';
 
 export const StoreList = () => {
 	const [{ cities, selectedState, city, storeList }, adminDispatch] = useContext(AdminContext);
+	console.log('city: ', city);
 	const [combinedStores, setCombinedStores] = useState();
 	const [saving, setSaving] = useState();
 

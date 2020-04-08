@@ -20,9 +20,9 @@ export const Dashboard = (props) => {
 	const [showLocationModal, setLocationModal] = useState();
 	const [selectedState, setSelectedState] = useState();
 
-	if (!user) {
-		return;
-	}
+	// if (!user) {
+	// 	return;
+	// }
 
 	const handleClose = (location) => {
 		setLocationModal(null);
@@ -31,15 +31,30 @@ export const Dashboard = (props) => {
 	if (!location) {
 		return (
 			<Container>
-				<Row className="justify-content-md-center">
-					<Col>
-						<h3>To get started, select your city.</h3>
+				<div className="text-center mb-4">
+					<div className="icons h2 mb-4">
+						<i className="fas fa-pump-soap mr-4 pr-2"></i>
+						<i className="fas fa-toilet-paper"></i>
+						<i className="fas fa-thermometer-half ml-4 pl-2"></i>
+					</div>
+					<h2>
+						Real-time reporting
+						<br />
+						of <em>essential items</em>
+						<br />
+						in your community.
+					</h2>
+					<div></div>
+				</div>
+				<Row>
+					<Col className="d-flex flex-column align-items-center">
+						{/* <h3>To get started, select your city.</h3>
 						<ul>
 							<li>We'll show stores in your area.</li>
 							<li>Report how busy stores are.</li>
 							<li>Report whether stores carry essential items.</li>
 							<li>Help others and profit!</li>
-						</ul>
+						</ul> */}
 						<div>
 							<LocationSelection
 								handleClose={handleClose}

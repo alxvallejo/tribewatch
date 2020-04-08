@@ -23,9 +23,9 @@ export const LocationSelection = ({ handleClose, onSelectState }) => {
 		getLocations();
 	}, []);
 
-	if (!user) {
-		return;
-	}
+	// if (!user) {
+	// 	return;
+	// }
 
 	if (!locations) {
 		return 'Loading Locations...';
@@ -39,17 +39,17 @@ export const LocationSelection = ({ handleClose, onSelectState }) => {
 		onSelectState(abr);
 	};
 	const stateAbrs = Object.entries(locations).map(([abr, city]) => abr);
-	const stateOptions = stateAbrs.map(abr => {
+	const stateOptions = stateAbrs.map((abr) => {
 		return {
 			state: states[abr],
-			abr
+			abr,
 		};
 	});
 
 	return (
 		<Formik
 			initialValues={{ state: '', city: '' }}
-			validate={values => {
+			validate={(values) => {
 				const errors = {};
 				if (!values.state) {
 					errors.state = 'Required';
@@ -63,13 +63,15 @@ export const LocationSelection = ({ handleClose, onSelectState }) => {
 				const location = {
 					state: values.state,
 					city: values.city,
-					collectionId: `${values.state}_${values.city}`
+					collectionId: `${values.state}_${values.city}`,
 				};
-				await firebaseDb.ref(`users/${user.uid}/location`).set(location);
+				if (user) {
+					await firebaseDb.ref(`users/${user.uid}/location`).set(location);
+				}
 
 				userDispatch({
 					type: 'SET_LOCATION',
-					location
+					location,
 				});
 
 				handleClose(location);
@@ -83,7 +85,7 @@ export const LocationSelection = ({ handleClose, onSelectState }) => {
 				handleBlur,
 				handleSubmit,
 				isSubmitting,
-				setFieldValue
+				setFieldValue,
 				/* and other goodies */
 			}) => (
 				<Form onSubmit={handleSubmit}>
@@ -101,7 +103,7 @@ export const LocationSelection = ({ handleClose, onSelectState }) => {
 									<option key="selectState" value="">
 										Select State
 									</option>
-									{stateOptions.map(s => {
+									{stateOptions.map((s) => {
 										return (
 											<option key={s.abr} value={s.abr}>
 												{s.state}
@@ -121,7 +123,7 @@ export const LocationSelection = ({ handleClose, onSelectState }) => {
 										<option key="selectCity" value="">
 											Select City
 										</option>
-										{cityOptions.map(c => {
+										{cityOptions.map((c) => {
 											return (
 												<option key={c.name} value={c.name}>
 													{c.name}

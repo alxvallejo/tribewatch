@@ -14,6 +14,7 @@ export const Stores = () => {
 				const values = snapshot.val();
 				if (values) {
 					const assignedStores = Object.values(snapshot.val());
+					console.log('assignedStores: ', assignedStores);
 					const featuredStores = assignedStores.filter((store) => store.items || store.traffic);
 					console.log('featuredStores: ', featuredStores);
 

@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
+import { ReportStatusModal } from './ReportStatusModal';
 import { firebaseDb } from '../../services/firebase';
 import { UserContext } from '../../context/UserContext';
 import { Button, Form, Card, Modal } from 'react-bootstrap';
-import { StoreItemsModal, StoreItemsFilter, ItemStatuses } from './StoreItems';
+import { ItemsForm, StoreItemsFilter, ItemStatuses } from './StoreItems';
 import { ItemStatusBadge, TrafficStatusBadge } from './badges';
 import { map, keys, concat, join, groupBy } from 'lodash';
 import Ticker from 'react-ticker';
-const moment = require('moment');
 
 export const StoreList = () => {
 	const [{ user, location, favorites, storeList, featuredStores }, userDispatch] = useContext(UserContext);
@@ -16,6 +16,12 @@ export const StoreList = () => {
 	const [selectedStore, setSelectedStore] = useState();
 
 	const storeCard = (store, i) => {
+		if (store.id == '65nq65lXTLueX8CIIGJg0A') {
+			console.log('store: ', store);
+		}
+		if (!store.location) {
+			return null;
+		}
 		const items = store.items ? map(store.items) : null;
 		const isStarred = favorites && favorites.includes(store.id);
 
@@ -119,31 +125,8 @@ export const StoreList = () => {
 		setSearchFilter(term);
 	};
 
-	const handleClose = () => {
+	const handleItemFormClose = () => {
 		setSelectedStore(null);
-	};
-
-	const setItemStatus = async (status, item) => {
-		const unix = moment().unix();
-		const newAvailability = {
-			item: item.name,
-			user: user.displayName,
-			time: unix,
-			status: status.name,
-		};
-		handleClose();
-		await firebaseDb.ref(`stores/${state}/${city}/${selectedStore.id}/items/${item.id}`).set(newAvailability);
-	};
-
-	const setTrafficStatus = async (trafficStatus) => {
-		const unix = moment().unix();
-		const newTrafficStatus = {
-			user: user.displayName,
-			time: unix,
-			status: trafficStatus.name,
-		};
-		handleClose();
-		await firebaseDb.ref(`stores/${state}/${city}/${selectedStore.id}/traffic`).set(newTrafficStatus);
 	};
 
 	const addFavorite = async (store) => {
@@ -240,21 +223,7 @@ export const StoreList = () => {
 				})}
 			</div>
 			{selectedStore && (
-				<Modal show={!!selectedStore} onHide={handleClose} centered>
-					<Modal.Header closeButton>
-						<Modal.Title>
-							<div className="h5 mb-1">Report Status for:</div>
-							{selectedStore.name}
-						</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<StoreItemsModal
-							store={selectedStore}
-							setItemStatus={setItemStatus}
-							setTrafficStatus={setTrafficStatus}
-						/>
-					</Modal.Body>
-				</Modal>
+				<ReportStatusModal selectedStore={selectedStore} handleItemFormClose={handleItemFormClose} />
 			)}
 		</div>
 	);

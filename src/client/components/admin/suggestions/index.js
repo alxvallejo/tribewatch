@@ -110,6 +110,8 @@ export const Suggestions = () => {
 						<tr>
 							<th>State</th>
 							<th>City</th>
+							<th>Name</th>
+							<th>Email</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -119,6 +121,8 @@ export const Suggestions = () => {
 								<tr key={i}>
 									<td>{sug.state}</td>
 									<td>{sug.city}</td>
+									<td>{sug.userName}</td>
+									<td>{sug.userEmail}</td>
 									<td>{actions(sug)}</td>
 								</tr>
 							);

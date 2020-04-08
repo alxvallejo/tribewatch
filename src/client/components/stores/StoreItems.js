@@ -105,7 +105,7 @@ export const StoreItemsFilter = ({ itemFilters, setItemFilter }) => {
 	);
 };
 
-export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
+export const ItemsForm = ({ store, setItemStatus, setTrafficStatus }) => {
 	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
 	const { city, state } = location;
 
@@ -117,7 +117,7 @@ export const StoreItemsModal = ({ store, setItemStatus, setTrafficStatus }) => {
 	};
 
 	const showItem = (item, i) => {
-		console.log('item: ', item);
+		// console.log('item: ', item);
 		const itemStatus = checkStatus(item.id);
 		return (
 			<Card key={i} className="modal-card">

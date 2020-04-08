@@ -16,7 +16,7 @@ import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { firebaseAuth, firebaseDb } from './services/firebase';
 import firebase from 'firebase';
 
-const App = (props) => {
+const App = () => {
 	const [{ user }, userDispatch] = useContext(UserContext);
 	const [loading, setLoading] = useState(true);
 	const [isAdmin, setIsAdmin] = useState();
@@ -36,7 +36,6 @@ const App = (props) => {
 					// Get user info
 					const resp = await firebaseDb.ref(`users/${u.uid}`).once('value');
 					const userInfo = resp.val();
-					console.log('userInfo: ', userInfo);
 					if (userInfo) {
 						if (userInfo.location) {
 							userDispatch({

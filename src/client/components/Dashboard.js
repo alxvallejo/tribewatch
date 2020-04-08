@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
+import { Login } from './Login';
 import { Link } from 'react-router-dom';
 import { sortBy, reverse } from 'lodash';
 const moment = require('moment');
@@ -16,12 +17,17 @@ import { Stores } from './stores';
 // import { getLocation } from '../services/geolocate';
 
 export const Dashboard = (props) => {
-	const [{ location }, userDispatch] = useContext(UserContext);
+	const [{ user, location }, userDispatch] = useContext(UserContext);
 	const [showLocationModal, setLocationModal] = useState();
 	const [selectedState, setSelectedState] = useState();
+	const [showLogin, setShowLogin] = useState();
 
-	const handleClose = (location) => {
+	const handleLocationClose = (location) => {
 		setLocationModal(null);
+	};
+
+	const handleLoginClose = () => {
+		setShowLogin(null);
 	};
 
 	if (!location) {
@@ -33,7 +39,7 @@ export const Dashboard = (props) => {
 						<i className="fas fa-toilet-paper"></i>
 						<i className="fas fa-thermometer-half ml-4 pl-2"></i>
 					</div>
-					<h2>
+					<h2 style={{ lineHeight: '1.5' }}>
 						Real-time reporting
 						<br />
 						of <em>essential items</em>
@@ -53,9 +59,12 @@ export const Dashboard = (props) => {
 						</ul> */}
 						<div>
 							<LocationSelection
-								handleClose={handleClose}
+								handleClose={handleLocationClose}
 								onSelectState={(state) => setSelectedState(state)}
 							/>
+						</div>
+						<div className="mb-4">
+							<a onClick={() => setShowLogin(true)}>Already have a login?</a>
 						</div>
 						{selectedState && (
 							<div>
@@ -64,6 +73,11 @@ export const Dashboard = (props) => {
 						)}
 					</Col>
 				</Row>
+				<Modal show={!!showLogin} onHide={handleLoginClose} centered>
+					<Modal.Body>
+						<Login handleClose={handleLoginClose} />
+					</Modal.Body>
+				</Modal>
 			</Container>
 		);
 	}
@@ -119,13 +133,13 @@ export const Dashboard = (props) => {
 				<Stores />
 			</div>
 			{showLocationModal && (
-				<Modal show={!!showLocationModal} onHide={handleClose} centered>
+				<Modal show={!!showLocationModal} onHide={handleLocationClose} centered>
 					<Modal.Header closeButton>
 						<Modal.Title>Change Location</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
 						<LocationSelection
-							handleClose={handleClose}
+							handleClose={handleLocationClose}
 							onSelectState={(state) => setSelectedState(state)}
 						/>
 						{selectedState && (

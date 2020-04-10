@@ -6,6 +6,7 @@ import { Container, Row, Col, Button, Card, Tab, Nav } from 'react-bootstrap';
 import { LocationSelect } from './locations/LocationSelect';
 import { Users } from './users';
 import { Suggestions } from './suggestions';
+import { Activity } from './activity';
 import { firebaseDb } from '../../services/firebase';
 
 import { Stores } from './stores';
@@ -17,13 +18,16 @@ export const AdminDash = (props) => {
 
 	return (
 		<Container>
-			<Tab.Container id="left-tabs-example" defaultActiveKey="suggestions">
+			<Tab.Container id="left-tabs-example" defaultActiveKey="activity">
 				<h3 className="mb-3">Admin Dashboard</h3>
 				<Row>
 					<Col sm={3}>
 						<Nav variant="pills" className="flex-column">
 							<Nav.Item>
 								<Nav.Link eventKey="suggestions">Suggestions</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="activity">Activity</Nav.Link>
 							</Nav.Item>
 							<Nav.Item>
 								<Nav.Link eventKey="first">Locations</Nav.Link>
@@ -37,6 +41,9 @@ export const AdminDash = (props) => {
 						<Tab.Content>
 							<Tab.Pane eventKey="suggestions">
 								<Suggestions />
+							</Tab.Pane>
+							<Tab.Pane eventKey="activity">
+								<Activity />
 							</Tab.Pane>
 							<Tab.Pane eventKey="first">
 								<LocationSelect />

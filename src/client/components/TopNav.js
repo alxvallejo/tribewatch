@@ -16,10 +16,10 @@ export const TopNav = () => {
 				localStorage.removeItem('authUser');
 				userDispatch({
 					type: 'SET_USER',
-					user: null
+					user: null,
 				});
 			})
-			.catch(e => {
+			.catch((e) => {
 				console.log('e: ', e);
 			});
 	};

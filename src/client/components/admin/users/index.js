@@ -12,12 +12,13 @@ export const Users = () => {
 	const [{ user }, userDispatch] = useContext(UserContext);
 	const [admins, setAdmins] = useState();
 
+	const getAdmins = async () => {
+		const resp = await firebaseDb.ref(`admins`).once('value');
+		const results = resp.val();
+		setAdmins(map(results));
+	};
+
 	useEffect(() => {
-		const getAdmins = async () => {
-			const resp = await firebaseDb.ref(`admins`).once('value');
-			const results = resp.val();
-			setAdmins(map(results));
-		};
 		getAdmins();
 	}, []);
 
@@ -33,14 +34,22 @@ export const Users = () => {
 		const resp = await firebaseDb.ref(`users`).orderByChild('');
 	};
 
-	const createAdmin = (user) => {
+	const createAdmin = async (uid) => {
+		const resp = await firebaseDb.ref(`users/${uid}`).once('value');
+		const user = resp.val();
+		console.log('user: ', user);
+		// return false;
 		const unix = moment().unix();
 		const adminData = {
-			uid: user.uid,
+			uid: uid,
 			time: unix,
 			name: user.displayName,
 			email: user.email,
 		};
+		// const newAdmins = [...admins, adminData];
+		await firebaseDb.ref(`admins`).push(adminData);
+		getAdmins();
+		return adminData;
 	};
 
 	const actions = (admin) => {
@@ -70,7 +79,7 @@ export const Users = () => {
 					return errors;
 				}}
 				onSubmit={async (values, { setSubmitting }) => {
-					await createCity(values);
+					await createAdmin(values.uid);
 					setSubmitting(false);
 				}}
 			>

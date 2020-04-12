@@ -5,7 +5,9 @@ import { AdminContext } from '../../../context/AdminContext';
 import { Table, Row, Col, Button, ButtonGroup, Card, Tab, Nav, Form } from 'react-bootstrap';
 import { firebaseDb } from '../../../services/firebase';
 import { getStoresByLocation } from '../../../services/yelp';
-import { map, flatten, keys, uniq, differenceBy, concat, keyBy } from 'lodash';
+import { map, flatten, keys, join, groupBy, orderBy } from 'lodash';
+
+const moment = require('moment');
 
 export const Activity = () => {
 	const [{ user }, userDispatch] = useContext(UserContext);
@@ -30,48 +32,89 @@ export const Activity = () => {
 						};
 					})
 					.filter((city) => city.stores.length > 0);
-				return stateStores;
+				return {
+					state,
+					stores: stateStores,
+				};
 			})
-			.filter((state) => state.length > 0);
+			.filter((state) => state.stores.length > 0);
 		console.log('states: ', states);
 
 		setStateStores(states);
 	};
 
-	const cityInfo = (city) => {
+	const cityReport = (city) => {
 		const stores = city.stores;
-		const storeItems = flatten(stores.map((store) => store.items));
-		let storeItemReporters = storeItems.map((item) => {
-			return item.user;
+		let storeItems = flatten(stores.map((store) => map(store.items)));
+		storeItems = groupBy(storeItems, 'user');
+		// storeItems = orderBy(storeItems, 'items.time');
+		storeItems = keys(storeItems).map((key, i) => {
+			return {
+				items: storeItems[key],
+				user: key,
+			};
 		});
-		return uniq(storeItemReporters).length;
+
+		console.log('storeItems: ', storeItems);
+		// return (
+		// 	{storeItems.map((store, i) => {
+		// 		return (
+		// 			<div key={i}>
+
+		// 			</div>
+		// 		)
+		// 	})}
+		// )
+		// return null;
+		return (
+			<Table>
+				<thead>
+					<tr>
+						<th>User</th>
+						<th>Date</th>
+						<th>Items Reported</th>
+					</tr>
+				</thead>
+				<tbody>
+					{storeItems.map((store, storeIndex) => {
+						// console.log('store: ', store);
+						const storeItems = store.items;
+						const latestStoreTime = orderBy(storeItems, 'time');
+						// console.log('latestStoreTime: ', latestStoreTime);
+						const displayTime = moment.unix(latestStoreTime[0].time).fromNow();
+						const items = store.items.map((item) => item.item);
+						const itemCount = items.length;
+						return (
+							<tr key={storeIndex}>
+								<td style={{ width: '33%' }}>{store.user}</td>
+								<td style={{ width: '33%' }}>{displayTime}</td>
+								<td style={{ width: '33%' }}>{itemCount}</td>
+							</tr>
+						);
+					})}
+				</tbody>
+			</Table>
+		);
 	};
 
 	return (
 		<div>
 			<h2>Activity</h2>
 			{stateStores &&
-				stateStores.map((stateCities, stateIndex) => {
+				stateStores.map((state, stateIndex) => {
 					return (
 						<div key={stateIndex}>
-							<Table>
-								<thead>
-									<tr>
-										<th>City</th>
-										<th># Reporters</th>
-									</tr>
-								</thead>
-								<tbody>
-									{stateCities.map((city, i) => {
-										return (
-											<tr key={i}>
-												<td>{city.city}</td>
-												<td>{cityInfo(city)}</td>
-											</tr>
-										);
-									})}
-								</tbody>
-							</Table>
+							<h2>{state.state}</h2>
+							{state.stores.map((stores, i) => {
+								const city = stores.city;
+
+								return (
+									<div key={i}>
+										<h3>{city}</h3>
+										{cityReport(stores)}
+									</div>
+								);
+							})}
 						</div>
 					);
 				})}

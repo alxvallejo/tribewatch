@@ -5,8 +5,7 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { StoreList } from './StoreList';
 
 export const Stores = () => {
-	const [{ user, location, preferences, profile, storeList }, userDispatch] = useContext(UserContext);
-	console.log('location: ', location);
+	const [{ user, location }, userDispatch] = useContext(UserContext);
 	const { city, state } = location;
 
 	useEffect(() => {

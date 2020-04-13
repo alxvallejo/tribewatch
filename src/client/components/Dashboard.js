@@ -1,20 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { Login } from './Login';
-import { Link } from 'react-router-dom';
-import { sortBy, reverse } from 'lodash';
-const moment = require('moment');
 import { UserContext } from '../context/UserContext';
-import { Route, Switch } from 'react-router-dom';
-import { Container, Row, Col, Badge, Card, Modal } from 'react-bootstrap';
-import { Preferences } from './Preferences';
-import { Profile } from './Profile';
+import { Container, Row, Col, Modal } from 'react-bootstrap';
 import { LocationSelection } from './LocationSelection';
 import { SuggestCity } from './SuggestCity';
-
 import { Stores } from './stores';
-
-// import { getLocation } from '../services/geolocate';
 
 export const Dashboard = (props) => {
 	const [{ user, location }, userDispatch] = useContext(UserContext);
@@ -81,37 +72,6 @@ export const Dashboard = (props) => {
 			</Container>
 		);
 	}
-
-	// if (!preferences) {
-	// 	return (
-	// 		<Container>
-	// 			<Row className="align-items-center">
-	// 				<h2>{`${location.city}, ${location.state}`}</h2>
-	// 			</Row>
-	// 			<Row className="justify-content-md-center">
-	// 				<Preferences />
-	// 			</Row>
-	// 		</Container>
-	// 	);
-	// }
-
-	// if (!profile) {
-	// 	return (
-	// 		<Container>
-	// 			<Row className="align-items-center">
-	// 				<h2>{`${location.city}, ${location.state}`}</h2>
-	// 				{preferences.canDrive && (
-	// 					<Badge variant="light" className="ml-3">
-	// 						<i className="fas fa-car" /> Driver
-	// 					</Badge>
-	// 				)}
-	// 			</Row>
-	// 			<Row className="justify-content-md-center">
-	// 				<Profile />
-	// 			</Row>
-	// 		</Container>
-	// 	);
-	// }
 
 	return (
 		<Container>

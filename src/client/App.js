@@ -12,6 +12,7 @@ import { Dashboard } from './components/Dashboard';
 import { Footer } from './components/Footer';
 import { AdminDash } from './components/admin';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { Shopping } from './components/Shopping';
 
 import { firebaseAuth, firebaseDb } from './services/firebase';
 import firebase from 'firebase';
@@ -110,6 +111,7 @@ const App = () => {
 			<Switch>
 				<Route path="/privacy" component={PrivacyPolicy} />
 				{isAdmin && <Route path="/admin" component={AdminDash} />}
+				<Route path="/shopping-list" component={Shopping} />
 
 				<Route path="/" component={Dashboard} />
 			</Switch>

@@ -46,7 +46,10 @@ export const TopNav = () => {
 						Tribewatch
 					</a>
 					<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-					<Nav className="mr-auto">{/* <Nav.Link href="#home">Home</Nav.Link> */}</Nav>
+					<Nav className="mr-auto">
+						<Nav.Link href="/">Stores</Nav.Link>
+						<Nav.Link href="/shopping-list">Shopping</Nav.Link>
+					</Nav>
 					<NavDropdown title={<Image src={photoURL} className="img-thumbnail" />} id="basic-nav-dropdown">
 						<NavDropdown.Item href="/admin">Admin</NavDropdown.Item>
 						<NavDropdown.Item onClick={() => signOut()}>Logout</NavDropdown.Item>

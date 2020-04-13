@@ -38,7 +38,6 @@ export const Activity = () => {
 				};
 			})
 			.filter((state) => state.stores.length > 0);
-		console.log('states: ', states);
 
 		setStateStores(states);
 	};
@@ -47,25 +46,12 @@ export const Activity = () => {
 		const stores = city.stores;
 		let storeItems = flatten(stores.map((store) => map(store.items)));
 		storeItems = groupBy(storeItems, 'user');
-		// storeItems = orderBy(storeItems, 'items.time');
 		storeItems = keys(storeItems).map((key, i) => {
 			return {
 				items: storeItems[key],
 				user: key,
 			};
 		});
-
-		console.log('storeItems: ', storeItems);
-		// return (
-		// 	{storeItems.map((store, i) => {
-		// 		return (
-		// 			<div key={i}>
-
-		// 			</div>
-		// 		)
-		// 	})}
-		// )
-		// return null;
 		return (
 			<Table>
 				<thead>
@@ -77,10 +63,8 @@ export const Activity = () => {
 				</thead>
 				<tbody>
 					{storeItems.map((store, storeIndex) => {
-						// console.log('store: ', store);
 						const storeItems = store.items;
 						const latestStoreTime = orderBy(storeItems, 'time');
-						// console.log('latestStoreTime: ', latestStoreTime);
 						const displayTime = moment.unix(latestStoreTime[0].time).fromNow();
 						const items = store.items.map((item) => item.item);
 						const itemCount = items.length;

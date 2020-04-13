@@ -76,7 +76,9 @@ export const StoreList = () => {
 
 	let filteredStores = storeList;
 	if (searchFilter) {
-		filteredStores = storeList.filter((store) => store.name.toLowerCase().search(searchFilter.toLowerCase()) != -1);
+		filteredStores = storeList.filter((store) => {
+			store.name.toLowerCase().search(searchFilter.toLowerCase()) != -1;
+		});
 	}
 	if (itemFilters && itemFilters.length > 0) {
 		filteredStores = filteredStores.filter((store) => {

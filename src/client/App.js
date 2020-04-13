@@ -103,20 +103,6 @@ const App = () => {
 		);
 	}
 
-	// if (!user) {
-	// 	console.log('no user');
-	// 	return (
-	// 		<BrowserRouter>
-	// 			<TopNav />
-	// 			<Switch>
-	// 				<Route path="/privacy" component={PrivacyPolicy} />
-	// 				<Route path="/" component={LoginForm} />
-	// 			</Switch>
-	// 			<Footer />
-	// 		</BrowserRouter>
-	// 	);
-	// }
-
 	// currently assumes admin
 	return (
 		<BrowserRouter>

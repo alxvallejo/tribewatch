@@ -20,7 +20,9 @@ export const RequestForm = () => {
 	};
 
 	useEffect(() => {
-		getMyEntry();
+		if (user) {
+			getMyEntry();
+		}
 	}, []);
 
 	const validate = (values) => {
@@ -41,7 +43,7 @@ export const RequestForm = () => {
 	};
 
 	const initialValues = entry || {
-		displayName: user.displayName,
+		displayName: (user && user.displayName) || '',
 		contactMethod: '',
 		contactLink: '',
 		entry: '',

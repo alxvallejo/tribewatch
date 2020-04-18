@@ -27,7 +27,9 @@ export const Shoppers = () => {
 	};
 
 	useEffect(() => {
-		getEntries();
+		if (location) {
+			getEntries();
+		}
 	}, [location]);
 
 	const contactButton = (entry) => {

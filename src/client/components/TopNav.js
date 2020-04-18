@@ -37,15 +37,43 @@ export const TopNav = () => {
 			});
 	};
 
+	const defaultNav = () => {
+		return (
+			<div>
+				<div className="d-flex align-items-center">
+					<a href="/" className="navbar-brand">
+						<i className="fas fa-campground mr-2"></i>
+						Tribewatch
+					</a>
+					<div>
+						{location && (
+							<h6 className="mb-0">
+								{`${location.city}, ${location.state}`}
+								<a role="button" onClick={setLocation} className="ml-3">
+									<i className="mr-2 fas fa-map-marker-alt"></i>Change Location
+								</a>
+							</h6>
+						)}
+					</div>
+				</div>
+
+				<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
+				<Nav className="mr-3">
+					<NavLink exact to="/" activeClassName="active" className="ml-4">
+						<h6>Stores</h6>
+					</NavLink>
+					<NavLink to="/shopping-list" activeClassName="active" className="ml-4">
+						<h6>Shopping</h6>
+					</NavLink>
+				</Nav>
+			</div>
+		);
+	};
+
 	if (!user) {
 		return (
 			<Navbar expand="lg">
-				<div className="container">
-					<Navbar.Brand>
-						<i className="fas fa-campground mr-2"></i>
-						Tribewatch
-					</Navbar.Brand>
-				</div>
+				<div className="container">{defaultNav()}</div>
 			</Navbar>
 		);
 	} else {
@@ -54,32 +82,7 @@ export const TopNav = () => {
 		return (
 			<Navbar expand="lg">
 				<div className="container">
-					<div className="d-flex align-items-center">
-						<a href="/" className="navbar-brand">
-							<i className="fas fa-campground mr-2"></i>
-							Tribewatch
-						</a>
-						<div>
-							{location && (
-								<h6 className="mb-0">
-									{`${location.city}, ${location.state}`}
-									<a role="button" onClick={setLocation} className="ml-3">
-										<i className="mr-2 fas fa-map-marker-alt"></i>Change Location
-									</a>
-								</h6>
-							)}
-						</div>
-					</div>
-
-					<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-					<Nav className="mr-3">
-						<NavLink exact to="/" activeClassName="active" className="ml-4">
-							<h6>Stores</h6>
-						</NavLink>
-						<NavLink to="/shopping-list" activeClassName="active" className="ml-4">
-							<h6>Shopping</h6>
-						</NavLink>
-					</Nav>
+					{defaultNav()}
 					<NavDropdown title={<Image src={photoURL} className="img-thumbnail" />} id="basic-nav-dropdown">
 						<NavDropdown.Item href="/admin">Admin</NavDropdown.Item>
 						<NavDropdown.Item onClick={() => signOut()}>Logout</NavDropdown.Item>

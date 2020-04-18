@@ -18,7 +18,9 @@ export const DriverForm = () => {
 	};
 
 	useEffect(() => {
-		getMyDriverProfile();
+		if (user) {
+			getMyDriverProfile();
+		}
 	}, []);
 
 	const validate = (values) => {
@@ -39,7 +41,7 @@ export const DriverForm = () => {
 	};
 
 	const initialValues = profile || {
-		displayName: user.displayName,
+		displayName: (user && user.displayName) || '',
 		contactMethod: '',
 		contactLink: '',
 	};
@@ -47,6 +49,8 @@ export const DriverForm = () => {
 		initialValues,
 		validate,
 		onSubmit: async (values) => {
+			if (!user) {
+			}
 			const unix = moment().unix();
 			const payload = {
 				...values,

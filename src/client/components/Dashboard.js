@@ -85,31 +85,10 @@ export const Dashboard = (props) => {
 						<i className="fas fa-car" /> Driver
 					</Badge>
 				)} */}
-				<a role="button" onClick={() => setLocationModal(true)}>
-					<i className="mr-2 fas fa-map-marker-alt"></i>Change Location
-				</a>
 			</div>
 			<div>
 				<Stores />
 			</div>
-			{showLocationModal && (
-				<Modal show={!!showLocationModal} onHide={handleLocationClose} centered>
-					<Modal.Header closeButton>
-						<Modal.Title>Change Location</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<LocationSelection
-							handleClose={handleLocationClose}
-							onSelectState={(state) => setSelectedState(state)}
-						/>
-						{selectedState && (
-							<div>
-								<SuggestCity state={selectedState} />
-							</div>
-						)}
-					</Modal.Body>
-				</Modal>
-			)}
 		</Container>
 	);
 };

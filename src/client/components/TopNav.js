@@ -1,13 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { UserContext } from '../context/UserContext';
-import { Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, Image, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { LocationSelection } from './LocationSelection';
+import { SuggestCity } from './SuggestCity';
 
 import { firebaseAuth } from '../services/firebase';
 
 export const TopNav = () => {
-	const [{ user }, userDispatch] = useContext(UserContext);
+	const [{ user, location }, userDispatch] = useContext(UserContext);
+	const [showLocationModal, setLocationModal] = useState();
+	const [selectedState, setSelectedState] = useState();
+
+	const handleLocationClose = (location) => {
+		setLocationModal(null);
+	};
+
+	const setLocation = (e) => {
+		e.preventDefault();
+		setLocationModal(true);
+	};
 
 	const signOut = () => {
 		firebaseAuth
@@ -41,10 +54,23 @@ export const TopNav = () => {
 		return (
 			<Navbar expand="lg">
 				<div className="container">
-					<a href="/" className="navbar-brand">
-						<i className="fas fa-campground mr-2"></i>
-						Tribewatch
-					</a>
+					<div className="d-flex align-items-center">
+						<a href="/" className="navbar-brand">
+							<i className="fas fa-campground mr-2"></i>
+							Tribewatch
+						</a>
+						<div>
+							{location && (
+								<h6 className="mb-0">
+									{`${location.city}, ${location.state}`}
+									<a role="button" onClick={setLocation} className="ml-3">
+										<i className="mr-2 fas fa-map-marker-alt"></i>Change Location
+									</a>
+								</h6>
+							)}
+						</div>
+					</div>
+
 					<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
 					<Nav className="mr-auto">
 						<Nav.Link href="/">Stores</Nav.Link>
@@ -55,6 +81,24 @@ export const TopNav = () => {
 						<NavDropdown.Item onClick={() => signOut()}>Logout</NavDropdown.Item>
 					</NavDropdown>
 				</div>
+				{showLocationModal && (
+					<Modal show={!!showLocationModal} onHide={handleLocationClose} centered>
+						<Modal.Header closeButton>
+							<Modal.Title>Change Location</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							<LocationSelection
+								handleClose={handleLocationClose}
+								onSelectState={(state) => setSelectedState(state)}
+							/>
+							{selectedState && (
+								<div>
+									<SuggestCity state={selectedState} />
+								</div>
+							)}
+						</Modal.Body>
+					</Modal>
+				)}
 			</Navbar>
 		);
 	}

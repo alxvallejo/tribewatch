@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { UserContext } from '../context/UserContext';
 import { Nav, Navbar, NavDropdown, Image, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { LocationSelection } from './LocationSelection';
 import { SuggestCity } from './SuggestCity';
 
@@ -72,9 +72,13 @@ export const TopNav = () => {
 					</div>
 
 					<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-					<Nav className="mr-auto">
-						<Nav.Link href="/">Stores</Nav.Link>
-						<Nav.Link href="/shopping-list">Shopping</Nav.Link>
+					<Nav className="mr-3">
+						<NavLink exact to="/" activeClassName="active" className="ml-4">
+							<h6>Stores</h6>
+						</NavLink>
+						<NavLink to="/shopping-list" activeClassName="active" className="ml-4">
+							<h6>Shopping</h6>
+						</NavLink>
 					</Nav>
 					<NavDropdown title={<Image src={photoURL} className="img-thumbnail" />} id="basic-nav-dropdown">
 						<NavDropdown.Item href="/admin">Admin</NavDropdown.Item>

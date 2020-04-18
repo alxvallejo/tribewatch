@@ -9,12 +9,7 @@ export const Shopping = () => {
 
 	return (
 		<Container>
-			<Row>
-				<Col>Drivers</Col>
-				<Col>
-					<Shoppers />
-				</Col>
-			</Row>
+			<Shoppers />
 		</Container>
 	);
 };

@@ -13,7 +13,7 @@ export const Stores = () => {
 			firebaseDb.ref(`stores/${state}/${city}`).on('value', (snapshot) => {
 				const values = snapshot.val();
 				if (values) {
-					const assignedStores = Object.values(snapshot.val());
+					const assignedStores = Object.values(values);
 					const featuredStores = assignedStores.filter((store) => store.items || store.traffic);
 
 					userDispatch({

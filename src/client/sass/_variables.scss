@@ -51,28 +51,30 @@ $yellowBold: #ffc314;
 $teal: #88bdbc;
 $darkTeal: #1c8aa5;
 
+$main: $indigo;
+
 // // Brand Colors
-$primary: $gray-900;
+$primary: $main;
 $secondary: $orange;
 $success: $green;
 $info: $navy;
 $warning: $yellow;
 $danger: $pink;
 $light: $gray-500;
-$dark: $gray-900;
+$dark: $main;
 
 // Body
 //
 // Settings for the `<body>` element.
 
 $body-bg: $white;
-$body-color: $dark;
+$body-color: $gray-900;
 
 // Links
 //
 // Style anchor elements.
 
-$link-color: $gray-900;
+$link-color: $main;
 $link-decoration: none;
 $link-hover-color: darken($link-color, 15%);
 $link-hover-decoration: none;
@@ -142,7 +144,7 @@ $grid-breakpoints: (
 	sm: 576px,
 	md: 768px,
 	lg: 992px,
-	xl: 1200px
+	xl: 1200px,
 ) !default;
 
 // Grid containers
@@ -153,7 +155,7 @@ $container-max-widths: (
 	sm: 540px,
 	md: 720px,
 	lg: 960px,
-	xl: 1170px
+	xl: 1170px,
 );
 
 // Grid columns

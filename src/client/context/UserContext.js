@@ -11,6 +11,7 @@ const initialUser = {
 	favorites: [],
 	tutorial: null,
 	featuredStores: null,
+	showLogin: false,
 };
 
 const UserReducer = (state, action) => {
@@ -61,6 +62,12 @@ const UserReducer = (state, action) => {
 			return {
 				...state,
 				featuredStores: action.featuredStores,
+			};
+
+		case 'SHOW_LOGIN':
+			return {
+				...state,
+				showLogin: action.showLogin,
 			};
 
 		default:

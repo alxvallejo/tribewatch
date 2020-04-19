@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { Login } from './Login';
 import { UserContext } from '../context/UserContext';
 import { Container, Row, Col, Modal } from 'react-bootstrap';
 import { LocationSelection } from './LocationSelection';
@@ -15,10 +14,6 @@ export const Dashboard = (props) => {
 
 	const handleLocationClose = (location) => {
 		setLocationModal(null);
-	};
-
-	const handleLoginClose = () => {
-		setShowLogin(null);
 	};
 
 	if (!location) {
@@ -41,13 +36,6 @@ export const Dashboard = (props) => {
 				</div>
 				<Row>
 					<Col className="d-flex flex-column align-items-center">
-						{/* <h3>To get started, select your city.</h3>
-						<ul>
-							<li>We'll show stores in your area.</li>
-							<li>Report how busy stores are.</li>
-							<li>Report whether stores carry essential items.</li>
-							<li>Help others and profit!</li>
-						</ul> */}
 						<div>
 							<LocationSelection
 								handleClose={handleLocationClose}
@@ -55,7 +43,9 @@ export const Dashboard = (props) => {
 							/>
 						</div>
 						<div className="mb-4">
-							<a onClick={() => setShowLogin(true)}>Already have a login?</a>
+							<a onClick={() => userDispatch({ type: 'SHOW_LOGIN', showLogin: true })}>
+								Already have a login?
+							</a>
 						</div>
 						{selectedState && (
 							<div>
@@ -64,11 +54,6 @@ export const Dashboard = (props) => {
 						)}
 					</Col>
 				</Row>
-				<Modal show={!!showLogin} onHide={handleLoginClose} centered>
-					<Modal.Body>
-						<Login handleClose={handleLoginClose} />
-					</Modal.Body>
-				</Modal>
 			</Container>
 		);
 	}

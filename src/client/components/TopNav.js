@@ -17,8 +17,7 @@ export const TopNav = () => {
 		setLocationModal(null);
 	};
 
-	const setLocation = (e) => {
-		e.preventDefault();
+	const setLocation = () => {
 		setLocationModal(true);
 	};
 
@@ -49,7 +48,7 @@ export const TopNav = () => {
 						{location && (
 							<h6 className="mb-0">
 								{`${location.city}, ${location.state}`}
-								<a role="button" onClick={setLocation} className="ml-3">
+								<a role="button" onClick={() => setLocation()} className="ml-3">
 									<i className="mr-2 fas fa-map-marker-alt"></i>Change Location
 								</a>
 							</h6>

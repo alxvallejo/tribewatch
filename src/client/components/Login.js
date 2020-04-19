@@ -18,7 +18,7 @@ export const Login = ({ handleClose }) => {
 		callbacks: {
 			// Avoid redirects after sign-in.
 			signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-				// console.log('authResult', authResult);
+				console.log('authResult', authResult);
 				if (authResult.user) {
 					userDispatch({
 						type: 'SET_USER',

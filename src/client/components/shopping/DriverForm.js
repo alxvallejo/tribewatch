@@ -50,15 +50,20 @@ export const DriverForm = () => {
 		validate,
 		onSubmit: async (values) => {
 			if (!user) {
+				userDispatch({
+					type: 'SHOW_LOGIN',
+					showLogin: true,
+				});
+			} else {
+				const unix = moment().unix();
+				const payload = {
+					...values,
+					uid: user.uid,
+					time: values.time || unix,
+					photoURL: user.photoURL,
+				};
+				await firebaseDb.ref(`driverProfiles/${location.collectionId}/${user.uid}`).set(payload);
 			}
-			const unix = moment().unix();
-			const payload = {
-				...values,
-				uid: user.uid,
-				time: values.time || unix,
-				photoURL: user.photoURL,
-			};
-			await firebaseDb.ref(`driverProfiles/${location.collectionId}/${user.uid}`).set(payload);
 		},
 		enableReinitialize: true,
 	});

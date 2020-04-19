@@ -20,7 +20,7 @@ export const RequestForm = () => {
 	};
 
 	useEffect(() => {
-		if (user) {
+		if (user && location) {
 			getMyEntry();
 		}
 	}, []);
@@ -53,14 +53,21 @@ export const RequestForm = () => {
 		initialValues,
 		validate,
 		onSubmit: async (values) => {
-			const unix = moment().unix();
-			const payload = {
-				...values,
-				uid: user.uid,
-				time: values.time || unix,
-				photoURL: user.photoURL,
-			};
-			await firebaseDb.ref(`shopping/${location.collectionId}/${user.uid}`).set(payload);
+			if (!user) {
+				userDispatch({
+					type: 'SHOW_LOGIN',
+					showLogin: true,
+				});
+			} else {
+				const unix = moment().unix();
+				const payload = {
+					...values,
+					uid: user.uid,
+					time: values.time || unix,
+					photoURL: user.photoURL,
+				};
+				await firebaseDb.ref(`shopping/${location.collectionId}/${user.uid}`).set(payload);
+			}
 		},
 		enableReinitialize: true,
 	});
@@ -160,7 +167,7 @@ export const RequestForm = () => {
 							name="entry"
 							value={values.entry || ''}
 							onChange={(e) => setFieldValue('entry', e)}
-							placeholder={`Hi ${location.city}! I need a shopper!`}
+							placeholder={`Hi ${location && location.city}! I need a shopper!`}
 						/>
 						{errors.entry && touched.entry && errors.entry}
 					</Form.Group>

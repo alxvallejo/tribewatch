@@ -30,12 +30,6 @@ export const RequestForm = () => {
 		if (!values.displayName) {
 			errors.displayName = 'Required';
 		}
-		if (!values.contactMethod) {
-			errors.contactMethod = 'Required';
-		}
-		if (!values.contactLink) {
-			errors.contactLink = 'Required';
-		}
 		if (!values.entry) {
 			errors.entry = 'Required';
 		}
@@ -44,8 +38,6 @@ export const RequestForm = () => {
 
 	const initialValues = entry || {
 		displayName: (user && user.displayName) || '',
-		contactMethod: '',
-		contactLink: '',
 		entry: '',
 		status: 'open',
 	};
@@ -73,11 +65,6 @@ export const RequestForm = () => {
 	});
 	const { handleChange, handleSubmit, values, setFieldValue, errors, touched, isSubmitting } = formik;
 	// console.log('values: ', values);
-
-	let contactLinkLabel = null;
-	if (values.contactMethod === 'fb') {
-		contactLinkLabel = 'Facebook Profile URL';
-	}
 
 	return (
 		<div>
@@ -133,32 +120,6 @@ export const RequestForm = () => {
 						/>
 						{errors.displayName && touched.displayName && errors.displayName}
 					</Form.Group>
-
-					<Form.Group>
-						<Form.Label>Contact Method</Form.Label>
-						<Form.Label>
-							<Button
-								variant={values.contactMethod === 'fb' ? 'primary' : 'primary-outline'}
-								onClick={() => setFieldValue('contactMethod', 'fb')}
-							>
-								Facebook
-							</Button>
-						</Form.Label>
-						{errors.contactMethod && touched.contactMethod && errors.contactMethod}
-					</Form.Group>
-
-					{contactLinkLabel && (
-						<Form.Group>
-							<Form.Label>{contactLinkLabel}</Form.Label>
-							<Form.Control
-								type="text"
-								name="contactLink"
-								onChange={handleChange}
-								value={values.contactLink}
-							/>
-							{errors.contactLink && touched.contactLink && errors.contactLink}
-						</Form.Group>
-					)}
 
 					<Form.Group>
 						<Form.Label>Your shopping request</Form.Label>

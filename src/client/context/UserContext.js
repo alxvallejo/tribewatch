@@ -12,6 +12,7 @@ const initialUser = {
 	tutorial: null,
 	featuredStores: null,
 	showLogin: false,
+	inbox: null,
 };
 
 const UserReducer = (state, action) => {
@@ -68,6 +69,14 @@ const UserReducer = (state, action) => {
 			return {
 				...state,
 				showLogin: action.showLogin,
+			};
+
+		// This is essentially a list of
+		//
+		case 'SET_INBOX':
+			return {
+				...state,
+				inbox: action.inbox,
 			};
 
 		default:

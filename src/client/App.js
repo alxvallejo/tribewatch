@@ -3,9 +3,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import './sass/globals.scss';
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from './context/UserContext';
-import { AdminContextProvider } from './context/AdminContext';
+import { ShopperContext } from './context/ShopperContext';
 import { Modal } from 'react-bootstrap';
 import { Route, Switch } from 'react-router-dom';
+import { keys, map, orderBy } from 'lodash';
 
 import { Login } from './components/Login';
 import { TopNav } from './components/TopNav';
@@ -14,12 +15,13 @@ import { Footer } from './components/Footer';
 import { AdminDash } from './components/admin';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { Shopping } from './components/Shopping';
+import { Message } from './components/shopping/Message';
 
 import { firebaseAuth, firebaseDb } from './services/firebase';
-import firebase from 'firebase';
 
 const App = () => {
 	const [{ user, location, showLogin }, userDispatch] = useContext(UserContext);
+	const [{ entry }, shopperDispatch] = useContext(ShopperContext);
 	const [loading, setLoading] = useState(true);
 	const [isAdmin, setIsAdmin] = useState();
 
@@ -38,12 +40,64 @@ const App = () => {
 					// Get user info
 					const resp = await firebaseDb.ref(`users/${u.uid}`).once('value');
 					const userInfo = resp.val();
+					console.log('userInfo: ', userInfo);
 					if (userInfo) {
 						if (userInfo.location) {
 							userDispatch({
 								type: 'SET_LOCATION',
 								location: userInfo.location,
 							});
+							// We need two listeners for messages
+							// 1. Listen for messageSubscriptions on other entries
+							// 2. Listen for messages on your entries
+							if (u && userInfo.location) {
+								// Check messageSubscriptions
+								firebaseDb
+									.ref(`messageInbox/${userInfo.location.collectionId}/${u.uid}`)
+									.on('value', (snapshot) => {
+										const results = snapshot.val();
+										console.log('results: ', results);
+										if (results) {
+											// Filter the results.
+											// If already on conversation,
+											// delete the inbox notification
+											let filteredInbox = keys(results).map((key) => {
+												return {
+													...results[key],
+													key,
+												};
+											});
+
+											filteredInbox = orderBy(filteredInbox, 'time', 'desc');
+
+											if (entry) {
+												// If the convo is already active, we can mark it as read
+												// console.log('entry: ', entry);
+												filteredInbox = filteredInbox.map((result, i) => {
+													// console.log('result: ', result);
+													if (result.entryUid === entry.uid) {
+														return {
+															...result,
+															status: 'read',
+														};
+													} else {
+														return result;
+													}
+												});
+											}
+
+											userDispatch({
+												type: 'SET_INBOX',
+												inbox: filteredInbox,
+											});
+										} else {
+											userDispatch({
+												type: 'SET_INBOX',
+												inbox: null,
+											});
+										}
+									});
+							}
 						}
 						if (userInfo.preferences) {
 							userDispatch({
@@ -122,6 +176,14 @@ const App = () => {
 			<Modal show={!!showLogin} onHide={handleLoginClose} centered>
 				<Modal.Body>
 					<Login handleClose={handleLoginClose} />
+				</Modal.Body>
+			</Modal>
+			<Modal show={!!entry} onHide={() => shopperDispatch({ type: 'SET_ENTRY', entry: null })} centered>
+				<Modal.Header closeButton>
+					<Modal.Title>{`Chat with ${entry && entry.displayName}`}</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Message entry={entry} convoUid={user.uid} />
 				</Modal.Body>
 			</Modal>
 		</BrowserRouter>

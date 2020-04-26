@@ -42,7 +42,6 @@
 @import 'node_modules/bootstrap/scss/utilities';
 @import 'node_modules/bootstrap/scss/print';
 
-
 // Base
 @import 'base';
 
@@ -56,7 +55,4 @@
 @import 'components/location-header';
 @import 'components/loading';
 @import 'components/login';
-
-
-
-
+@import 'components/messages';

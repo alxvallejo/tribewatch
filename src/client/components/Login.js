@@ -24,6 +24,10 @@ export const Login = ({ handleClose }) => {
 						type: 'SET_USER',
 						user: authResult.user,
 					});
+					userDispatch({
+						type: 'SHOW_LOGIN',
+						showLogin: false,
+					});
 					localStorage.setItem('authUser', JSON.stringify(authResult.user));
 				}
 				handleClose();

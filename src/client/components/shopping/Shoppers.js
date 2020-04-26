@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
-import { Image, Row, Col, Badge, Form, Button } from 'react-bootstrap';
+import { ShopperContext } from '../../context/ShopperContext';
+import { Image, Row, Col, Badge, Form, Button, Modal } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
-import { useFormik } from 'formik';
 import { RequestForm } from './RequestForm';
 import { DriverForm } from './DriverForm';
+
 import { firebaseDb } from '../../services/firebase';
 import { map } from 'lodash';
 
@@ -13,15 +14,21 @@ const moment = require('moment');
 
 export const Shoppers = () => {
 	const [{ user, location, profile }, userDispatch] = useContext(UserContext);
+	const [{ shopEntries, entry }, shopperDispatch] = useContext(ShopperContext);
 	const [tab, setTab] = useState('driver');
-	const [shopEntries, setShopEntries] = useState();
+	// const [shopEntries, setShopEntries] = useState();
+	// const [messageEntry, setMessageEntry] = useState();
 
 	const getEntries = async () => {
 		firebaseDb.ref(`shopping/${location.collectionId}`).on('value', (snapshot) => {
 			const values = snapshot.val();
 			if (values) {
 				const entries = map(values);
-				setShopEntries(entries);
+				// setShopEntries(entries);
+				shopperDispatch({
+					type: 'SET_SHOPPER_ENTRIES',
+					shopEntries: entries,
+				});
 			}
 		});
 	};
@@ -32,20 +39,12 @@ export const Shoppers = () => {
 		}
 	}, [location]);
 
-	const contactButton = (entry) => {
-		switch (entry.contactMethod) {
-			case 'fb':
-				return (
-					<a href={entry.contactLink} target="_blank">
-						<Badge variant="primary">
-							<i className="fab fa-facebook mr-1" />
-							Contact
-						</Badge>
-					</a>
-				);
-			default:
-				return '';
-		}
+	const contactButton = (shopperEntry) => {
+		return (
+			<a onClick={() => shopperDispatch({ type: 'SET_ENTRY', entry: shopperEntry })}>
+				<Badge variant="secondary">Message</Badge>
+			</a>
+		);
 	};
 
 	return (
@@ -80,25 +79,29 @@ export const Shoppers = () => {
 			<Col className="ml-4">
 				<div>
 					{shopEntries &&
-						shopEntries.map((entry, i) => {
-							const displayDate = moment(entry.unix).fromNow();
+						shopEntries.map((shopperEntry, i) => {
+							const displayDate = moment(shopperEntry.unix).fromNow();
 
 							return (
 								<Row key={i}>
 									<div className="mr-4">
-										<Image roundedCircle src={entry.photoURL} style={{ width: 50 }} />
+										<Image roundedCircle src={shopperEntry.photoURL} style={{ width: 50 }} />
 									</div>
 									<div>
 										<Row>
 											<Col>
-												<h5>{entry.displayName}</h5>
-												{contactButton(entry)}
+												<h5>{shopperEntry.displayName}</h5>
+												{contactButton(shopperEntry)}
 											</Col>
 											<div>
 												<h5>
 													<i>{displayDate}</i>
 												</h5>
-												<ReactQuill value={entry.entry} readOnly={true} theme={'bubble'} />
+												<ReactQuill
+													value={shopperEntry.entry}
+													readOnly={true}
+													theme={'bubble'}
+												/>
 											</div>
 										</Row>
 									</div>

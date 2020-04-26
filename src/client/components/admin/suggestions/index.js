@@ -20,7 +20,7 @@ export const Suggestions = () => {
 	}, []);
 
 	const getSuggestions = async () => {
-		await firebaseDb.ref(`suggestions/cities`).on('value', (snapshot) => {
+		firebaseDb.ref(`suggestions/cities`).on('value', (snapshot) => {
 			const results = snapshot.val();
 			setSuggestions(
 				keys(results).map((key) => {

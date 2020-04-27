@@ -178,12 +178,12 @@ const App = () => {
 					<Login handleClose={handleLoginClose} />
 				</Modal.Body>
 			</Modal>
-			<Modal show={!!entry} onHide={() => shopperDispatch({ type: 'SET_ENTRY', entry: null })} centered>
+			<Modal show={entry && user} onHide={() => shopperDispatch({ type: 'SET_ENTRY', entry: null })} centered>
 				<Modal.Header closeButton>
 					<Modal.Title>{`Chat with ${entry && entry.displayName}`}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Message entry={entry} convoUid={user.uid} />
+					<Message entry={entry} convoUid={user && user.uid} />
 				</Modal.Body>
 			</Modal>
 		</BrowserRouter>

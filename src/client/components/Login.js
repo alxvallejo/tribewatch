@@ -8,6 +8,7 @@ import { Container, Button, Form, Card, Modal } from 'react-bootstrap';
 const moment = require('moment');
 
 export const Login = ({ handleClose }) => {
+	const [{ user }, userDispatch] = useContext(UserContext);
 	// Configure FirebaseUI.
 	const uiConfig = {
 		// Popup signin flow rather than redirect flow.

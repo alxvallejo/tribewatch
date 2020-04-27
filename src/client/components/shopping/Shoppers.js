@@ -40,6 +40,9 @@ export const Shoppers = () => {
 	}, [location]);
 
 	const contactButton = (shopperEntry) => {
+		if (user && shopperEntry.uid === user.uid) {
+			return null;
+		}
 		return (
 			<a onClick={() => shopperDispatch({ type: 'SET_ENTRY', entry: shopperEntry })}>
 				<Badge variant="secondary">Message</Badge>

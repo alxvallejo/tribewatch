@@ -7,43 +7,51 @@ input[type='tel'],
 select,
 textarea,
 .form-control {
-    @extend .form-control;
-    box-shadow: 1px 2px 4px 0 rgba(34, 34, 34, 0.1) inset;
-    border-radius: 20px;
-    border: 1px solid #d6d3d3;
+	@extend .form-control;
+	box-shadow: 1px 2px 4px 0 rgba(34, 34, 34, 0.1) inset;
+	border-radius: 20px;
+	border: 1px solid #d6d3d3;
 }
 
 .has-icon {
-    position: relative;
+	position: relative;
 
-    .form-control {
-        padding-right: 35px;
-    }
+	.form-control {
+		padding-right: 35px;
+	}
 
-    i {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-    }
+	i {
+		position: absolute;
+		right: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }
 
 label {
-    display: block;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    font-weight: bold;
-    font-size: 12px;
-    color: #222;
+	display: block;
+	text-transform: uppercase;
+	margin-bottom: 6px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #222;
 }
 
 select {
-    -webkit-appearance: none;
-    appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
 }
 
 .form-row {
-    @include media-breakpoint-down(md) {
-        display: block;
-    }
+	@include media-breakpoint-down(md) {
+		display: block;
+	}
+}
+
+.quill {
+	.entry-input {
+		box-shadow: 1px 2px 4px 0 rgba(34, 34, 34, 0.1) inset;
+		border-radius: 20px;
+		border: 1px solid #d6d3d3;
+	}
 }

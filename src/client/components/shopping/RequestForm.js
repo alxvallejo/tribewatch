@@ -129,6 +129,7 @@ export const RequestForm = () => {
 							value={values.entry || ''}
 							onChange={(e) => setFieldValue('entry', e)}
 							placeholder={`Hi ${location && location.city}! I need a shopper!`}
+							className="entry-input"
 						/>
 						{errors.entry && touched.entry && errors.entry}
 					</Form.Group>

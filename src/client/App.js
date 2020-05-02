@@ -183,7 +183,7 @@ const App = () => {
 					<Modal.Title>{`Chat with ${entry && entry.displayName}`}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Message entry={entry} convoUid={user && user.uid} />
+					<Message entry={entry} />
 				</Modal.Body>
 			</Modal>
 		</BrowserRouter>

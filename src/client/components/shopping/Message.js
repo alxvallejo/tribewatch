@@ -9,11 +9,12 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 const moment = require('moment');
 
-export const Message = ({ convoUid, entry }) => {
+export const Message = ({ entry }) => {
 	const [{ user, location, inbox }, userDispatch] = useContext(UserContext);
 	// const [{ user, location, inbox }, shopperDispatch] = useContext(UserContext);
 	const [messages, setMessages] = useState();
 	const [convoRef, setConvoRef] = useState();
+	const [otherUid, setOtherUid] = useState();
 
 	const getConvo = async () => {
 		// Check if entry is already in your inbox
@@ -58,6 +59,10 @@ export const Message = ({ convoUid, entry }) => {
 
 	useEffect(() => {
 		getConvo();
+
+		if (entry.uid === user.uid) {
+			// this is
+		}
 	}, []);
 
 	const validate = (values) => {
@@ -84,6 +89,7 @@ export const Message = ({ convoUid, entry }) => {
 				const unix = moment().unix();
 				const payload = {
 					...values,
+					entryUid: entry.uid,
 					uid: user.uid,
 					displayName: user.displayName,
 					time: unix,
